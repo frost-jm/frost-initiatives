@@ -1,11 +1,11 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, logo, submitButton } from '@/components/index';
+import { Sample, Logo, Button } from '@/components/index';
 
 // Add the component here
 const components = [
   { name: 'Sample Component', component: Sample },
-  { name: 'Page logo', component: logo },
-  { name: 'Submit button', component: submitButton },
+  { name: 'Page logo', component: Logo },
+  { name: 'Submit button', component: Button },
 ];
 
 const ComponentsLibrary = () => {

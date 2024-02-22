@@ -1,7 +1,7 @@
 // Import all the components and export at once.
 
 import Sample from './sample';
-import logo from './low-level-components/logo';
-import submitButton from './low-level-components/submitButton';
+import Logo from './low-level-components/Logo';
+import Button from './low-level-components/Button';
 
-export { Sample, logo, submitButton };
+export { Sample, Logo, Button };
