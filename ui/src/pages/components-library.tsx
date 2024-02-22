@@ -22,7 +22,7 @@ const ComponentsLibrary = () => {
 				container
 				spacing={3}
 			>
-				{components.map(({ name, component: Component }) => (
+				{components.map(({ name, component: Component, props }) => (
 					<Grid
 						item
 						xs={12}
@@ -42,7 +42,7 @@ const ComponentsLibrary = () => {
 								>
 									{name}
 								</Typography>
-								<Component />
+								{props ? <Component {...props} /> : <Component />}
 							</CardContent>
 						</Card>
 					</Grid>
