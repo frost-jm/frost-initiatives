@@ -2,5 +2,6 @@
 
 import Sample from './sample';
 import logo from './low-level-components/logo';
+import submitButton from './low-level-components/submitButton';
 
-export { Sample, logo };
+export { Sample, logo, submitButton };
