@@ -1,16 +1,16 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, logo } from '@/components/index';
+import { Sample, Logo } from '@/components/index';
 
 // Add the component here
 const components = [
   { name: 'Sample Component', component: Sample },
-  { name: 'Page logo', component: logo },
+  { name: 'Page logo', component: Logo },
 ];
 
 const ComponentsLibrary = () => {
   return (
     <Box padding={4}>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant='h2' gutterBottom>
         Component Library
       </Typography>
       <Grid container spacing={3}>
@@ -24,7 +24,7 @@ const ComponentsLibrary = () => {
               }}
             >
               <CardContent>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant='h6' gutterBottom>
                   {name}
                 </Typography>
                 <Component />
