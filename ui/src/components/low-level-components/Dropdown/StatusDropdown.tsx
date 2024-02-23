@@ -16,6 +16,15 @@ const options: Option[] = [
 
 const StatusDropdown = () => {
 	const [selectedOptions, setSelectedOptions] = useState<string[]>(['In Progress']);
+	const [open, setOpen] = useState<boolean>(false);
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleOpen = () => {
+		setOpen(true);
+	};
 
 	const handleChange = (event: SelectChangeEvent<string | string[]>) => {
 		const value = event.target.value;
@@ -23,6 +32,7 @@ const StatusDropdown = () => {
 
 		setSelectedOptions(newValue);
 	};
+
 	return (
 		<FormControl
 			fullWidth
@@ -39,6 +49,8 @@ const StatusDropdown = () => {
 				displayEmpty
 				value={selectedOptions}
 				onChange={handleChange}
+				onClose={handleClose}
+				onOpen={handleOpen}
 				renderValue={(selected) => {
 					if (!Array.isArray(selected)) {
 						selected = [selected];
@@ -77,6 +89,7 @@ const StatusDropdown = () => {
 					PaperProps: {
 						style: {
 							boxShadow: 'none',
+							borderRadius: ' 0 0 4px 4px',
 						},
 					},
 					MenuListProps: {
@@ -87,16 +100,26 @@ const StatusDropdown = () => {
 						},
 					},
 				}}
+				IconComponent={SelectIcon}
 				sx={{
 					fontFamily: 'Figtree-Medium',
 					fontWeight: '500',
 					fontSize: '12px',
 					lineHeight: '18px',
 					color: 'var(--input-color)',
-					background: 'rgba(244, 247, 248, 1)',
+					opacity: '0.8',
+					background: '#F8FAFB',
 					border: 'none',
+					borderRadius: open ? '4px 4px 0 0' : '4px',
 					fieldset: {
 						display: 'none',
+					},
+					'> .MuiSelect-select': {
+						padding: '11px 8px 11px 12px!important',
+					},
+					svg: {
+						position: 'absolute',
+						right: '8px',
 					},
 				}}
 			>
@@ -110,7 +133,7 @@ const StatusDropdown = () => {
 							fontSize: '12px',
 							lineHeight: '18px',
 							color: 'var(--input-color)',
-							padding: '12px 8px  12px 12px',
+							padding: '11px 8px 11px 12px',
 							background: 'var(--primary-color)',
 							'&:not(:last-of-type):not(.Mui-selected)': {
 								borderBottom: '1px solid #E9EDEE',
@@ -130,6 +153,23 @@ const StatusDropdown = () => {
 				))}
 			</Select>
 		</FormControl>
+	);
+};
+
+const SelectIcon = () => {
+	return (
+		<svg
+			width='14'
+			height='14'
+			viewBox='0 0 14 14'
+			fill='none'
+			xmlns='http://www.w3.org/2000/svg'
+		>
+			<path
+				d='M2 5L7 10L12 5H2Z'
+				fill='#1D244F'
+			/>
+		</svg>
 	);
 };
 

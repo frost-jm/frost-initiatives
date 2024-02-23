@@ -6,8 +6,8 @@ const components = [
 	{ name: 'Sample Component', component: Sample },
 	{ name: 'Page logo', component: Logo },
 	{ name: 'Submit button', component: Button },
-	{ name: 'Input Field', component: Input },
 	{ name: 'Status Dropdown', component: StatusDropdown },
+	{ name: 'Input Field', component: Input },
 ];
 
 const ComponentsLibrary = () => {
