@@ -7,6 +7,7 @@ const components = [
 	{ name: 'Page logo', component: Logo },
 	{ name: 'Submit button', component: Button },
 	{ name: 'Input Field', component: Input },
+	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 ];
 
 const ComponentsLibrary = () => {
