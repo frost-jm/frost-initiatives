@@ -2,7 +2,7 @@
 
 // Low Level Elements
 import Logo from '@/components/low-level-components/Logo';
-import Input from '@/components/low-level-components/input';
+import Input from '@/components/low-level-components/Input';
 import Button from '@/components/low-level-components/Button';
 
 import ActionDropdown from '@/components/low-level-components/Dropdown/ActionDropdown';

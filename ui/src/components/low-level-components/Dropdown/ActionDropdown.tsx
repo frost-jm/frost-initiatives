@@ -19,7 +19,7 @@ const actions = [
 
 const ActionDropdown = () => {
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '16px', background: 'var(--primary-color)', color: 'var(--input-color)', borderRadius: '4px', border: '1px solid #E9EDEE', width: '100%', maxWidth: '185px', boxShadow: '2px 2px 8px 0px rgba(233, 237, 238, 1)' }}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px', padding: '16px', background: 'var(--primary-color)', color: 'var(--input-color)', borderRadius: '4px', border: '1px solid #E9EDEE', width: '100%', maxWidth: '185px', boxShadow: '2px 2px 8px 0px rgba(29, 36, 79, 0.04)' }}>
 			{actions.map((action, index) => (
 				<Box
 					key={index}
