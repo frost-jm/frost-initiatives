@@ -8,6 +8,7 @@ const components = [
 	{ name: 'Submit button', component: Button },
 	{ name: 'Status Dropdown', component: StatusDropdown },
 	{ name: 'Input Field', component: Input },
+	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
 ];
 
