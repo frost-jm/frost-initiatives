@@ -1,7 +1,13 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, Button, Input, EditorTabs } from '@/components/index';
-
-//const tabLabelsData = ['Home', 'For Voting', 'For Implementation'];
+import {
+  Sample,
+  Logo,
+  Button,
+  Input,
+  StatusDropdown,
+  ActionDropdown,
+  EditorTabs,
+} from '@/components/index';
 
 const tabLabelsData = [
   { label: 'Home', count: 0 },
@@ -9,14 +15,15 @@ const tabLabelsData = [
   { label: 'For Implementation', count: 1 },
 ];
 
-console.log('tab', tabLabelsData);
-
 // Add the component here
 const components = [
   { name: 'Sample Component', component: Sample },
   { name: 'Page logo', component: Logo },
   { name: 'Submit button', component: Button },
+  { name: 'Status Dropdown', component: StatusDropdown },
   { name: 'Input Field', component: Input },
+  { name: 'Comment Field', component: Input, props: { variant: 'comment' } },
+  { name: 'Action Dropdown', component: ActionDropdown },
   {
     name: 'Editor Tabs',
     component: EditorTabs,
