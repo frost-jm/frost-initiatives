@@ -42,10 +42,9 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 				fontFamily: 'Figtree-Medium',
 				fontSize: '14px',
 				lineHeight: '14px',
-				background: 'rgba(244, 247, 248, 0.6)',
+				background: '#F8FAFB',
 				padding: '12px',
-				borderRadius: '12px',
-
+				borderRadius: '4px',
 				...commonStyles,
 			};
 		}
