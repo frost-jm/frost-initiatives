@@ -16,6 +16,7 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 		boxSizing: 'border-box',
 		input: {
 			color: 'var(--input-color)',
+			padding: '0',
 			'&::placeholder': {
 				color: 'var(--input-color)',
 			},
