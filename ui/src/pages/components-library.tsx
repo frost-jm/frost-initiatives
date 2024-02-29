@@ -1,7 +1,7 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown } from '@/components/index';
+import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, StatusHeader } from '@/components/index';
 
-// Add the component here
+// Add the components here
 const components = [
 	{ name: 'Sample Component', component: Sample },
 	{ name: 'Page logo', component: Logo },
@@ -9,6 +9,9 @@ const components = [
 	{ name: 'Status Dropdown', component: StatusDropdown },
 	{ name: 'Input Field', component: Input },
 	{ name: 'Action Dropdown', component: ActionDropdown },
+
+	// To check different status: Change the status to any of the ff: 'Done', 'In Progress', 'For Implementation', 'Archived'
+	{ name: 'Status Header', component: StatusHeader, props: { status: 'For Implementation' } },
 ];
 
 const ComponentsLibrary = () => {
