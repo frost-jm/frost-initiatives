@@ -19,6 +19,7 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 			padding: '0',
 			'&::placeholder': {
 				color: 'var(--input-color)',
+				opacity: '0.40',
 			},
 		},
 		'&:before, &:after': {
