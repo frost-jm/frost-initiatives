@@ -49,7 +49,7 @@ const StatusHeader = ({ status }: ModalHeaderProps) => {
 				fontFamily: 'Figtree-Bold,sans-serif',
 				fontSize: '10px',
 				lineHeight: '10px',
-				letterSpacing: '0.6px',
+				letterSpacing: '0.96px',
 				textTransform: 'uppercase',
 				display: 'flex',
 				alignItems: 'center',
