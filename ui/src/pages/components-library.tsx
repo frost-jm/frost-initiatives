@@ -1,11 +1,14 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader } from '@/components/index';
+import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, Avatar } from '@/components/index';
 
 const tabLabelsData = [
 	{ label: 'Home', count: 0 },
 	{ label: 'For Voting', count: 5 },
 	{ label: 'For Implementation', count: 1 },
 ];
+
+// Dummy Data for Avatar
+import dummyData from '../testdata.json';
 
 // Add the components here
 const components = [
@@ -32,6 +35,10 @@ const components = [
 	},
 	// To check different status: Change the status to any of the ff: 'Done', 'In Progress', 'For Implementation', 'Archived'
 	{ name: 'Status Header', component: StatusHeader, props: { status: 'Pending' } },
+	{ name: 'Avatar', component: Avatar },
+	{ name: 'Multiple Avatar ( Expanded )', component: Avatar, props: { type: dummyData.users.length > 1 ? 'multiple' : 'single', data: dummyData.users, label: true } },
+	{ name: 'Multiple Avatar', component: Avatar, props: { type: 'multiple', data: dummyData.users } },
+	{ name: 'Multiple Avatar ( Table View )', component: Avatar, props: { type: 'table', data: dummyData.users } },
 ];
 
 const ComponentsLibrary = () => {
