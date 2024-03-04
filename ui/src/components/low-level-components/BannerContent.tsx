@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-const BannerContent = () => {
+const BannerContent = ({ title, description }) => {
   return (
     <Box
       sx={{
@@ -15,7 +15,7 @@ const BannerContent = () => {
           lineHeight: '1',
         }}
       >
-        Got any suggestions for us?
+        {title}
       </Box>
       <Box
         sx={{
@@ -27,7 +27,7 @@ const BannerContent = () => {
           marginTop: '8px',
         }}
       >
-        Let us know by pitching your own internal initiative.
+        {description}
       </Box>
     </Box>
   );

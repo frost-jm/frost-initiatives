@@ -18,7 +18,14 @@ const components = [
   { name: 'Input Field', component: Input },
   { name: 'Comment Field', component: Input, props: { variant: 'comment' } },
   { name: 'Action Dropdown', component: ActionDropdown },
-  { name: 'Banner Content', component: BannerContent },
+  {
+    name: 'Banner Content',
+    component: BannerContent,
+    props: {
+      title: 'Got any suggestions for us?',
+      description: 'Let us know by pitching your own internal initiative.',
+    },
+  },
 ];
 
 const ComponentsLibrary = () => {
