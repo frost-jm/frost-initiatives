@@ -5,6 +5,7 @@ enum Status {
 	InProgress = 'In Progress',
 	ForImplementation = 'For Implementation',
 	Archived = 'Archived',
+	Pending = 'Pending',
 }
 
 interface ModalHeaderProps {
@@ -32,8 +33,8 @@ const StatusHeader = ({ status }: ModalHeaderProps) => {
 			headerColor = '#CFD5DA';
 			break;
 		default:
-			headerText = 'In Progress';
-			headerColor = '#36B9D6';
+			headerText = 'Pending';
+			headerColor = '#576BCD';
 			break;
 	}
 
@@ -44,7 +45,7 @@ const StatusHeader = ({ status }: ModalHeaderProps) => {
 				background: headerColor,
 				color: '#ffffff',
 				borderRadius: '12px 12px 0 0',
-				height: '36px',
+
 				fontFamily: 'Figtree-Bold,sans-serif',
 				fontSize: '10px',
 				lineHeight: '10px',

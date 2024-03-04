@@ -31,7 +31,7 @@ const components = [
 		},
 	},
 	// To check different status: Change the status to any of the ff: 'Done', 'In Progress', 'For Implementation', 'Archived'
-	{ name: 'Status Header', component: StatusHeader, props: { status: 'For Implementation' } },
+	{ name: 'Status Header', component: StatusHeader, props: { status: 'Pending' } },
 ];
 
 const ComponentsLibrary = () => {
