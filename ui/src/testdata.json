@@ -1,0 +1,228 @@
+{
+	"users": [
+		{
+			"userId": 34,
+			"firstName": "Anna",
+			"lastName": "Enriquez",
+			"bindname": "@annaenriquez",
+			"email": "anna.enriquez@frostdesigngroup.com",
+			"position": "Technical Lead"
+		},
+		{
+			"userId": 75,
+			"firstName": "Bea",
+			"lastName": "Martin",
+			"bindname": "@beamartin",
+			"email": "bea.martin@frostdesigngroup.com",
+			"position": "Visual Designer II"
+		},
+		{
+			"userId": 93,
+			"firstName": "Cathy",
+			"lastName": "Castillo",
+			"bindname": "@cathy",
+			"email": "cathy.limsoc@frostdesigngroup.com",
+			"position": "Independent Director"
+		},
+		{
+			"userId": 57,
+			"firstName": "Mark Clarence",
+			"lastName": "Profeta",
+			"bindname": "@clarenceprofeta",
+			"email": "clarence.profeta@frostdesigngroup.com",
+			"position": "Mid-Level Visual Designer"
+		},
+		{
+			"userId": 78,
+			"firstName": "Dhar",
+			"lastName": "Gemarino",
+			"bindname": "@dhargemarino",
+			"email": "dhar.gemarino@frostdesigngroup.com",
+			"position": "Visual Designer I"
+		},
+		{
+			"userId": 91,
+			"firstName": "Shirlyn Dhei",
+			"lastName": "Pengson",
+			"bindname": "@dheipengson",
+			"email": "dhei.pengson@frostdesigngroup.com",
+			"position": "Talent Acquisition Specialist"
+		},
+		{
+			"userId": 42,
+			"firstName": "Donelle",
+			"lastName": "Agudo",
+			"bindname": "@donelleagudo",
+			"email": "don.agudo@frostdesigngroup.com",
+			"position": "Mid-Level Visual Designer"
+		},
+		{
+			"userId": 52,
+			"firstName": "Lorenzo Xavier",
+			"lastName": "Ocampo",
+			"bindname": "@enzoocampo",
+			"email": "enzo.ocampo@frostdesigngroup.com",
+			"position": "Front End Developer II"
+		},
+		{
+			"userId": 53,
+			"firstName": "Gideon Royce",
+			"lastName": "Rivera",
+			"bindname": "@gideonrivera",
+			"email": "gideon.rivera@frostdesigngroup.com",
+			"position": "Mid-Level Content Writer"
+		},
+		{
+			"userId": 55,
+			"firstName": "Gwyneth Joy",
+			"lastName": "Cristo",
+			"bindname": "@gwyncristo",
+			"email": "gwyn.cristo@frostdesigngroup.com",
+			"position": "Mid-Level Visual Designer"
+		},
+		{
+			"userId": 74,
+			"firstName": "Ian",
+			"lastName": "Bautista",
+			"bindname": "@ianbautista",
+			"email": "ian.bautista@frostdesigngroup.com",
+			"position": "Talent Acquisition and Development Partner"
+		},
+		{
+			"userId": 12,
+			"firstName": "Inigo",
+			"lastName": "de Paula",
+			"bindname": "@inigodepaula",
+			"email": "inigo.depaula@frostdesigngroup.com",
+			"position": "Content Director"
+		},
+		{
+			"userId": 77,
+			"firstName": "John Melo",
+			"lastName": "De las Alas",
+			"bindname": "@jmdelasalas",
+			"email": "jm.delasalas@frostdesigngroup.com",
+			"position": "Mid-Level Front End Developer"
+		},
+		{
+			"userId": 5,
+			"firstName": "John Paul",
+			"lastName": "de Guzman",
+			"bindname": "@jpdguzman",
+			"email": "jpdguzman@frostdesigngroup.com",
+			"position": "Chief Creative"
+		},
+		{
+			"userId": 56,
+			"firstName": "Karen",
+			"lastName": "Ong",
+			"bindname": "@karenong",
+			"email": "karen.ong@frostdesigngroup.com",
+			"position": "Content Writer II"
+		},
+		{
+			"userId": 95,
+			"firstName": "Kyla Charisse ",
+			"lastName": "Comendador",
+			"bindname": "@kylacomendador",
+			"email": "kyla.comendador@frostdesigngroup.com",
+			"position": "Project Coordinator"
+		},
+		{
+			"userId": 81,
+			"firstName": "Jennilea",
+			"lastName": "Villanueva",
+			"bindname": "@leavillanueva",
+			"email": "lea.villanueva@frostdesigngroup.com",
+			"position": "Visual Designer I"
+		},
+		{
+			"userId": 49,
+			"firstName": "Leigh",
+			"lastName": "de Joya-de Guzman",
+			"bindname": "@leigh",
+			"email": "leigh@frostdesigngroup.com",
+			"position": "Chief Executive"
+		},
+		{
+			"userId": 82,
+			"firstName": "Marie Joy",
+			"lastName": "Garbin",
+			"bindname": "@mariegarbin",
+			"email": "marie.garbin@frostdesigngroup.com",
+			"position": "Front End Developer II"
+		},
+		{
+			"userId": 83,
+			"firstName": "Mariel Louise",
+			"lastName": "Cerio",
+			"bindname": "@marielcerio",
+			"email": "mariel.cerio@frostdesigngroup.com",
+			"position": "Visual Designer II"
+		},
+		{
+			"userId": 94,
+			"firstName": "Marietta ",
+			"lastName": "Milallos-Tavares",
+			"bindname": "@mayethtavarez",
+			"email": "mayeth.tavares@frostdesigngroup.com",
+			"position": "Mid-level Project Manager"
+		},
+		{
+			"userId": 61,
+			"firstName": "Regina Milagros",
+			"lastName": "Alba",
+			"bindname": "@milesalba",
+			"email": "miles.alba@frostdesigngroup.com",
+			"position": "Design Operations I"
+		},
+		{
+			"userId": 48,
+			"firstName": "Millette",
+			"lastName": "Aran",
+			"bindname": "@millettearan",
+			"email": "millette.aran@frostdesigngroup.com",
+			"position": "Admin"
+		},
+		{
+			"userId": 92,
+			"firstName": "Michael Roi",
+			"lastName": "Gonda",
+			"bindname": "@mirogonda",
+			"email": "miro.gonda@frostdesigngroup.com",
+			"position": "Project Coordinator"
+		},
+		{
+			"userId": 90,
+			"firstName": "Maria Dominique",
+			"lastName": "Magnaye",
+			"bindname": "@monmagnaye",
+			"email": "mon.magnaye@frostdesigngroup.com",
+			"position": "Content Writer I "
+		},
+		{
+			"userId": 84,
+			"firstName": "Rey",
+			"lastName": "Orlanes",
+			"bindname": "@reyorlanes",
+			"email": "rey.orlanes@frostdesigngroup.com",
+			"position": "Sr. Visual Designer"
+		},
+		{
+			"userId": 46,
+			"firstName": "Valerie",
+			"lastName": "Uy",
+			"bindname": "@valerieuy",
+			"email": "valerie.uy@frostdesigngroup.com",
+			"position": "Mid-Level Visual Designer"
+		},
+		{
+			"userId": 80,
+			"firstName": "Wilmer Jan",
+			"lastName": "Pascua",
+			"bindname": "@wilmerpascua",
+			"email": "wilmer.pascua@frostdesigngroup.com",
+			"position": "Visual Designer I"
+		}
+	]
+}
