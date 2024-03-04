@@ -1,5 +1,11 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, DepartmentDropdown } from '@/components/index';
+import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown } from '@/components/index';
+
+const tabLabelsData = [
+	{ label: 'Home', count: 0 },
+	{ label: 'For Voting', count: 5 },
+	{ label: 'For Implementation', count: 1 },
+];
 
 // Add the component here
 const components = [
@@ -11,6 +17,11 @@ const components = [
 	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
 	{ name: 'Department Dropdown', component: DepartmentDropdown },
+	{
+		name: 'Editor Tabs',
+		component: EditorTabs,
+		props: { tabLabels: tabLabelsData },
+	},
 ];
 
 const ComponentsLibrary = () => {

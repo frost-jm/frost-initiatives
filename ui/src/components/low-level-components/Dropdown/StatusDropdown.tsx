@@ -114,7 +114,7 @@ const StatusDropdown = () => {
 						display: 'none',
 					},
 					'> .MuiSelect-select': {
-						padding: '11px 8px 11px 12px!important',
+						padding: '12px 8px 12px 12px!important',
 					},
 					svg: {
 						position: 'absolute',
@@ -126,13 +126,14 @@ const StatusDropdown = () => {
 					<MenuItem
 						key={option.value}
 						value={option.value}
+						disableRipple
 						sx={{
 							fontFamily: 'Figtree-Medium',
 							fontWeight: '500',
 							fontSize: '12px',
 							lineHeight: '18px',
 							color: 'var(--input-color)',
-							padding: '11px 8px 11px 12px',
+							padding: '12px 8px 12px 12px',
 							background: 'var(--primary-color)',
 							'&:not(:last-of-type):not(.Mui-selected)': {
 								borderBottom: '1px solid #E9EDEE',
