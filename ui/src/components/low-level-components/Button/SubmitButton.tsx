@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-interface ButtonProps {
+interface SubmitButtonProps {
   backgroundColor: string;
   color: string;
   textAlign: string;
@@ -12,7 +12,7 @@ interface ButtonProps {
   lineHeight?: string;
 }
 
-const Button = ({ text = 'Submit an initiative' }: ButtonProps) => {
+const SubmitButton = ({ text = 'Submit an initiative' }: SubmitButtonProps) => {
   return (
     <Box
       sx={{
@@ -33,4 +33,4 @@ const Button = ({ text = 'Submit an initiative' }: ButtonProps) => {
     </Box>
   );
 };
-export default Button;
+export default SubmitButton;
