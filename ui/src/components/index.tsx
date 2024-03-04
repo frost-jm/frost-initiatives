@@ -3,7 +3,7 @@
 // Low Level Elements
 import Logo from '@/components/low-level-components/Logo';
 import Input from '@/components/low-level-components/Input';
-import Button from '@/components/low-level-components/Button';
+import SubmitButton from '@/components/low-level-components/Button/SubmitButton';
 import StatusDropdown from '@/components/low-level-components/Dropdown/StatusDropdown';
 import ActionDropdown from '@/components/low-level-components/Dropdown/ActionDropdown';
 import EditorTabs from '@/components/low-level-components/EditorTabs';
@@ -11,18 +11,20 @@ import DepartmentDropdown from '@/components/low-level-components/Dropdown/Depar
 import BannerContent from '@/components/low-level-components/BannerContent';
 import StatusHeader from '@/components/low-level-components/Header/StatusHeader';
 import TableHeader from './low-level-components/TableHeader';
+import Buttons from './low-level-components/Button/Buttons';
 import Sample from '@/components/sample';
 
 export {
   Sample,
   Logo,
   Input,
-  Button,
+  SubmitButton,
   StatusDropdown,
   ActionDropdown,
   EditorTabs,
   DepartmentDropdown,
   BannerContent,
   StatusHeader,
+  Buttons,
   TableHeader,
 };

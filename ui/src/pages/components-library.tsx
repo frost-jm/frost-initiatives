@@ -2,7 +2,7 @@ import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
 import {
   Sample,
   Logo,
-  Button,
+  SubmitButton,
   Input,
   StatusDropdown,
   ActionDropdown,
@@ -11,6 +11,7 @@ import {
   BannerContent,
   StatusHeader,
   TableHeader,
+  Buttons,
 } from '@/components/index';
 
 const tabLabelsData = [
@@ -23,7 +24,7 @@ const tabLabelsData = [
 const components = [
   { name: 'Sample Component', component: Sample },
   { name: 'Page logo', component: Logo },
-  { name: 'Submit button', component: Button },
+  { name: 'Submit button', component: SubmitButton },
   { name: 'Status Dropdown', component: StatusDropdown },
   { name: 'Input Field', component: Input },
   { name: 'Comment Field', component: Input, props: { variant: 'comment' } },
@@ -55,6 +56,13 @@ const components = [
     name: 'Status Header',
     component: StatusHeader,
     props: { status: 'Pending' },
+  },
+
+  //To check other button type: 'Join', 'View', 'Leave','Cancel'
+  {
+    name: 'Buttons',
+    component: Buttons,
+    props: { type: 'View' },
   },
 ];
 
