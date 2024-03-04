@@ -8,7 +8,18 @@ import StatusDropdown from '@/components/low-level-components/Dropdown/StatusDro
 import ActionDropdown from '@/components/low-level-components/Dropdown/ActionDropdown';
 import EditorTabs from '@/components/low-level-components/EditorTabs';
 import DepartmentDropdown from '@/components/low-level-components/Dropdown/DepartmentDropdown';
+import BannerContent from '@/components/low-level-components/BannerContent';
 
 import Sample from '@/components/sample';
 
-export { Sample, Logo, Input, Button, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown };
+export {
+  Sample,
+  Logo,
+  Input,
+  Button,
+  StatusDropdown,
+  ActionDropdown,
+  EditorTabs,
+  DepartmentDropdown,
+  BannerContent,
+};
