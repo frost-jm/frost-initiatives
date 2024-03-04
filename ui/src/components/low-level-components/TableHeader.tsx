@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-const TableHeader = () => {
+const TableHeader = ({ text, quantity }) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Box
@@ -12,7 +12,7 @@ const TableHeader = () => {
           color: 'var(--input-color)',
         }}
       >
-        Initiatives for Voting
+        {text}
       </Box>
       <Box
         sx={{
@@ -26,7 +26,7 @@ const TableHeader = () => {
           color: 'rgba(29, 36, 79, 0.6)',
         }}
       >
-        5
+        {quantity}
       </Box>
     </Box>
   );

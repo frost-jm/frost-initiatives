@@ -29,7 +29,14 @@ const components = [
   { name: 'Comment Field', component: Input, props: { variant: 'comment' } },
   { name: 'Action Dropdown', component: ActionDropdown },
   { name: 'Department Dropdown', component: DepartmentDropdown },
-  { name: 'Table Header', component: TableHeader },
+  {
+    name: 'Table Header',
+    component: TableHeader,
+    props: {
+      text: 'Initiatives for Voting',
+      quantity: '5',
+    },
+  },
   {
     name: 'Editor Tabs',
     component: EditorTabs,
