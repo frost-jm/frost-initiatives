@@ -23,7 +23,7 @@ const SubmitButton = ({ text = 'Submit an initiative' }: SubmitButtonProps) => {
         borderRadius: '63px',
         width: 'max-content',
         cursor: 'pointer',
-        fontFamily: 'Figtree-Semibold, sans-serif',
+        fontFamily: 'Figtree-SemiBold, sans-serif',
         fontWeight: '600',
         fontSize: '14px',
         lineHeight: '1',

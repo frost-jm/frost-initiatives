@@ -50,7 +50,7 @@ const Buttons = ({ type }: ButtonTypeProps) => {
         boxSizing: 'border-box',
         borderRadius: '4px',
         textAlign: 'center',
-        fontFamily: 'Figtree-Semibold, sans-serif',
+        fontFamily: 'Figtree-SemiBold, sans-serif',
         fontWeight: '600',
         fontSize: '12px',
         lineHeight: '1',
