@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-const TableHeader = ({ text, quantity }) => {
+const TableHeader = ({ text, quantity }: any) => {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
       <Box
