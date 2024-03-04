@@ -6,8 +6,16 @@ import {
   Input,
   StatusDropdown,
   ActionDropdown,
+  EditorTabs,
+  DepartmentDropdown,
   BannerContent,
 } from '@/components/index';
+
+const tabLabelsData = [
+  { label: 'Home', count: 0 },
+  { label: 'For Voting', count: 5 },
+  { label: 'For Implementation', count: 1 },
+];
 
 // Add the component here
 const components = [
@@ -18,6 +26,12 @@ const components = [
   { name: 'Input Field', component: Input },
   { name: 'Comment Field', component: Input, props: { variant: 'comment' } },
   { name: 'Action Dropdown', component: ActionDropdown },
+  { name: 'Department Dropdown', component: DepartmentDropdown },
+  {
+    name: 'Editor Tabs',
+    component: EditorTabs,
+    props: { tabLabels: tabLabelsData },
+  },
   {
     name: 'Banner Content',
     component: BannerContent,
