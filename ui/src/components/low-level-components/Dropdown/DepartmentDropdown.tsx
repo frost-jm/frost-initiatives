@@ -150,6 +150,7 @@ const DepartmentDropdown = () => {
 									fontWeight: '500',
 									fontSize: '14px',
 									lineHeight: '14px',
+									opacity: '0.8',
 								},
 							}}
 						/>

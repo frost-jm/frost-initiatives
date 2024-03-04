@@ -115,6 +115,7 @@ const StatusDropdown = () => {
 					},
 					'> .MuiSelect-select': {
 						padding: '12px 8px 12px 12px!important',
+						color: '#1D244F',
 					},
 					svg: {
 						position: 'absolute',
@@ -132,8 +133,9 @@ const StatusDropdown = () => {
 							fontWeight: '500',
 							fontSize: '12px',
 							lineHeight: '18px',
-							color: 'var(--input-color)',
+							color: 'rgba(29, 36, 79, 0.8)',
 							padding: '12px 8px 12px 12px',
+
 							background: 'var(--primary-color)',
 							'&:not(:last-of-type):not(.Mui-selected)': {
 								borderBottom: '1px solid #E9EDEE',
