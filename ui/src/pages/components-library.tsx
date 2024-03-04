@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, Avatar } from '@/components/index';
+import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, Avatar } from '@/components/index';
 
 const tabLabelsData = [
 	{ label: 'Home', count: 0 },
@@ -14,12 +14,20 @@ import dummyData from '../testdata.json';
 const components = [
 	{ name: 'Sample Component', component: Sample },
 	{ name: 'Page logo', component: Logo },
-	{ name: 'Submit button', component: Button },
+	{ name: 'Submit button', component: SubmitButton },
 	{ name: 'Status Dropdown', component: StatusDropdown },
 	{ name: 'Input Field', component: Input },
 	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
 	{ name: 'Department Dropdown', component: DepartmentDropdown },
+	{
+		name: 'Table Header',
+		component: TableHeader,
+		props: {
+			text: 'Initiatives for Voting',
+			quantity: '5',
+		},
+	},
 	{
 		name: 'Editor Tabs',
 		component: EditorTabs,
@@ -34,11 +42,22 @@ const components = [
 		},
 	},
 	// To check different status: Change the status to any of the ff: 'Done', 'In Progress', 'For Implementation', 'Archived'
-	{ name: 'Status Header', component: StatusHeader, props: { status: 'Pending' } },
+	{
+		name: 'Status Header',
+		component: StatusHeader,
+		props: { status: 'Pending' },
+	},
 	{ name: 'Avatar', component: Avatar },
 	{ name: 'Multiple Avatar ( Expanded )', component: Avatar, props: { type: dummyData.users.length > 1 ? 'multiple' : 'single', data: dummyData.users, label: true } },
 	{ name: 'Multiple Avatar', component: Avatar, props: { type: 'multiple', data: dummyData.users } },
 	{ name: 'Multiple Avatar ( Table View )', component: Avatar, props: { type: 'table', data: dummyData.users } },
+
+	//To check other button type: 'Join', 'View', 'Leave','Cancel'
+	{
+		name: 'Buttons',
+		component: Buttons,
+		props: { type: 'View' },
+	},
 ];
 
 const ComponentsLibrary = () => {
