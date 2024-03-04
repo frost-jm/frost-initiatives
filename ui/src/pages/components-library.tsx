@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown } from '@/components/index';
+import { Sample, Logo, Button, Input, StatusDropdown, ActionDropdown, DepartmentDropdown } from '@/components/index';
 
 // Add the component here
 const components = [
@@ -10,6 +10,7 @@ const components = [
 	{ name: 'Input Field', component: Input },
 	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
+	{ name: 'Department Dropdown', component: DepartmentDropdown },
 ];
 
 const ComponentsLibrary = () => {
