@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar } from '@/components/index';
+import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel } from '@/components/index';
 
 const tabLabelsData = [
 	{ label: 'Home', count: 0 },
@@ -30,6 +30,13 @@ const components = [
 		},
 	},
 	{
+		name: 'Table Label',
+		component: TableLabel,
+		props: {
+			label: 'Date',
+		},
+	},
+	{
 		name: 'Editor Tabs',
 		component: EditorTabs,
 		props: { tabLabels: tabLabelsData },
@@ -49,9 +56,25 @@ const components = [
 		props: { status: 'Pending' },
 	},
 	{ name: 'Avatar', component: Avatar },
-	{ name: 'Multiple Avatar ( Expanded )', component: Avatar, props: { type: dummyData.users.length > 1 ? 'multiple' : 'single', data: dummyData.users, label: true } },
-	{ name: 'Multiple Avatar', component: Avatar, props: { type: 'multiple', data: dummyData.users } },
-	{ name: 'Multiple Avatar ( Table View )', component: Avatar, props: { type: 'table', data: dummyData.users } },
+	{
+		name: 'Multiple Avatar ( Expanded )',
+		component: Avatar,
+		props: {
+			type: dummyData.users.length > 1 ? 'multiple' : 'single',
+			data: dummyData.users,
+			label: true,
+		},
+	},
+	{
+		name: 'Multiple Avatar',
+		component: Avatar,
+		props: { type: 'multiple', data: dummyData.users },
+	},
+	{
+		name: 'Multiple Avatar ( Table View )',
+		component: Avatar,
+		props: { type: 'table', data: dummyData.users },
+	},
 
 	//To check other button type: 'Join', 'View', 'Leave','Cancel'
 	{
@@ -63,10 +86,6 @@ const components = [
 		},
 	},
 
-	{
-		name: 'Pending Vote',
-		component: PendingVote,
-	},
 	{
 		name: 'Pending Vote',
 		component: PendingVote,

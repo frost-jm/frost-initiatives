@@ -11,10 +11,12 @@ const PendingVote = ({ type = 'block' }: PendingVoteProp) => {
 			sx={{
 				width: '100%',
 				backgroundColor: '#0C1335',
-				display: type === 'fixed' ? 'fixed' : 'block',
+				position: type === 'fixed' ? 'fixed' : 'static',
 				borderRadius: type === 'fixed' ? 0 : '0 0 12px 12px',
 				padding: '20px 24px',
 				boxSizing: 'border-box',
+				bottom: '0',
+				left: '0',
 			}}
 		>
 			<Box
