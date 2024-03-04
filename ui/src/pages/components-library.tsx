@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, Avatar } from '@/components/index';
+import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar } from '@/components/index';
 
 const tabLabelsData = [
 	{ label: 'Home', count: 0 },
@@ -9,6 +9,7 @@ const tabLabelsData = [
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
+import PendingVote from '@/components/low-level-components/Header/PendingVote';
 
 // Add the components here
 const components = [
@@ -56,7 +57,22 @@ const components = [
 	{
 		name: 'Buttons',
 		component: Buttons,
-		props: { type: 'View' },
+		props: {
+			type: ButtonType.View,
+			children: 'View',
+		},
+	},
+
+	{
+		name: 'Pending Vote',
+		component: PendingVote,
+	},
+	{
+		name: 'Pending Vote',
+		component: PendingVote,
+		props: {
+			type: 'fixed',
+		},
 	},
 ];
 
@@ -93,7 +109,7 @@ const ComponentsLibrary = () => {
 								>
 									{name}
 								</Typography>
-								{props ? <Component {...props} /> : <Component />}
+								{props && props.children ? <Component {...props}>{props.children}</Component> : props ? <Component {...props} /> : <Component />}
 							</CardContent>
 						</Card>
 					</Grid>
