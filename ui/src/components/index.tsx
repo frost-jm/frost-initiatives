@@ -6,8 +6,10 @@ import Input from '@/components/low-level-components/Input';
 import Button from '@/components/low-level-components/Button';
 import StatusDropdown from '@/components/low-level-components/Dropdown/StatusDropdown';
 import ActionDropdown from '@/components/low-level-components/Dropdown/ActionDropdown';
-
-import StatusHeader from './low-level-components/Header/StatusHeader';
+import EditorTabs from '@/components/low-level-components/EditorTabs';
+import DepartmentDropdown from '@/components/low-level-components/Dropdown/DepartmentDropdown';
+import BannerContent from '@/components/low-level-components/BannerContent';
+import StatusHeader from '@/components/low-level-components/Header/StatusHeader';
 import Sample from '@/components/sample';
 
-export { Sample, Logo, Input, Button, StatusDropdown, ActionDropdown, StatusHeader };
+export { Sample, Logo, Input, Button, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader };
