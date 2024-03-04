@@ -9,17 +9,7 @@ import ActionDropdown from '@/components/low-level-components/Dropdown/ActionDro
 import EditorTabs from '@/components/low-level-components/EditorTabs';
 import DepartmentDropdown from '@/components/low-level-components/Dropdown/DepartmentDropdown';
 import BannerContent from '@/components/low-level-components/BannerContent';
-
+import StatusHeader from '@/components/low-level-components/Header/StatusHeader';
 import Sample from '@/components/sample';
 
-export {
-  Sample,
-  Logo,
-  Input,
-  Button,
-  StatusDropdown,
-  ActionDropdown,
-  EditorTabs,
-  DepartmentDropdown,
-  BannerContent,
-};
+export { Sample, Logo, Input, Button, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader };
