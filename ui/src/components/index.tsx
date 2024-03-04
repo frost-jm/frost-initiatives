@@ -10,6 +10,7 @@ import EditorTabs from '@/components/low-level-components/EditorTabs';
 import DepartmentDropdown from '@/components/low-level-components/Dropdown/DepartmentDropdown';
 import BannerContent from '@/components/low-level-components/BannerContent';
 import StatusHeader from '@/components/low-level-components/Header/StatusHeader';
+import TableHeader from './low-level-components/TableHeader';
 import Buttons from './low-level-components/Button/Buttons';
 import Sample from '@/components/sample';
 
@@ -25,4 +26,5 @@ export {
   BannerContent,
   StatusHeader,
   Buttons,
+  TableHeader,
 };
