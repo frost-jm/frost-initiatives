@@ -5,7 +5,7 @@ const TableContent = ({ content }: any) => {
     <>
       <Box
         sx={{
-          fontFamily: 'Figtree-Regular,san-serif',
+          fontFamily: 'Figtree-Medium,san-serif',
           fontWeight: '500',
           fontSize: '12px',
           lineHeight: '1.5',
