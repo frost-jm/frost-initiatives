@@ -18,6 +18,7 @@ import Buttons, {
 import TableLabel from '@/components/low-level-components/Table/TableLabel';
 import TableContent from './low-level-components/Table/TableContent';
 import PendingVote from './low-level-components/Header/PendingVote';
+import TableContentWTitle from './low-level-components/Table/TableContentWTitle';
 import Sample from '@/components/sample';
 
 export {
@@ -38,4 +39,5 @@ export {
   TableLabel,
   TableContent,
   PendingVote,
+  TableContentWTitle,
 };
