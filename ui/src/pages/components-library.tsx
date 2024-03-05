@@ -12,9 +12,11 @@ import {
   StatusHeader,
   TableHeader,
   Buttons,
+  ButtonType,
   Avatar,
   TableLabel,
   TableContent,
+  PendingVote,
 } from '@/components/index';
 
 const tabLabelsData = [
@@ -102,7 +104,18 @@ const components = [
   {
     name: 'Buttons',
     component: Buttons,
-    props: { type: 'View' },
+    props: {
+      type: ButtonType.View,
+      children: 'View',
+    },
+  },
+
+  {
+    name: 'Pending Vote',
+    component: PendingVote,
+    props: {
+      type: 'fixed',
+    },
   },
 ];
 
@@ -126,7 +139,13 @@ const ComponentsLibrary = () => {
                 <Typography variant='h6' gutterBottom>
                   {name}
                 </Typography>
-                {props ? <Component {...props} /> : <Component />}
+                {props && props.children ? (
+                  <Component {...props}>{props.children}</Component>
+                ) : props ? (
+                  <Component {...props} />
+                ) : (
+                  <Component />
+                )}
               </CardContent>
             </Card>
           </Grid>
