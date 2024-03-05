@@ -3,10 +3,10 @@ import TableContent from './TableContent';
 
 const TableContentWTitle = ({ title }: any) => {
   return (
-    <Box>
+    <>
       <Box
         sx={{
-          fontFamily: 'Figtree-SemiBold',
+          fontFamily: 'Figtree-SemiBold, sans-serif',
           fontWeight: '600',
           fontSize: '14px',
           lineHeight: '1',
@@ -20,7 +20,7 @@ const TableContentWTitle = ({ title }: any) => {
           A document to record the CQA process for our future reference
         </TableContent>
       </Box>
-    </Box>
+    </>
   );
 };
 export default TableContentWTitle;
