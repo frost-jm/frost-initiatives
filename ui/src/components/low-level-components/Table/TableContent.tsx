@@ -1,6 +1,10 @@
 import { Box } from '@mui/material';
+import React from 'react';
 
-const TableContent = ({ content }: any) => {
+interface TableContentProp {
+  children: React.ReactNode;
+}
+const TableContent = ({ children }: TableContentProp) => {
   return (
     <>
       <Box
@@ -12,9 +16,10 @@ const TableContent = ({ content }: any) => {
           color: 'rgba(29, 36, 79, .8)',
         }}
       >
-        {content}
+        {children}
       </Box>
     </>
   );
 };
+
 export default TableContent;

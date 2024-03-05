@@ -55,7 +55,7 @@ const components = [
     name: 'Table Content',
     component: TableContent,
     props: {
-      content: '1/15/2024',
+      children: <>1/12/24</>,
     },
   },
   {
