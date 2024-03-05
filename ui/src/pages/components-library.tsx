@@ -14,6 +14,7 @@ import {
   Buttons,
   Avatar,
   TableLabel,
+  TableContent,
 } from '@/components/index';
 
 const tabLabelsData = [
@@ -48,6 +49,13 @@ const components = [
     component: TableLabel,
     props: {
       label: 'Date',
+    },
+  },
+  {
+    name: 'Table Content',
+    component: TableContent,
+    props: {
+      content: '1/15/2024',
     },
   },
   {

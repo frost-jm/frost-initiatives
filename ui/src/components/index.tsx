@@ -14,6 +14,7 @@ import TableHeader from './low-level-components/Table/TableHeader';
 import Avatar from '@/components/low-level-components/Avatar/Avatar';
 import Buttons from './low-level-components/Button/Buttons';
 import TableLabel from './low-level-components/Table/TableLabel';
+import TableContent from './low-level-components/Table/TableContent';
 import Sample from '@/components/sample';
 
 export {
@@ -31,4 +32,5 @@ export {
   TableHeader,
   Avatar,
   TableLabel,
+  TableContent,
 };
