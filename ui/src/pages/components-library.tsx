@@ -1,10 +1,15 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, Tabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle } from '@/components/index';
+import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, Tabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle, ExpandButton } from '@/components/index';
+
+import { Home, Archived, ForImplementation, Implemented, InProgress, Voting } from '@/pages/tabs';
 
 const tabLabelsData = [
-	{ label: 'Home', count: 0 },
-	{ label: 'For Voting', count: 5 },
-	{ label: 'For Implementation', count: 1 },
+	{ label: 'Home', count: 0, page: Home },
+	{ label: 'For Voting', count: 5, page: Voting },
+	{ label: 'For Implementation', count: 0, page: ForImplementation },
+	{ label: 'In Progress', count: 1, page: InProgress },
+	{ label: 'Implemented', count: 2, page: Implemented },
+	{ label: 'Archived', count: 4, page: Archived },
 ];
 
 // Dummy Data for Avatar
@@ -100,11 +105,13 @@ const components = [
 	},
 
 	{
+		name: 'Expand Button',
+		component: ExpandButton,
+	},
+
+	{
 		name: 'Pending Vote',
 		component: PendingVote,
-		props: {
-			type: 'fixed',
-		},
 	},
 ];
 
