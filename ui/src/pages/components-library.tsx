@@ -17,6 +17,7 @@ import {
   TableLabel,
   TableContent,
   PendingVote,
+  TableContentWTitle,
 } from '@/components/index';
 
 const tabLabelsData = [
@@ -58,6 +59,13 @@ const components = [
     component: TableContent,
     props: {
       children: <>1/12/24</>,
+    },
+  },
+  {
+    name: 'Table Content with Title',
+    component: TableContentWTitle,
+    props: {
+      title: 'DQA Guidelines',
     },
   },
   {
