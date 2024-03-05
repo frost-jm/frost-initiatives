@@ -11,6 +11,7 @@ const ExpandButton = () => {
 	return (
 		<Box
 			sx={{
+				opacity: '0.6',
 				display: 'flex',
 				alignItems: 'center',
 				padding: '5px',
@@ -39,7 +40,7 @@ const ExpandButton = () => {
 			<Box
 				sx={{
 					display: 'flex',
-					transform: expanded ? 'rotate(180deg)' : 'none',
+					transform: !expanded ? 'rotate(180deg)' : 'none',
 					'svg path': { fill: expanded ? '#1d244f' : '#ffffff' },
 				}}
 			>

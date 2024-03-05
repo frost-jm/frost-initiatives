@@ -1,5 +1,5 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel, TableContent, PendingVote, ExpandButton } from '@/components/index';
+import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle, ExpandButton } from '@/components/index';
 
 const tabLabelsData = [
 	{ label: 'Home', count: 0 },
@@ -40,6 +40,13 @@ const components = [
 		component: TableContent,
 		props: {
 			children: <>1/12/24</>,
+		},
+	},
+	{
+		name: 'Table Content with Title',
+		component: TableContentWTitle,
+		props: {
+			title: 'DQA Guidelines',
 		},
 	},
 	{
@@ -95,6 +102,11 @@ const components = [
 	{
 		name: 'Expand Button',
 		component: ExpandButton,
+	},
+
+	{
+		name: 'Pending Vote',
+		component: PendingVote,
 	},
 ];
 

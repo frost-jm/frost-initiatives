@@ -14,9 +14,10 @@ import TableHeader from '@/components/low-level-components/Table/TableHeader';
 import Avatar from '@/components/low-level-components/Avatar/Avatar';
 import Buttons, { ButtonType } from '@/components/low-level-components/Button/Buttons';
 import TableLabel from '@/components/low-level-components/Table/TableLabel';
-import TableContent from '@/components/low-level-components/Table/TableContent';
-import PendingVote from '@/components/low-level-components/Header/PendingVote';
+import TableContent from './low-level-components/Table/TableContent';
+import PendingVote from './low-level-components/Header/PendingVote';
+import TableContentWTitle from './low-level-components/Table/TableContentWTitle';
 import ExpandButton from '@/components/low-level-components/Button/ExpandButton';
 import Sample from '@/components/sample';
 
-export { Sample, Logo, Input, SubmitButton, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, Buttons, ButtonType, TableHeader, Avatar, TableLabel, TableContent, PendingVote, ExpandButton };
+export { Sample, Logo, Input, SubmitButton, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, Buttons, ButtonType, TableHeader, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle, ExpandButton };
