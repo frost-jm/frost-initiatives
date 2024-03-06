@@ -21,6 +21,7 @@ import {
 	ExpandButton,
 	TableDropdown,
 	SortDropdown,
+	ProgressBar,
 } from '@/components/index';
 
 import { Home, Archived, ForImplementation, Implemented, InProgress, Voting } from '@/pages/tabs';
@@ -181,6 +182,10 @@ const components = [
 	{
 		name: 'Landing Banner',
 		component: LandingBanner,
+	},
+	{
+		name: 'Progress Bar',
+		component: ProgressBar,
 	},
 ];
 
