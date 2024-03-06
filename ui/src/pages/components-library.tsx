@@ -1,5 +1,27 @@
 import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
-import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, Tabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle, ExpandButton } from '@/components/index';
+import {
+	Sample,
+	Logo,
+	SubmitButton,
+	Input,
+	StatusDropdown,
+	ActionDropdown,
+	Tabs,
+	DepartmentDropdown,
+	BannerContent,
+	StatusHeader,
+	TableHeader,
+	Buttons,
+	ButtonType,
+	Avatar,
+	TableLabel,
+	TableContent,
+	PendingVote,
+	TableContentWTitle,
+	ExpandButton,
+	TableDropdown,
+	SortDropdown,
+} from '@/components/index';
 
 import { Home, Archived, ForImplementation, Implemented, InProgress, Voting } from '@/pages/tabs';
 
@@ -10,6 +32,28 @@ const tabLabelsData = [
 	{ label: 'In Progress', count: 1, page: InProgress },
 	{ label: 'Implemented', count: 2, page: Implemented },
 	{ label: 'Archived', count: 4, page: Archived },
+];
+
+const optionsData = [
+	{
+		value: 'Latest',
+		label: 'Latest',
+	},
+	{
+		value: 'Oldest',
+		label: 'Oldest',
+	},
+];
+
+const sortData = [
+	{
+		value: 'Most Votes',
+		label: 'Most Votes',
+	},
+	{
+		value: 'Least Votes',
+		label: 'Least Votes',
+	},
 ];
 
 // Dummy Data for Avatar
@@ -25,6 +69,20 @@ const components = [
 	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
 	{ name: 'Department Dropdown', component: DepartmentDropdown },
+	{
+		name: 'Table Dropdown',
+		component: TableDropdown,
+		props: {
+			options: optionsData,
+		},
+	},
+	{
+		name: 'Sort Dropdown',
+		component: SortDropdown,
+		props: {
+			options: sortData,
+		},
+	},
 	{
 		name: 'Table Header',
 		component: TableHeader,
