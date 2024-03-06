@@ -2,7 +2,7 @@ import { LinearProgress, Box } from '@mui/material';
 const ProgressBar = () => {
 	return (
 		<>
-			<Box sx={{ width: '100%', position: 'relative', maxWidth: '199px' }}>
+			<Box sx={{ width: '100%', position: 'relative' }}>
 				<LinearProgress
 					variant='determinate'
 					value={80}
@@ -30,7 +30,7 @@ const ProgressBar = () => {
 			</Box>
 			<Box
 				sx={{
-					marginTop: '8px',
+					marginTop: '11px',
 					fontFamily: 'Figtree-Medium,san-serif',
 					fontSize: '10px',
 					lineHeight: '1',
