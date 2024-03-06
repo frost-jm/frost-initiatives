@@ -5,21 +5,18 @@ const EmptyState = () => {
   return (
     <Box
       sx={{
-        maxWidth: '1040px',
         minHeight: '551px',
-        width: '100%',
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         color: 'var(--input-color)',
+        padding: '0 24px',
+        textAlign: 'center',
       }}
     >
-      <img
-        src='./public/assets/empty-state-img.png'
-        style={{ width: '200px' }}
-      />
+      <img src='./assets/empty-state-img.png' style={{ width: '200px' }} />
       <Box
         sx={{
           fontFamily: 'Figtree-Bold, sans-serif',
@@ -39,7 +36,6 @@ const EmptyState = () => {
           marginTop: '8px',
           lineHeight: '1.5',
           maxWidth: '40ch',
-          textAlign: 'center',
         }}
       >
         Looks like no one has added any new initiatives yet. Come back later or
