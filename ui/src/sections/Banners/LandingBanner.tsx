@@ -13,7 +13,7 @@ const LandingBannerr = () => {
 			sx={{
 				width: '100%',
 				backgroundColor: '#4056C3',
-				padding: '24px ',
+				padding: '20px 24px',
 				borderRadius: '4px',
 				display: 'flex',
 				justifyContent: 'space-between',
@@ -40,6 +40,7 @@ const LandingBannerr = () => {
 				className='banner-asset'
 				style={{
 					height: '80px',
+					width: '96px',
 				}}
 			/>
 		</Box>
