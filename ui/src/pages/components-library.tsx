@@ -2,6 +2,7 @@ import { Box, Typography, Grid, Card, CardContent } from '@mui/material';
 import { Sample, Logo, SubmitButton, Input, StatusDropdown, ActionDropdown, EditorTabs, DepartmentDropdown, BannerContent, StatusHeader, TableHeader, Buttons, ButtonType, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle, ExpandButton } from '@/components/index';
 
 import VotingBanner from '@/sections/Banners/VotingBanner';
+import LandingBanner from '@/sections/Banners/LandingBanner';
 
 const tabLabelsData = [
 	{ label: 'Home', count: 0 },
@@ -113,6 +114,10 @@ const components = [
 	{
 		name: 'Voting Banner',
 		component: VotingBanner,
+	},
+	{
+		name: 'Landing Banner',
+		component: LandingBanner,
 	},
 ];
 
