@@ -13,12 +13,7 @@ const tabsData = [
 
 const TabsLanding = () => {
 	return (
-		<Box
-			sx={{
-				maxWidth: '1040px',
-				margin: '0 auto',
-			}}
-		>
+		<Box>
 			<Tabs data={tabsData} />
 		</Box>
 	);

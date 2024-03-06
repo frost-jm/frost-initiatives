@@ -17,7 +17,22 @@ interface TabPanelProp {
 }
 
 const TabPanel = ({ children, value, index }: TabPanelProp) => {
-	return <div hidden={value !== index}>{value === index && <Box>{children}</Box>}</div>;
+	return (
+		<div hidden={value !== index}>
+			{value === index && (
+				<Box
+					sx={{
+						background: '#EFF4F7',
+
+						maxWidth: '1040px',
+						margin: '0 auto',
+					}}
+				>
+					{children}
+				</Box>
+			)}
+		</div>
+	);
 };
 
 const Tabs = ({ data }: TabsProp) => {
@@ -29,94 +44,112 @@ const Tabs = ({ data }: TabsProp) => {
 
 	return (
 		<>
-			<MUITabs
-				value={value}
-				onChange={handleChange}
+			<Box
 				sx={{
-					'.MuiTab-root': {
-						minWidth: '40px',
-						maxWidth: 'max-content',
-					},
-					'.MuiTabs-indicator': {
-						display: 'none',
-					},
+					width: '100%',
+					background: '#ffffff',
 				}}
 			>
-				{data &&
-					data.map((tab, index: number) => {
-						return (
-							<Tab
-								key={index}
-								disableRipple
-								label={
-									<div
-										style={{
-											display: 'flex',
-											alignItems: 'center',
-											gap: index === 0 ? '0' : '8px',
-										}}
-									>
-										<span>{tab.label}</span>
-										<span
-											style={{
-												display: index === 0 ? 'none' : 'block',
-												padding: '4px 6px',
-												backgroundColor: '#F6F6F6',
-												borderRadius: '4px',
-											}}
-										>
-											{tab.count}
-										</span>
-									</div>
-								}
-								sx={{
-									display: 'flex',
-									fontFamily: 'Figtree-SemiBold, sans-serif',
-									fontWeight: '600',
-									fontSize: '14px',
-									lineHeight: '1',
-									textTransform: 'capitalize',
-									padding: '16px 12px 18px',
-									color: 'var(--cyan-blue)',
-
-									'&:focus': {
-										backgroundColor: 'unset',
-									},
-
-									'&.Mui-selected': {
-										color: 'var(--secondary-color)',
-										fontFamily: 'Figtree-Bold, sans-serif',
-										fontWeight: '700',
-										position: 'relative',
-
-										'&::after': {
-											content: '""',
-											position: 'absolute',
-											display: 'block',
-											width: '100%',
-											height: '2px',
-											bottom: '0',
-											left: '0',
-											backgroundColor: 'var(--secondary-color)',
-										},
-									},
-								}}
-							/>
-						);
-					})}
-			</MUITabs>
-			{data.map((panels, index: number) => {
-				const { page: Component } = panels;
-				return (
-					<TabPanel
-						key={index}
+				<Box
+					sx={{
+						maxWidth: '1040px',
+						margin: '0 auto',
+					}}
+				>
+					<MUITabs
 						value={value}
-						index={index}
+						onChange={handleChange}
+						sx={{
+							'.MuiTab-root': {
+								minWidth: '40px',
+								maxWidth: 'max-content',
+							},
+							'.MuiTabs-indicator': {
+								display: 'none',
+							},
+						}}
 					>
-						<Component />
-					</TabPanel>
-				);
-			})}
+						{data &&
+							data.map((tab, index: number) => {
+								return (
+									<Tab
+										key={index}
+										disableRipple
+										label={
+											<div
+												style={{
+													display: 'flex',
+													alignItems: 'center',
+													gap: index === 0 ? '0' : '8px',
+												}}
+											>
+												<span>{tab.label}</span>
+												<span
+													style={{
+														display: index === 0 ? 'none' : 'block',
+														padding: '4px 6px',
+														backgroundColor: '#F6F6F6',
+														borderRadius: '4px',
+														fontSize: '12px',
+														lineHeight: '1',
+													}}
+												>
+													{tab.count}
+												</span>
+											</div>
+										}
+										sx={{
+											display: 'flex',
+											fontFamily: 'Figtree-SemiBold, sans-serif',
+											fontWeight: '600',
+											fontSize: '14px',
+											lineHeight: '1',
+											textTransform: 'capitalize',
+											padding: '14px 12px 18px',
+											color: 'var(--cyan-blue)',
+
+											'&:focus': {
+												backgroundColor: 'unset',
+											},
+
+											'&.Mui-selected': {
+												color: 'var(--secondary-color)',
+												fontFamily: 'Figtree-Bold, sans-serif',
+												fontWeight: '700',
+												position: 'relative',
+
+												'&::after': {
+													content: '""',
+													position: 'absolute',
+													display: 'block',
+													width: '100%',
+													height: '2px',
+													bottom: '0',
+													left: '0',
+													backgroundColor: 'var(--secondary-color)',
+												},
+											},
+										}}
+									/>
+								);
+							})}
+					</MUITabs>
+				</Box>
+			</Box>
+			<Box>
+				{data.map((panels, index: number) => {
+					const { page: Component } = panels;
+					return (
+						<TabPanel
+							key={index}
+							value={value}
+							index={index}
+						>
+							<Component />
+						</TabPanel>
+					);
+				})}
+			</Box>
 		</>
 	);
 };
