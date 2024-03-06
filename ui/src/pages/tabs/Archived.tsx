@@ -1,7 +1,8 @@
 import React from 'react';
+import EmptyState from '@/sections/EmptyState';
 
 const Archived = () => {
-	return <div>Archived</div>;
+  return <EmptyState />;
 };
 
 export default Archived;
