@@ -22,8 +22,6 @@ const TabPanel = ({ children, value, index }: TabPanelProp) => {
 			{value === index && (
 				<Box
 					sx={{
-						background: '#EFF4F7',
-
 						maxWidth: '1040px',
 						margin: '0 auto',
 					}}
@@ -54,6 +52,7 @@ const Tabs = ({ data }: TabsProp) => {
 					sx={{
 						maxWidth: '1040px',
 						margin: '0 auto',
+						paddingLeft: '24px',
 					}}
 				>
 					<MUITabs
