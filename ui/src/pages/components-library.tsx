@@ -25,6 +25,9 @@ import {
 
 import { Home, Archived, ForImplementation, Implemented, InProgress, Voting } from '@/pages/tabs';
 
+import VotingBanner from '@/sections/Banners/VotingBanner';
+import LandingBanner from '@/sections/Banners/LandingBanner';
+
 const tabLabelsData = [
 	{ label: 'Home', count: 0, page: Home },
 	{ label: 'For Voting', count: 5, page: Voting },
@@ -170,6 +173,14 @@ const components = [
 	{
 		name: 'Pending Vote',
 		component: PendingVote,
+	},
+	{
+		name: 'Voting Banner',
+		component: VotingBanner,
+	},
+	{
+		name: 'Landing Banner',
+		component: LandingBanner,
 	},
 ];
 
