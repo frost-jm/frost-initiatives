@@ -8,8 +8,8 @@
 	--primary-color: #ffffff;
 	--secondary-color: #576bcd;
 	--input-color: #1d244f;
-	--cyan-blue: #80868D;
-	--teal-blue: #576BCD;
+	--cyan-blue: #80868d;
+	--teal-blue: #576bcd;
 }
 
 @font-face {
@@ -39,6 +39,7 @@
 body {
 	margin: 0;
 	padding: 0;
+	background: #eff4f7;
 }
 
 body::-webkit-scrollbar {
