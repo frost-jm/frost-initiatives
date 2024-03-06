@@ -22,6 +22,7 @@ import {
 	TableDropdown,
 	SortDropdown,
 	ProgressBar,
+	PaginationControl,
 } from '@/components/index';
 
 import { Home, Archived, ForImplementation, Implemented, InProgress, Voting } from '@/pages/tabs';
@@ -62,6 +63,7 @@ const sortData = [
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
+import { useState } from 'react';
 
 // Add the components here
 const components = [
@@ -186,6 +188,15 @@ const components = [
 	{
 		name: 'Progress Bar',
 		component: ProgressBar,
+	},
+	{
+		name: 'Pagination',
+		component: PaginationControl,
+		props: {
+			totalPages: 10,
+			currentPage: 1,
+			handlePageChange: console.log('test'), // page change logic,
+		},
 	},
 ];
 
