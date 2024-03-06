@@ -19,7 +19,7 @@ const ProgressBar = () => {
 				<Box
 					sx={{
 						width: '16px',
-						height: '10px',
+						height: '1px',
 						borderTop: '1px dashed rgba(29, 36, 79, 0.8)',
 						position: 'absolute',
 						left: '50%',
