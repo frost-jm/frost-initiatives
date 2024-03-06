@@ -10,7 +10,7 @@ const BannerContent = ({ title, description }) => {
       <Box
         sx={{
           fontFamily: 'Figtree-Bold, sans-serif',
-          fontweight: '700',
+          fontWeight: '700',
           fontSize: '20px',
           lineHeight: '1',
         }}
