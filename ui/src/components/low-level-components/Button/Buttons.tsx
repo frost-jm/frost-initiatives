@@ -9,10 +9,12 @@ export enum ButtonType {
 
 interface ButtonTypeProps {
 	type: ButtonType;
+	maxWidth?: string;
 	children: React.ReactNode;
+	action: () => void;
 }
 
-const Buttons = ({ type, children }: ButtonTypeProps) => {
+const Buttons = ({ type, children, maxWidth, action }: ButtonTypeProps) => {
 	let btnBgColor, btnColor, btnBorder, btnPadding;
 
 	switch (type) {
@@ -42,7 +44,7 @@ const Buttons = ({ type, children }: ButtonTypeProps) => {
 	return (
 		<Box
 			sx={{
-				maxWidth: '64px',
+				maxWidth: maxWidth ? maxWidth : '64px',
 				width: '100%',
 				boxSizing: 'border-box',
 				borderRadius: '4px',
@@ -57,7 +59,7 @@ const Buttons = ({ type, children }: ButtonTypeProps) => {
 				border: btnBorder,
 				padding: btnPadding,
 			}}
-			onClick={() => console.log('click')}
+			onClick={() => action}
 		>
 			{children}
 		</Box>

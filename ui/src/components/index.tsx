@@ -21,6 +21,31 @@ import ExpandButton from '@/components/low-level-components/Button/ExpandButton'
 import TableDropdown from '@/components/low-level-components/Dropdown/TableDropdown';
 import SortDropdown from '@/components/low-level-components/Dropdown/SortDropdown';
 import ProgressBar from '@/components/low-level-components/ProgressBar';
+import InitiativeCard from '@/components/low-level-components/Card/InitiativeCard';
 import Sample from '@/components/sample';
 
-export { Sample, Logo, Input, SubmitButton, StatusDropdown, ActionDropdown, Tabs, DepartmentDropdown, BannerContent, StatusHeader, Buttons, ButtonType, TableHeader, Avatar, TableLabel, TableContent, PendingVote, TableContentWTitle, ExpandButton, TableDropdown, SortDropdown, ProgressBar };
+export {
+	Sample,
+	Logo,
+	Input,
+	SubmitButton,
+	StatusDropdown,
+	ActionDropdown,
+	Tabs,
+	DepartmentDropdown,
+	BannerContent,
+	StatusHeader,
+	Buttons,
+	ButtonType,
+	TableHeader,
+	Avatar,
+	TableLabel,
+	TableContent,
+	PendingVote,
+	TableContentWTitle,
+	ExpandButton,
+	TableDropdown,
+	SortDropdown,
+	ProgressBar,
+	InitiativeCard,
+};

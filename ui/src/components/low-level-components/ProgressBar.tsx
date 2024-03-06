@@ -1,5 +1,10 @@
 import { LinearProgress, Box } from '@mui/material';
-const ProgressBar = () => {
+
+interface ProgressBarProps {
+	count: number;
+	totalHeads: number;
+}
+const ProgressBar = ({ count, totalHeads }: ProgressBarProps) => {
 	return (
 		<>
 			<Box sx={{ width: '100%', position: 'relative' }}>
@@ -37,7 +42,7 @@ const ProgressBar = () => {
 					color: 'rgba(29, 36, 79, 0.6)',
 				}}
 			>
-				14 of 16 in favor of this initiative
+				{count} of {totalHeads} in favor of this initiative
 			</Box>
 		</>
 	);

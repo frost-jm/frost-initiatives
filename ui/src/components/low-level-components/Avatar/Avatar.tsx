@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Avatar as MUIAvatar, Box } from '@mui/material';
 
 interface AvatarData {
@@ -8,21 +9,28 @@ interface AvatarData {
 interface AvatarProps {
 	type: 'single' | 'multiple' | 'table';
 	label?: boolean;
-	data: AvatarData[];
+	data: AvatarData[] | AvatarData;
 }
 
 const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#2c3e50', '#27ae60', '#c0392b'];
 
 const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
+	let singleUserData;
+
+	!Array.isArray(data) ? (singleUserData = data) : null;
+
+	console.log('silgne', singleUserData);
 	return (
 		<>
-			{type === 'single' && (
+			{type === 'single' && singleUserData && (
 				<Box
 					sx={{
 						display: label ? 'flex' : 'block',
+						alignItems: 'center',
 						fontFamily: 'Figtree-Medium, sans-serif',
 						fontSize: '12px',
 						lineHeight: '18px',
+						gap: '8px',
 						color: 'var(--input-color)',
 					}}
 				>
@@ -36,13 +44,13 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 							lineHeight: '14.4px',
 						}}
 					>
-						F
+						{singleUserData.firstName[0]}
 					</MUIAvatar>
-					{label && <>F</>}
+					{label && <>{singleUserData.firstName + ' ' + singleUserData.lastName}</>}
 				</Box>
 			)}
 
-			{type === 'multiple' && (
+			{type === 'multiple' && Array.isArray(data) && (
 				<Box
 					sx={{
 						display: label ? 'grid' : 'flex',
@@ -51,7 +59,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 					}}
 				>
 					{data &&
-						data.map((avatar, index) => {
+						data.map((avatar: { firstName: string | any[]; lastName: string }, index: number) => {
 							const initials = avatar.firstName[0];
 							const fullname = avatar.firstName + ' ' + avatar.lastName;
 
