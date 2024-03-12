@@ -31,6 +31,7 @@ const Home = () => {
               fontWeight: '600',
               fontSize: '12px',
               lineHeight: '1',
+              cursor: 'pointer',
             }}
           >
             Show all initiatives
