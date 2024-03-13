@@ -24,6 +24,7 @@ import {
   ProgressBar,
   InitiativeCard,
   TableFilter,
+  InitiativesTable,
 } from '@/components/index';
 
 import {
@@ -220,6 +221,10 @@ const components = [
     props: { data: initiativeCardData },
   },
   { name: 'Table Filter', component: TableFilter },
+  {
+    name: 'Initiatives Table',
+    component: InitiativesTable,
+  },
 ];
 
 const ComponentsLibrary = () => {

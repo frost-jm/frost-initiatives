@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import TableContent from './TableContent';
 
-const TableContentWTitle = ({ title }: any) => {
+const TableContentWTitle = ({ title, children }: any) => {
   return (
     <>
       <Box
@@ -16,9 +16,7 @@ const TableContentWTitle = ({ title }: any) => {
         {title}
       </Box>
       <Box sx={{ marginTop: '8px' }}>
-        <TableContent>
-          A document to record the CQA process for our future reference
-        </TableContent>
+        <TableContent>{children}</TableContent>
       </Box>
     </>
   );
