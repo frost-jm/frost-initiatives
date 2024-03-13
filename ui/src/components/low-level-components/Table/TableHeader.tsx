@@ -14,20 +14,22 @@ const TableHeader = ({ text, quantity }: any) => {
       >
         {text}
       </Box>
-      <Box
-        sx={{
-          backgroundColor: '#E7EEF0',
-          padding: '4px 8px',
-          borderRadius: '5px',
-          fontFamily: 'Figtree-Bold',
-          fontWeight: '700',
-          fontSize: '14px',
-          lineHeight: '1',
-          color: 'rgba(29, 36, 79, 0.6)',
-        }}
-      >
-        {quantity}
-      </Box>
+      {quantity && (
+        <Box
+          sx={{
+            backgroundColor: '#E7EEF0',
+            padding: '4px 8px',
+            borderRadius: '5px',
+            fontFamily: 'Figtree-Bold',
+            fontWeight: '700',
+            fontSize: '14px',
+            lineHeight: '1',
+            color: 'rgba(29, 36, 79, 0.6)',
+          }}
+        >
+          {quantity}
+        </Box>
+      )}
     </Box>
   );
 };

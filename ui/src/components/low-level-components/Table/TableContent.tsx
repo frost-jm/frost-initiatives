@@ -14,6 +14,7 @@ const TableContent = ({ children }: TableContentProp) => {
           fontSize: '12px',
           lineHeight: '1.5',
           color: 'rgba(29, 36, 79, .8)',
+          maxWidth: '24ch',
         }}
       >
         {children}

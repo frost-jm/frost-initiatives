@@ -5,80 +5,44 @@ module.exports = gql`
 	scalar Int
 	scalar DateTime
 
-	input PostCreate {
+	input InitiativeCreate {
 		title: String!
 		post: String!
 		created_by: String!
-		tagsId: [String]
+		reason: String!
+		department:[String]
+		members:[String]
 	}
 
-	input PostUpdate {
-		title: String!
-		post: String!
-		tagsId: [String]
+	input InitiativeTab {
+		status: String
 	}
 
-	input PostFilterInput {
-		orderBy: String
-		tags: [String]
-		createdBy: [String]
-		title: String
-	}
-
-	input PaginationInput {
-		page: Int
-		pageSize: Int
+	type InitiativesPagination {
+		items: [Post]!
+		count: Int!
+		currentPage: Int!
 	}
 
 	type Post {
 		id: ID
 		title: String!
 		post: String!
-		tags: [String!]!
+		reason: String!
 		created_by: String!
+		members:[String]!
 		created_date: DateTime!
 		updated_date: DateTime!
 		deleted: Boolean!
-		explanation: String
-	}
-
-	type PostPagination {
-		items: [Post]!
-		count: Int!
-		currentPage: Int!
-	}
-
-	type Tag {
-		id: ID!
-		tag: String!
-		post_count: Int!
-	}
-
-	type User {
-		userId: String!
-		bindname: String!
-		email: String
-		firstName: String
-		lastName: String
-		position: String
+		status: Int!
 	}
 
 	type Query {
-		posts(filter: PostFilterInput, pagination: PaginationInput): PostPagination
-		postId(id: ID!): Post
-		tag(id: [ID]!): Tag
-		tags: [Tag]
-		hailstormData: [User]
+		initiatives(status: InitiativeTab):InitiativesPagination
 	}
 
 	type Mutation {
-		createdPost(input: PostCreate): Message
-		updatedPost(postId: ID!, input: PostUpdate): Message
-		deletedPost(postId: ID!): Message
-		generateExplanation(postId: ID!): String
-		createdTag(name: [String]!): Message
-		updatedTag(tagId: [ID]!, tag: String!): Message
-		deletedTag(tagId: ID!): Message
+		createdInitiative(input: InitiativeCreate): Message
 	}
 
 	type Message {
@@ -93,3 +57,4 @@ module.exports = gql`
 		code: String
 	}
 `;
+
