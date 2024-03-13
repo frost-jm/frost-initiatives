@@ -2,6 +2,9 @@ import { Box } from '@mui/material';
 import TableLabel from './TableLabel';
 import TableContent from './TableContent';
 import TableContentWTitle from './TableContentWTitle';
+import Avatar from '../Avatar/Avatar';
+import ProgressBar from '../ProgressBar';
+import Buttons, { ButtonType } from '../Button/Buttons';
 
 const InitiativesTable = () => {
   const tableHeads = [
@@ -12,6 +15,8 @@ const InitiativesTable = () => {
     { id: 5, label: 'Results', width: '240px' },
     { id: 6, label: '', width: '64px' },
   ];
+
+  const data = { firstName: 'Lea', lastName: 'Villanueva' };
 
   return (
     <Box sx={{ borderRadius: '4px', maxWidth: '1040px' }}>
@@ -34,7 +39,7 @@ const InitiativesTable = () => {
 
       <Box
         sx={{
-          '& :last-of-type': {
+          '> :last-of-type': {
             borderRadius: '0 0 4px 4px',
           },
         }}
@@ -43,16 +48,30 @@ const InitiativesTable = () => {
           sx={{
             backgroundColor: '#F7FAFC',
             display: 'flex',
+            alignItems: 'flex-start',
             gap: '32px',
             padding: '12px 24px',
           }}
         >
-          <TableContent>1/15/2024</TableContent>
+          <Box sx={{ width: '68px' }}>
+            <TableContent>1/15/2024</TableContent>
+          </Box>
+
           <Box sx={{ display: 'block', width: '220px' }}>
             <TableContentWTitle title='DQA Guidelines'>
               A document to record the CQA process for our future reference{' '}
             </TableContentWTitle>
           </Box>
+          <Box sx={{ width: '140px' }}>
+            <Avatar type='single' label={true} data={data} />
+          </Box>
+          <Box sx={{ width: '100px' }}>
+            <TableContent>Design</TableContent>
+          </Box>
+          <Box sx={{ width: '240px', margin: 'auto' }}>
+            <ProgressBar count={14} totalHeads={16} />
+          </Box>
+          <Buttons type={ButtonType.View}>View</Buttons>
         </Box>
       </Box>
     </Box>

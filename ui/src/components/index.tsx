@@ -23,7 +23,8 @@ import ExpandButton from '@/components/low-level-components/Button/ExpandButton'
 import TableDropdown from '@/components/low-level-components/Dropdown/TableDropdown';
 import SortDropdown from '@/components/low-level-components/Dropdown/SortDropdown';
 import ProgressBar from '@/components/low-level-components/ProgressBar';
-import InitiativesTable from './low-level-components/Table/InitiativesTable';
+import InitiativeCard from '@/components/low-level-components/Card/InitiativeCard';
+import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
 import Sample from '@/components/sample';
 
 export {
@@ -49,5 +50,6 @@ export {
   TableDropdown,
   SortDropdown,
   ProgressBar,
+  InitiativeCard,
   InitiativesTable,
 };

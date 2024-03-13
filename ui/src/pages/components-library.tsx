@@ -22,6 +22,7 @@ import {
   TableDropdown,
   SortDropdown,
   ProgressBar,
+  InitiativeCard,
   InitiativesTable,
 } from '@/components/index';
 
@@ -67,6 +68,18 @@ const sortData = [
     label: 'Least Votes',
   },
 ];
+
+const initiativeCardData = {
+  title: 'Frost Lingo v2',
+  description:
+    'An update to our current Frost Lingo, will be pulling Content to help this time',
+  pitcher: {
+    firstName: 'John',
+    lastName: 'Doe',
+  },
+  vote: '12',
+  action: console.log('click'), // actual logic for on click
+};
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
@@ -122,8 +135,6 @@ const components = [
     component: TableContentWTitle,
     props: {
       title: 'DQA Guidelines',
-      children:
-        'A document to record the CQA process for our future reference ',
     },
   },
   {
@@ -145,7 +156,13 @@ const components = [
     component: StatusHeader,
     props: { status: 'Pending' },
   },
-  { name: 'Avatar', component: Avatar },
+  {
+    name: 'Avatar',
+    component: Avatar,
+    props: {
+      data: initiativeCardData.pitcher,
+    },
+  },
   {
     name: 'Multiple Avatar ( Expanded )',
     component: Avatar,
@@ -197,7 +214,11 @@ const components = [
     name: 'Progress Bar',
     component: ProgressBar,
   },
-
+  {
+    name: 'Initiatives Card',
+    component: InitiativeCard,
+    props: { data: initiativeCardData },
+  },
   {
     name: 'Initiatives Table',
     component: InitiativesTable,
