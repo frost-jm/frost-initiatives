@@ -85,6 +85,8 @@ const InitiativeCard = ({ data }: InitiativeCardProp) => {
 						<Buttons
 							type={ButtonType.View}
 							maxWidth='100%'
+							background='#F2F5F7'
+							fontSize='14px'
 							action={action}
 						>
 							View details

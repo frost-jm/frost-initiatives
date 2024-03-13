@@ -10,11 +10,13 @@ export enum ButtonType {
 interface ButtonTypeProps {
 	type: ButtonType;
 	maxWidth?: string;
+	fontSize?: string;
+	background?: string;
 	children: React.ReactNode;
 	action: () => void;
 }
 
-const Buttons = ({ type, children, maxWidth, action }: ButtonTypeProps) => {
+const Buttons = ({ type, children, maxWidth, action, background, fontSize }: ButtonTypeProps) => {
 	let btnBgColor, btnColor, btnBorder, btnPadding;
 
 	switch (type) {
@@ -51,11 +53,11 @@ const Buttons = ({ type, children, maxWidth, action }: ButtonTypeProps) => {
 				textAlign: 'center',
 				fontFamily: 'Figtree-SemiBold, sans-serif',
 				fontWeight: '600',
-				fontSize: '12px',
+				fontSize: fontSize ? fontSize : '12px',
 				lineHeight: '1',
 				cursor: 'pointer',
 				color: btnColor,
-				backgroundColor: btnBgColor,
+				backgroundColor: background ? background : btnBgColor,
 				border: btnBorder,
 				padding: btnPadding,
 			}}

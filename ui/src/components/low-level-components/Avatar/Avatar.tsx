@@ -19,7 +19,6 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 
 	!Array.isArray(data) ? (singleUserData = data) : null;
 
-	console.log('silgne', singleUserData);
 	return (
 		<>
 			{type === 'single' && singleUserData && (
@@ -31,7 +30,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						fontSize: '12px',
 						lineHeight: '18px',
 						gap: '8px',
-						color: 'var(--input-color)',
+						color: 'rgba(29, 36, 79, 0.8)',
 					}}
 				>
 					<MUIAvatar
