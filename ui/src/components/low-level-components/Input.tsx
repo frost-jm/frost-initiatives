@@ -52,7 +52,10 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 		}
 	};
 	return (
-		<Box position='relative'>
+		<Box
+			position='relative'
+			width='100%'
+		>
 			{variant === 'comment' && (
 				<>
 					<Avatar sx={{ width: 24, height: 24, fontFamily: 'Figtree-SemiBold,sans-serif', fontSize: '12px', lineHeight: '14.4px', background: '#EA5825', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>H</Avatar>

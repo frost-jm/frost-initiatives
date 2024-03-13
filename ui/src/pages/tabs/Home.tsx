@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Modal from '@/components/low-level-components/Modal/Modal';
 import { Button } from '@mui/material';
-import Editor from '@/components/high-level-components/Editor/Editor';
+import Form from '@/components/high-level-components/Form/Form';
 
 const Home = () => {
 	const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +15,7 @@ const Home = () => {
 				isOpen={modalOpen}
 				onClose={() => setModalOpen(false)}
 			>
-				<Editor />
+				<Form />
 			</Modal>
 			<Button onClick={handleModalOpen}>Open Modal</Button>
 		</>

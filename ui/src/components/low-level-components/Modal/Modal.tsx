@@ -11,10 +11,21 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 		<Dialog
 			open={isOpen}
 			onClose={onClose}
-			fullWidth
 			sx={{
 				'.MuiDialog-paperFullWidth': {
 					boxShadow: 'none',
+				},
+				'.MuiDialog-paper': {
+					width: '100%',
+					maxWidth: '980px',
+					height: '790px',
+					borderRadius: '12px',
+				},
+				'.MuiDialogContent-root': {
+					padding: '0 0 24px',
+					'&::-webkit-scrollbar': {
+						display: 'none',
+					},
 				},
 			}}
 		>
@@ -29,7 +40,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 						justifyContent: 'flex-end',
 						cursor: 'pointer',
 					}}
-					onClick={() => console.log('close')}
+					onClick={onClose}
 				>
 					<svg
 						width='24'
