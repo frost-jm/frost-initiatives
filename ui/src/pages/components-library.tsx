@@ -22,6 +22,7 @@ import {
   TableDropdown,
   SortDropdown,
   ProgressBar,
+  InitiativeCard,
   TableFilter,
 } from '@/components/index';
 
@@ -67,6 +68,18 @@ const sortData = [
     label: 'Least Votes',
   },
 ];
+
+const initiativeCardData = {
+  title: 'Frost Lingo v2',
+  description:
+    'An update to our current Frost Lingo, will be pulling Content to help this time',
+  pitcher: {
+    firstName: 'John',
+    lastName: 'Doe',
+  },
+  vote: '12',
+  action: console.log('click'), // actual logic for on click
+};
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
@@ -143,7 +156,13 @@ const components = [
     component: StatusHeader,
     props: { status: 'Pending' },
   },
-  { name: 'Avatar', component: Avatar },
+  {
+    name: 'Avatar',
+    component: Avatar,
+    props: {
+      data: initiativeCardData.pitcher,
+    },
+  },
   {
     name: 'Multiple Avatar ( Expanded )',
     component: Avatar,
@@ -191,11 +210,16 @@ const components = [
     name: 'Landing Banner',
     component: LandingBanner,
   },
-  { name: 'Table Filter', component: TableFilter },
   {
     name: 'Progress Bar',
     component: ProgressBar,
   },
+  {
+    name: 'Initiatives Card',
+    component: InitiativeCard,
+    props: { data: initiativeCardData },
+  },
+  { name: 'Table Filter', component: TableFilter },
 ];
 
 const ComponentsLibrary = () => {

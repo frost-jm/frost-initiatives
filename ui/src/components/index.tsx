@@ -23,6 +23,7 @@ import ExpandButton from '@/components/low-level-components/Button/ExpandButton'
 import TableDropdown from '@/components/low-level-components/Dropdown/TableDropdown';
 import SortDropdown from '@/components/low-level-components/Dropdown/SortDropdown';
 import ProgressBar from '@/components/low-level-components/ProgressBar';
+import InitiativeCard from '@/components/low-level-components/Card/InitiativeCard';
 import TableFilter from './low-level-components/Header/TableFilter';
 import Sample from '@/components/sample';
 
@@ -49,5 +50,6 @@ export {
   TableDropdown,
   SortDropdown,
   ProgressBar,
+  InitiativeCard,
   TableFilter,
 };
