@@ -10,11 +10,12 @@ module.exports = gql`
 		post: String!
 		created_by: String!
 		reason: String!
+		department:[String]
+		members:[String]
 	}
 
-	input InitiativeStatus {
+	input InitiativeTab {
 		status: String
-		department:[String]
 	}
 
 	type InitiativesPagination {
@@ -26,10 +27,10 @@ module.exports = gql`
 	type Post {
 		id: ID
 		title: String!
-		reason: String!
 		post: String!
-		tags: [String!]!
+		reason: String!
 		created_by: String!
+		members:[String]!
 		created_date: DateTime!
 		updated_date: DateTime!
 		deleted: Boolean!
@@ -37,7 +38,7 @@ module.exports = gql`
 	}
 
 	type Query {
-		initiatives(status: InitiativeStatus):InitiativesPagination
+		initiatives(status: InitiativeTab):InitiativesPagination
 	}
 
 	type Mutation {
