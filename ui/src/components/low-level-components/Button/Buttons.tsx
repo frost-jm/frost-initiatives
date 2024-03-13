@@ -9,10 +9,14 @@ export enum ButtonType {
 
 interface ButtonTypeProps {
 	type: ButtonType;
+	maxWidth?: string;
+	fontSize?: string;
+	background?: string;
 	children: React.ReactNode;
+	action: () => void;
 }
 
-const Buttons = ({ type, children }: ButtonTypeProps) => {
+const Buttons = ({ type, children, maxWidth, action, background, fontSize }: ButtonTypeProps) => {
 	let btnBgColor, btnColor, btnBorder, btnPadding;
 
 	switch (type) {
@@ -42,22 +46,22 @@ const Buttons = ({ type, children }: ButtonTypeProps) => {
 	return (
 		<Box
 			sx={{
-				maxWidth: '64px',
+				maxWidth: maxWidth ? maxWidth : '64px',
 				width: '100%',
 				boxSizing: 'border-box',
 				borderRadius: '4px',
 				textAlign: 'center',
 				fontFamily: 'Figtree-SemiBold, sans-serif',
 				fontWeight: '600',
-				fontSize: '12px',
+				fontSize: fontSize ? fontSize : '12px',
 				lineHeight: '1',
 				cursor: 'pointer',
 				color: btnColor,
-				backgroundColor: btnBgColor,
+				backgroundColor: background ? background : btnBgColor,
 				border: btnBorder,
 				padding: btnPadding,
 			}}
-			onClick={() => console.log('click')}
+			onClick={() => action}
 		>
 			{children}
 		</Box>
