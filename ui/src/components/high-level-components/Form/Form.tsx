@@ -1,8 +1,9 @@
 import { Box, Input as MInput } from '@mui/material';
 
 import Editor from '../Editor/Editor';
-import { ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
+import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
 import { useState } from 'react';
+import { formatDate } from '@/utils/formatDate';
 
 const Form = () => {
 	const [disabled, setDisabled] = useState<boolean>(true);
@@ -10,6 +11,16 @@ const Form = () => {
 	const handleFormChange = () => {
 		setDisabled(false);
 	};
+
+	// dummy
+
+	const pitcher = {
+		firstName: 'Donelle',
+		lastName: 'Agudo',
+	};
+
+	const date = new Date(2024, 1, 19);
+	const currentDate = formatDate(date);
 
 	return (
 		<>
@@ -69,6 +80,31 @@ const Form = () => {
 					<Box className='form-control'>
 						<Box>
 							<Box className='form-label'>Pitched by</Box>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									fontFamily: 'Figtree-Medium',
+									fontSize: '12px',
+									lineHeight: '1.5',
+									color: 'rgba(29, 36, 79, 0.6)',
+								}}
+							>
+								<Avatar
+									label={true}
+									type='single'
+									data={pitcher}
+								/>
+								<Box
+									sx={{
+										background: 'rgba(52, 58, 97, 0.2)',
+										height: '1px',
+										width: '18px',
+										transform: 'rotate(90deg)',
+									}}
+								/>
+								{currentDate}
+							</Box>
 						</Box>
 						<Box>
 							<Box className='form-label'>Why do we need this?</Box>
@@ -158,6 +194,7 @@ const Form = () => {
 						maxWidth='94px'
 						borderRadius='63px'
 						fontSize='16px'
+						action={() => console.log('form submit')}
 					>
 						Submit
 					</Buttons>
