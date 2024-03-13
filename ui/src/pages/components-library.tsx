@@ -122,6 +122,8 @@ const components = [
     component: TableContentWTitle,
     props: {
       title: 'DQA Guidelines',
+      children:
+        'A document to record the CQA process for our future reference ',
     },
   },
   {

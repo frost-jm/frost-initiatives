@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
 import TableLabel from './TableLabel';
+import TableContent from './TableContent';
+import TableContentWTitle from './TableContentWTitle';
 
 const InitiativesTable = () => {
   const tableHeads = [
@@ -24,10 +26,34 @@ const InitiativesTable = () => {
         }}
       >
         {tableHeads.map((tableHead) => (
-          <Box sx={{ width: tableHead.width }}>
-            <TableLabel label={tableHead.label}></TableLabel>
+          <Box sx={{ minWidth: tableHead.width }}>
+            <TableLabel label={tableHead.label} />
           </Box>
         ))}
+      </Box>
+
+      <Box
+        sx={{
+          '& :last-of-type': {
+            borderRadius: '0 0 4px 4px',
+          },
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: '#F7FAFC',
+            display: 'flex',
+            gap: '32px',
+            padding: '12px 24px',
+          }}
+        >
+          <TableContent>1/15/2024</TableContent>
+          <Box sx={{ display: 'block', width: '220px' }}>
+            <TableContentWTitle title='DQA Guidelines'>
+              A document to record the CQA process for our future reference{' '}
+            </TableContentWTitle>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );
