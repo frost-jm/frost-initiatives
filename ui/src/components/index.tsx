@@ -24,6 +24,7 @@ import TableDropdown from '@/components/low-level-components/Dropdown/TableDropd
 import SortDropdown from '@/components/low-level-components/Dropdown/SortDropdown';
 import ProgressBar from '@/components/low-level-components/ProgressBar';
 import InitiativeCard from '@/components/low-level-components/Card/InitiativeCard';
+import TableFilter from './low-level-components/Header/TableFilter';
 import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
 import Sample from '@/components/sample';
 
@@ -51,5 +52,6 @@ export {
   SortDropdown,
   ProgressBar,
   InitiativeCard,
+  TableFilter,
   InitiativesTable,
 };

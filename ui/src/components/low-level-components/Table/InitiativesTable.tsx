@@ -19,7 +19,7 @@ const InitiativesTable = () => {
   const data = { firstName: 'Lea', lastName: 'Villanueva' };
 
   return (
-    <Box sx={{ borderRadius: '4px', maxWidth: '1040px' }}>
+    <Box sx={{ borderRadius: '4px', maxWidth: '1040px', overflow: 'auto' }}>
       <Box
         sx={{
           display: 'flex',
@@ -28,6 +28,8 @@ const InitiativesTable = () => {
           border: '1px solid #E9EDEE',
           borderRadius: '4px 4px 0 0',
           padding: '12px 24px',
+          minWidth: '1040px',
+          boxSizing: 'border-box',
         }}
       >
         {tableHeads.map((tableHead) => (
@@ -39,6 +41,8 @@ const InitiativesTable = () => {
 
       <Box
         sx={{
+          minWidth: '1040px',
+
           '> :last-of-type': {
             borderRadius: '0 0 4px 4px',
           },
@@ -53,25 +57,27 @@ const InitiativesTable = () => {
             padding: '12px 24px',
           }}
         >
-          <Box sx={{ width: '68px' }}>
+          <Box sx={{ minWidth: '68px' }}>
             <TableContent>1/15/2024</TableContent>
           </Box>
 
-          <Box sx={{ display: 'block', width: '220px' }}>
+          <Box sx={{ display: 'block', minWidth: '220px' }}>
             <TableContentWTitle title='DQA Guidelines'>
               A document to record the CQA process for our future reference{' '}
             </TableContentWTitle>
           </Box>
-          <Box sx={{ width: '140px' }}>
+          <Box sx={{ minWidth: '140px' }}>
             <Avatar type='single' label={true} data={data} />
           </Box>
-          <Box sx={{ width: '100px' }}>
+          <Box sx={{ minWidth: '100px' }}>
             <TableContent>Design</TableContent>
           </Box>
-          <Box sx={{ width: '240px', margin: 'auto' }}>
+          <Box sx={{ minWidth: '240px', margin: 'auto' }}>
             <ProgressBar count={14} totalHeads={16} />
           </Box>
-          <Buttons type={ButtonType.View}>View</Buttons>
+          <Buttons type={ButtonType.View} action={() => console.log('click')}>
+            View
+          </Buttons>
         </Box>
       </Box>
     </Box>

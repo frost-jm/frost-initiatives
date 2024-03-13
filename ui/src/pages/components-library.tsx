@@ -23,6 +23,7 @@ import {
   SortDropdown,
   ProgressBar,
   InitiativeCard,
+  TableFilter,
   InitiativesTable,
 } from '@/components/index';
 
@@ -219,6 +220,7 @@ const components = [
     component: InitiativeCard,
     props: { data: initiativeCardData },
   },
+  { name: 'Table Filter', component: TableFilter },
   {
     name: 'Initiatives Table',
     component: InitiativesTable,
