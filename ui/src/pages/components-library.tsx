@@ -25,6 +25,7 @@ import {
   InitiativeCard,
   TableFilter,
   InitiativesTable,
+  PitchGroup,
 } from '@/components/index';
 
 import {
@@ -224,6 +225,10 @@ const components = [
   {
     name: 'Initiatives Table',
     component: InitiativesTable,
+  },
+  {
+    name: 'Pitch Group',
+    component: PitchGroup,
   },
 ];
 
