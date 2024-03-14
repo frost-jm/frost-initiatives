@@ -11,12 +11,14 @@ interface Option {
   label: string;
 }
 
-interface SortDropdownProp {
+interface DepartmentsDropdownProp {
   options: Option[];
 }
 
-const SortDropdown = ({ options }: SortDropdownProp) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+const DepartmentFilter = ({ options }: DepartmentsDropdownProp) => {
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([
+    'All Departments',
+  ]);
   const [open, setOpen] = useState<boolean>(false);
 
   const handleClose = () => {
@@ -35,24 +37,13 @@ const SortDropdown = ({ options }: SortDropdownProp) => {
   };
 
   return (
-    <FormControl sx={{ maxWidth: '103px', width: '100%' }}>
+    <FormControl sx={{ maxWidth: '125px', width: '100%' }}>
       <Select
         displayEmpty
         value={selectedOptions}
         onChange={handleChange}
         onClose={handleClose}
         onOpen={handleOpen}
-        renderValue={(selected) => {
-          if (selected.length === 0) {
-            return (
-              <>
-                <span className='placeholder'>No.of Votes</span>
-              </>
-            );
-          }
-
-          return selected;
-        }}
         MenuProps={{
           PaperProps: {
             style: {
@@ -82,12 +73,9 @@ const SortDropdown = ({ options }: SortDropdownProp) => {
           borderBottom: open ? '0' : 'inherit',
           borderRadius: open ? '4px 4px 0 0' : '4px',
           boxSizing: 'border-box',
+
           fieldset: {
             display: 'none',
-          },
-
-          '.placeholder': {
-            opacity: '0.2',
           },
 
           '>.MuiList': {
@@ -115,6 +103,7 @@ const SortDropdown = ({ options }: SortDropdownProp) => {
               color: 'rgba(29, 36, 79, 0.3)',
               padding: '0 12px',
               background: 'var(--primary-color)',
+              minHeight: 'auto',
               '&:not(:first-of-type)': {
                 marginTop: '8px',
               },
@@ -150,4 +139,4 @@ const SelectIcon = () => {
   );
 };
 
-export default SortDropdown;
+export default DepartmentFilter;
