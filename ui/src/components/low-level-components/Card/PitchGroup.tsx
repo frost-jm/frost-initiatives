@@ -42,7 +42,16 @@ const PitchGroup = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', gap: '8px' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '8px',
+          '@media screen and (max-width: 768px)': {
+            flexDirection: 'column',
+            alignItems: 'center',
+          },
+        }}
+      >
         {initiativeCards.map((initiativeCard, index) => (
           <InitiativeCard key={index} data={initiativeCard} />
         ))}
