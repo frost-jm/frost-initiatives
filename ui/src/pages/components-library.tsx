@@ -230,7 +230,6 @@ const components = [
 ];
 
 const ComponentsLibrary = () => {
-
   return (
     <Box padding={4}>
       <Typography variant='h2' gutterBottom>
