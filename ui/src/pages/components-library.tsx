@@ -62,6 +62,8 @@ const sortData = [
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
+import { UserContext } from '@/context/userContext';
+import { useContext } from 'react';
 
 // Add the components here
 const components = [
@@ -190,45 +192,52 @@ const components = [
 ];
 
 const ComponentsLibrary = () => {
+	const { validateUser } = useContext(UserContext);
+
 	return (
-		<Box padding={4}>
-			<Typography
-				variant='h2'
-				gutterBottom
-			>
-				Component Library
-			</Typography>
-			<Grid
-				container
-				spacing={3}
-			>
-				{components.map(({ name, component: Component, props }) => (
-					<Grid
-						item
-						xs={12}
-						key={name}
+		<>
+			{ validateUser(
+				<Box padding={4}>
+					<Typography
+						variant='h2'
+						gutterBottom
 					>
-						<Card
-							style={{
-								border: '1px solid #000',
-								boxShadow: 'none',
-								background: '#B4B4B4',
-							}}
-						>
-							<CardContent>
-								<Typography
-									variant='h6'
-									gutterBottom
+						Component Library
+					</Typography>
+					<Grid
+						container
+						spacing={3}
+					>
+						{components.map(({ name, component: Component, props }) => (
+							<Grid
+								item
+								xs={12}
+								key={name}
+							>
+								<Card
+									style={{
+										border: '1px solid #000',
+										boxShadow: 'none',
+										background: '#B4B4B4',
+									}}
 								>
-									{name}
-								</Typography>
-								{props && props.children ? <Component {...props}>{props.children}</Component> : props ? <Component {...props} /> : <Component />}
-							</CardContent>
-						</Card>
+									<CardContent>
+										<Typography
+											variant='h6'
+											gutterBottom
+										>
+											{name}
+										</Typography>
+										{props && props.children ? <Component {...props}>{props.children}</Component> : props ? <Component {...props} /> : <Component />}
+									</CardContent>
+								</Card>
+							</Grid>
+						))}
 					</Grid>
-				))}
-			</Grid>
-		</Box>
+				</Box>
+			)}
+		</>
+		
 	);
 };
 
