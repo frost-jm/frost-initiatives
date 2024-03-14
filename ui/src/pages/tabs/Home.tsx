@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
 import { Box, Button } from '@mui/material';
 import TableHeader from '@/components/low-level-components/Table/TableHeader';
 import Form from '@/components/high-level-components/Form/Form';
 import Modal from '@/components/low-level-components/Modal/Modal';
+import { useMode } from '@/context/DataContext';
 
 const Home = () => {
-	const [modalOpen, setModalOpen] = useState(false);
+	const { modalOpen, setModalOpen, setDepartment } = useMode();
 
 	const handleModalOpen = () => {
 		setModalOpen(true);
+	};
+
+	const handleModalClose = () => {
+		setModalOpen(false);
+		setDepartment([]);
 	};
 
 	return (
 		<>
 			<Modal
 				isOpen={modalOpen}
-				onClose={() => setModalOpen(false)}
+				onClose={handleModalClose}
 			>
 				<Form />
 			</Modal>

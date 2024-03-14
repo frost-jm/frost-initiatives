@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { FormControl, ListItemText, MenuItem, OutlinedInput, Checkbox, Select, SelectChangeEvent } from '@mui/material';
+import { useMode } from '@/context/DataContext';
 
 const departments = ['Content', 'Design', 'Dev', 'Execom', 'Mancomm', 'Org-wide', 'PMO', 'TMG'];
 
 const DepartmentDropdown = () => {
-	const [department, setDepartment] = useState<string[]>([]);
+	const { department, setDepartment } = useMode();
 	const [open, setOpen] = useState<boolean>(false);
 
 	const handleClose = () => {

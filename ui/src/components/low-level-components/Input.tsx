@@ -1,16 +1,13 @@
 import { Avatar, Input as MInput, Box } from '@mui/material';
-import { useState } from 'react';
+
 interface InputProps {
 	variant: 'normal' | 'comment';
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	value: string;
+	name?: string;
 }
 
-const Input = ({ variant = 'normal' }: InputProps) => {
-	const [input, setInput] = useState<string>('');
-
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setInput(event.target.value);
-	};
-
+const Input = ({ variant = 'normal', onChange, value, name }: InputProps) => {
 	const commonStyles = {
 		width: '100%',
 		boxSizing: 'border-box',
@@ -63,8 +60,8 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 						placeholder='Add a comment'
 						autoComplete='off'
 						sx={styles()}
-						onChange={handleInputChange}
-						value={input}
+						onChange={onChange}
+						value={value}
 					/>
 				</>
 			)}
@@ -73,11 +70,12 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 					placeholder='Required'
 					autoComplete='off'
 					sx={styles()}
-					onChange={handleInputChange}
-					value={input}
+					onChange={onChange}
+					value={value}
+					name={name}
 				/>
 			)}
-			{variant === 'comment' && input.trim() !== '' && (
+			{variant === 'comment' && value.trim() !== '' && (
 				<img
 					src='./icons/comment-icon.svg'
 					style={{

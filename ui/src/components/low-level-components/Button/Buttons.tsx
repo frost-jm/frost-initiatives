@@ -14,7 +14,7 @@ interface ButtonTypeProps {
 	borderRadius?: string;
 	background?: string;
 	children: React.ReactNode;
-	action: () => void;
+	action?: () => void;
 }
 
 const Buttons = ({ type, children, maxWidth, action, background, fontSize, borderRadius }: ButtonTypeProps) => {
@@ -62,7 +62,7 @@ const Buttons = ({ type, children, maxWidth, action, background, fontSize, borde
 				border: btnBorder,
 				padding: btnPadding,
 			}}
-			onClick={() => action}
+			onClick={action}
 		>
 			{children}
 		</Box>

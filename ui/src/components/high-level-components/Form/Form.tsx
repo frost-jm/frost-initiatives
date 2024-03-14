@@ -1,26 +1,56 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Box, Input as MInput } from '@mui/material';
 
 import Editor from '../Editor/Editor';
 import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
-import { useState } from 'react';
+import React, { useEffect } from 'react';
 import { formatDate } from '@/utils/formatDate';
+import { useMode } from '@/context/DataContext';
 
 const Form = () => {
-	const [disabled, setDisabled] = useState<boolean>(true);
+	const { department, formData, setFormData, setDisabled, disabled } = useMode();
 
-	const handleFormChange = () => {
-		setDisabled(false);
+	// Handle  Mutation for creating post
+	const handleSubmit = async () => {
+		try {
+			console.log('submit');
+		} catch (error) {
+			console.error('Error creating post:', error);
+		}
 	};
 
-	// dummy
+	// dummy data for current user
 
 	const pitcher = {
 		firstName: 'Donelle',
 		lastName: 'Agudo',
 	};
 
-	const date = new Date(2024, 1, 19);
+	const date = new Date();
 	const currentDate = formatDate(date);
+
+	useEffect(() => {
+		setFormData((prevFormData: any) => ({
+			...prevFormData,
+			department: department,
+		}));
+	}, [department]);
+
+	useEffect(() => {
+		// Checking fields value
+		console.log('form data', formData);
+
+		const requiredFields = ['title', 'post', 'reason', 'department'];
+
+		const emptyFields = requiredFields.filter((field) => !formData[field] || (field === 'department' && formData[field].length === 0));
+
+		if (emptyFields.length > 0 || formData.post.trim() === '<p><br></p>') {
+			setDisabled(true);
+		} else {
+			setDisabled(false);
+		}
+	}, [formData]);
 
 	return (
 		<>
@@ -34,6 +64,12 @@ const Form = () => {
 			>
 				<MInput
 					placeholder='Untitled'
+					onChange={(e) =>
+						setFormData((prevFormData: any) => ({
+							...prevFormData,
+							title: e.target.value,
+						}))
+					}
 					sx={{
 						fontSize: '32px',
 						lineHeight: '1.5',
@@ -108,7 +144,17 @@ const Form = () => {
 						</Box>
 						<Box>
 							<Box className='form-label'>Why do we need this?</Box>
-							<Input variant='normal' />
+							<Input
+								variant='normal'
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+									setFormData((prevFormData: any) => ({
+										...prevFormData,
+										reason: e.target.value,
+									}))
+								}
+								value={formData.reason}
+								name='reason'
+							/>
 						</Box>
 
 						<Box>
@@ -169,7 +215,7 @@ const Form = () => {
 							},
 						}}
 					>
-						<Editor setDisabled={handleFormChange} />
+						<Editor />
 					</Box>
 				</Box>
 			</Box>
@@ -183,6 +229,7 @@ const Form = () => {
 				<Box
 					sx={{
 						opacity: disabled ? '0.2' : '1',
+						pointerEvents: disabled ? 'none' : 'auto',
 						padding: '24px 24px 0 0',
 						'@media screen and (max-width:767px)': {
 							padding: '24px 24px 0',
@@ -194,7 +241,7 @@ const Form = () => {
 						maxWidth='94px'
 						borderRadius='63px'
 						fontSize='16px'
-						action={() => console.log('form submit')}
+						action={() => handleSubmit()}
 					>
 						Submit
 					</Buttons>

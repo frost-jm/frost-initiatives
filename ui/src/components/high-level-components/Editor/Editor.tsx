@@ -1,15 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactQuill from 'react-quill';
 import Quill from 'quill';
 import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
+import { useMode } from '@/context/DataContext';
 
 Quill.register('modules/imageResize', ImageResize);
 
-interface EditorProps {
-	setDisabled: () => void;
-}
+const Editor = () => {
+	const { setFormData, setDisabled } = useMode();
 
-const Editor = ({ setDisabled }: EditorProps) => {
 	const icons = Quill.import('ui/icons');
 	icons['bold'] =
 		'<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.5 19.5H14V16.5H17.5C17.8978 16.5 18.2794 16.658 18.5607 16.9393C18.842 17.2206 19 17.6022 19 18C19 18.3978 18.842 18.7794 18.5607 19.0607C18.2794 19.342 17.8978 19.5 17.5 19.5ZM14 10.5H17C17.3978 10.5 17.7794 10.658 18.0607 10.9393C18.342 11.2206 18.5 11.6022 18.5 12C18.5 12.3978 18.342 12.7794 18.0607 13.0607C17.7794 13.342 17.3978 13.5 17 13.5H14V10.5ZM19.6 14.79C20.57 14.11 21.25 13 21.25 12C21.25 9.74 19.5 8 17.25 8H11V22H18.04C20.14 22 21.75 20.3 21.75 18.21C21.75 16.69 20.89 15.39 19.6 14.79Z" fill="#182C50"/></svg>';
@@ -38,8 +39,11 @@ const Editor = ({ setDisabled }: EditorProps) => {
 	};
 	const formats = ['bold', 'italic', 'underline', 'list', 'bullet', 'image', 'link'];
 
-	const handleChange = (content, delta, source, editor) => {
-		setDisabled();
+	const handleChange = (content: any, _delta: any, _source: any, _editor: any) => {
+		setFormData((prevFormData: any) => ({
+			...prevFormData,
+			post: content,
+		}));
 	};
 	return (
 		<ReactQuill
