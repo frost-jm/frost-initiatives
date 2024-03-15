@@ -13,6 +13,7 @@ const errorHandler = (error, request, response, next) => {
 	const message = error.message || 'Access Denied';
 	response.status(status).json({ message });
 };
+
 module.exports = {
 	errorHandler,
 };

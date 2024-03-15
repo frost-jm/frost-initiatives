@@ -11,7 +11,11 @@ interface Option {
   label: string;
 }
 
-const TableDropdown = ({ options }: Option[]) => {
+interface TableDropdownProp {
+  options: Option[];
+}
+
+const TableDropdown = ({ options }: TableDropdownProp) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>(['Latest']);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -31,7 +35,7 @@ const TableDropdown = ({ options }: Option[]) => {
   };
 
   return (
-    <FormControl fullWidth>
+    <FormControl sx={{ maxWidth: '71px', width: '100%' }}>
       <Select
         displayEmpty
         value={selectedOptions}
