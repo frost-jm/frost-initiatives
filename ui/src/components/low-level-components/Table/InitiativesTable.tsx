@@ -46,7 +46,7 @@ const InitiativesTable = ({ hasVoted, hasJoined }: InitiativeTableProps) => {
         {tableContents.map((tableContent, index) => (
           <Box
             sx={{
-              backgroundColor: index % 2 === 0 ? '#ffffff' : '#F7FAFC',
+              backgroundColor: index % 2 !== 0 ? '#ffffff' : '#F7FAFC',
               display: 'flex',
               alignItems: 'flex-start',
               gap: '32px',
