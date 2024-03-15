@@ -163,6 +163,10 @@ const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostLi
 							alignItems: 'flex-end',
 							'li button': {
 								width: '100%',
+								'&.MuiPaginationItem-previousNext': {
+									margin: '0',
+									padding: '0',
+								},
 							},
 						},
 					}}
