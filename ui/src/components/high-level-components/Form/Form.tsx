@@ -4,12 +4,13 @@ import { Box, Input as MInput } from '@mui/material';
 
 import Editor from '../Editor/Editor';
 import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/formatDate';
 import { useMode } from '@/context/DataContext';
 
 const Form = () => {
 	const { department, formData, setFormData, setDisabled, disabled } = useMode();
+	const [isFocus, setIsFocus] = useState<boolean>(false);
 
 	// Handle  Mutation for creating post
 	const handleSubmit = async () => {
@@ -124,6 +125,7 @@ const Form = () => {
 									fontSize: '12px',
 									lineHeight: '1.5',
 									color: 'rgba(29, 36, 79, 0.6)',
+									gap: '8px',
 								}}
 							>
 								<Avatar
@@ -134,9 +136,8 @@ const Form = () => {
 								<Box
 									sx={{
 										background: 'rgba(52, 58, 97, 0.2)',
-										height: '1px',
-										width: '18px',
-										transform: 'rotate(90deg)',
+										height: '18px',
+										width: '1px',
 									}}
 								/>
 								{currentDate}
@@ -146,14 +147,17 @@ const Form = () => {
 							<Box className='form-label'>Why do we need this?</Box>
 							<Input
 								variant='normal'
-								onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+								onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 									setFormData((prevFormData: any) => ({
 										...prevFormData,
 										reason: e.target.value,
-									}))
-								}
+									}));
+
+									e.target.value.trim() === '' ? setIsFocus(false) : setIsFocus(true);
+								}}
 								value={formData.reason}
 								name='reason'
+								isFocused={isFocus}
 							/>
 						</Box>
 
@@ -230,7 +234,7 @@ const Form = () => {
 					sx={{
 						opacity: disabled ? '0.2' : '1',
 						pointerEvents: disabled ? 'none' : 'auto',
-						padding: '24px 24px 0 0',
+						padding: '24px 58px 0 0',
 						'@media screen and (max-width:767px)': {
 							padding: '24px 24px 0',
 						},

@@ -1,13 +1,15 @@
 import { Avatar, Input as MInput, Box } from '@mui/material';
+import { useState } from 'react';
 
 interface InputProps {
 	variant: 'normal' | 'comment';
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
 	name?: string;
+	isFocused?: boolean;
 }
 
-const Input = ({ variant = 'normal', onChange, value, name }: InputProps) => {
+const Input = ({ variant = 'normal', onChange, value, name, isFocused }: InputProps) => {
 	const commonStyles = {
 		width: '100%',
 		boxSizing: 'border-box',
@@ -73,6 +75,7 @@ const Input = ({ variant = 'normal', onChange, value, name }: InputProps) => {
 					onChange={onChange}
 					value={value}
 					name={name}
+					endAdornment={!isFocused && <span style={{ color: 'red', position: 'absolute', left: '70px' }}>*</span>}
 				/>
 			)}
 			{variant === 'comment' && value.trim() !== '' && (

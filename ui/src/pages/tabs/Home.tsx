@@ -5,7 +5,7 @@ import Modal from '@/components/low-level-components/Modal/Modal';
 import { useMode } from '@/context/DataContext';
 
 const Home = () => {
-	const { modalOpen, setModalOpen, setDepartment } = useMode();
+	const { modalOpen, setModalOpen, setDepartment, setFormData } = useMode();
 
 	const handleModalOpen = () => {
 		setModalOpen(true);
@@ -14,6 +14,7 @@ const Home = () => {
 	const handleModalClose = () => {
 		setModalOpen(false);
 		setDepartment([]);
+		setFormData('');
 	};
 
 	return (
