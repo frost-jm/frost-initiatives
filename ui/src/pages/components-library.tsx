@@ -78,7 +78,6 @@ const initiativeCardData = {
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
-import { useState } from 'react';
 
 // Add the components here
 const components = [

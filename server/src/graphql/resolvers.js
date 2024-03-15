@@ -1,6 +1,9 @@
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tags.controller');
 const { getAllPosts, getPostById, createPost, updatePost, deletePost } = require('../controllers/post.controller');
 
+const { pool } = require('../config/database');
+const poolQuery = require('util').promisify(pool.query).bind(pool);
+
 const { OpenAI } = require('openai');
 const axios = require('axios');
 
@@ -66,14 +69,35 @@ const getAnalyzedData = async (text) => {
 
 const resolvers = {
 	Mutation: {
-		createdInitiative: async (_, { input }) => {
-		},
+		createdInitiative: async (_, { input }) => {},
 	},
 	Query: {
-		initiatives: async (_, { status, pagination }) => {
-			
+		initiatives: async (_, { status, pagination }) => {},
+		departments: async () => {
+			try {
+				const results = await poolQuery(`SELECT * FROM departments;`);
+				return results;
+			} catch (error) {
+				throw error;
+			}
 		},
-	}
+		status: async () => {
+			try {
+				const results = await poolQuery(`SELECT * FROM status;`);
+				return results;
+			} catch (error) {
+				throw error;
+			}
+		},
+		hailstormData: async () => {
+			try {
+				const res = await axios.get(process.env.HAILSTORM_API);
+				return res.data.users;
+			} catch (error) {
+				throw new Error('Failed to fetch data', error);
+			}
+		},
+	},
 };
 
 module.exports = resolvers;
