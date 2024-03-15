@@ -76,9 +76,18 @@ const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostLi
 				color='var(--input-color)'
 				sx={{
 					'.Mui-selected': {
-						borderTop: '2px solid #576BCD',
+						// borderTop: '2px solid #576BCD',
 						borderRadius: '0',
 						background: 'transparent!important',
+						'&::before': {
+							content: '""',
+							background: '#576BCD',
+							width: '100%',
+							height: '2px',
+							display: 'block',
+							position: 'absolute',
+							top: '-1px',
+						},
 					},
 					'.MuiPagination-ul > li:first-of-type': {
 						marginRight: 'auto',
@@ -151,6 +160,10 @@ const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostLi
 					sx={{
 						'> ul': {
 							borderTop: '1px solid #E9EDEE',
+							alignItems: 'flex-end',
+							'li button': {
+								width: '100%',
+							},
 						},
 					}}
 				/>
