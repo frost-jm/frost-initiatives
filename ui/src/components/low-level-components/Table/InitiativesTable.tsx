@@ -5,19 +5,14 @@ import TableContentWTitle from './TableContentWTitle';
 import Avatar from '../Avatar/Avatar';
 import ProgressBar from '../ProgressBar';
 import Buttons, { ButtonType } from '../Button/Buttons';
+import { tableHeads, tableContents } from './dummyData';
 
-const InitiativesTable = () => {
-  const tableHeads = [
-    { id: 1, label: 'Date', width: '68px' },
-    { id: 2, label: 'Initiative Name', width: '220px' },
-    { id: 3, label: 'Pitched by', width: '140px' },
-    { id: 4, label: 'Departments', width: '100px' },
-    { id: 5, label: 'Results', width: '240px' },
-    { id: 6, label: '', width: '64px' },
-  ];
+interface InitiativeTableProps {
+  hasVoted: boolean;
+  hasJoined: boolean;
+}
 
-  const data = { firstName: 'Lea', lastName: 'Villanueva' };
-
+const InitiativesTable = ({ hasVoted, hasJoined }: InitiativeTableProps) => {
   return (
     <Box sx={{ borderRadius: '4px', maxWidth: '1040px', overflow: 'auto' }}>
       <Box
@@ -48,37 +43,70 @@ const InitiativesTable = () => {
           },
         }}
       >
-        <Box
-          sx={{
-            backgroundColor: '#F7FAFC',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '32px',
-            padding: '12px 24px',
-          }}
-        >
-          <Box sx={{ minWidth: '68px' }}>
-            <TableContent>1/15/2024</TableContent>
-          </Box>
+        {tableContents.map((tableContent, index) => (
+          <Box
+            sx={{
+              backgroundColor: index % 2 !== 0 ? '#ffffff' : '#F7FAFC',
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: '32px',
+              padding: '12px 24px',
+            }}
+          >
+            <Box sx={{ minWidth: '68px' }}>
+              <TableContent>{tableContent.date}</TableContent>
+            </Box>
 
-          <Box sx={{ display: 'block', minWidth: '220px' }}>
-            <TableContentWTitle title='DQA Guidelines'>
-              A document to record the CQA process for our future reference{' '}
-            </TableContentWTitle>
+            <Box sx={{ display: 'block', minWidth: '220px' }}>
+              <TableContentWTitle title={tableContent.initiativeName}>
+                {tableContent.initiativeDescription}
+              </TableContentWTitle>
+            </Box>
+            <Box sx={{ minWidth: '140px' }}>
+              <Avatar type='single' label={true} data={tableContent.pitcher} />
+            </Box>
+            <Box sx={{ minWidth: '100px' }}>
+              <TableContent>{tableContent.dept}</TableContent>
+            </Box>
+            <Box sx={{ minWidth: '240px', margin: 'auto' }}>
+              <ProgressBar
+                count={tableContent.count}
+                totalHeads={tableContent.totalHeads}
+              />
+            </Box>
+            {/* {!tableContent.joined && tableContent.voted && (
+              <Buttons
+                type={ButtonType.Join}
+                action={() => console.log('click')}
+              >
+                Join
+              </Buttons>
+            )}
+            {tableContent.joined && tableContent.voted && (
+              <Buttons
+                type={ButtonType.Leave}
+                action={() => console.log('click')}
+              >
+                Leave
+              </Buttons>
+            )} */}
+            {!tableContent.voted ? (
+              <Buttons
+                type={ButtonType.Join}
+                action={() => console.log('click')}
+              >
+                Vote
+              </Buttons>
+            ) : (
+              <Buttons
+                type={ButtonType.View}
+                action={() => console.log('click')}
+              >
+                View
+              </Buttons>
+            )}
           </Box>
-          <Box sx={{ minWidth: '140px' }}>
-            <Avatar type='single' label={true} data={data} />
-          </Box>
-          <Box sx={{ minWidth: '100px' }}>
-            <TableContent>Design</TableContent>
-          </Box>
-          <Box sx={{ minWidth: '240px', margin: 'auto' }}>
-            <ProgressBar count={14} totalHeads={16} />
-          </Box>
-          <Buttons type={ButtonType.View} action={() => console.log('click')}>
-            View
-          </Buttons>
-        </Box>
+        ))}
       </Box>
     </Box>
   );
