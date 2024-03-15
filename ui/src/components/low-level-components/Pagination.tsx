@@ -103,6 +103,7 @@ const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostLi
 						lineHeight: '1.5',
 						padding: '10px 12px 0 ',
 						margin: '0',
+						height: '48px',
 					},
 					'.Mui-disabled': {
 						opacity: `0.4 !important`,
@@ -147,6 +148,11 @@ const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostLi
 					onChange={handleChange}
 					siblingCount={isTablet ? 0 : 1}
 					boundaryCount={1}
+					sx={{
+						'> ul': {
+							borderTop: '1px solid #E9EDEE',
+						},
+					}}
 				/>
 			</Box>
 		</PaginationCustomWrap>

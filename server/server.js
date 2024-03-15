@@ -18,6 +18,7 @@ const server = new ApolloServer({
 	typeDefs,
 	resolvers,
 	context: ({ req }) => {
+	
 		const user = req.headers.authorization ? true : false;
 
 		if (!user) {
@@ -41,7 +42,7 @@ async function startServer() {
 	app.use(errorHandler);
 
 	app.get('/', (req, res) => {
-		res.json({ message: 'Welcome to Knowledge Base API.' });
+		res.json({ message: 'Welcome to the Initiatives API' });
 	});
 
 	const PORT = process.env.PORT || 8081;
