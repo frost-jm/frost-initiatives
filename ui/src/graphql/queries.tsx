@@ -19,3 +19,21 @@ export const GET_INITIATIVES = gql`
 		}
 	}
 `;
+
+export const GET_DEPARTMENTS = gql`
+	query {
+		departments {
+			department
+			id
+		}
+	}
+`;
+
+export const GET_STATUS = gql`
+	query {
+		status {
+			id
+			status
+		}
+	}
+`;

@@ -1,2 +1,3 @@
 # Build and Release Folders
 ui/package.lock-json
+ui/.env
