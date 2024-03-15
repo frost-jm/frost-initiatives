@@ -12,9 +12,7 @@ import BannerContent from '@/components/low-level-components/BannerContent';
 import StatusHeader from '@/components/low-level-components/Header/StatusHeader';
 import TableHeader from '@/components/low-level-components/Table/TableHeader';
 import Avatar from '@/components/low-level-components/Avatar/Avatar';
-import Buttons, {
-  ButtonType,
-} from '@/components/low-level-components/Button/Buttons';
+import Buttons, { ButtonType } from '@/components/low-level-components/Button/Buttons';
 import TableLabel from '@/components/low-level-components/Table/TableLabel';
 import TableContent from '@/components/low-level-components/Table/TableContent';
 import PendingVote from '@/components/low-level-components/Header/PendingVote';
@@ -24,36 +22,38 @@ import TableDropdown from '@/components/low-level-components/Dropdown/TableDropd
 import SortDropdown from '@/components/low-level-components/Dropdown/SortDropdown';
 import ProgressBar from '@/components/low-level-components/ProgressBar';
 import InitiativeCard from '@/components/low-level-components/Card/InitiativeCard';
-import TableFilter from './low-level-components/Header/TableFilter';
+import PaginationControl from '@/components/low-level-components/Pagination';
+import TableFilter from '@/components/low-level-components/Header/TableFilter';
 import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
-import PitchGroup from './low-level-components/Card/PitchGroup';
+import PitchGroup from '@/components/low-level-components/Card/PitchGroup';
 import Sample from '@/components/sample';
 
 export {
-  Sample,
-  Logo,
-  Input,
-  SubmitButton,
-  StatusDropdown,
-  ActionDropdown,
-  Tabs,
-  DepartmentDropdown,
-  BannerContent,
-  StatusHeader,
-  Buttons,
-  ButtonType,
-  TableHeader,
-  Avatar,
-  TableLabel,
-  TableContent,
-  PendingVote,
-  TableContentWTitle,
-  ExpandButton,
-  TableDropdown,
-  SortDropdown,
-  ProgressBar,
-  InitiativeCard,
-  TableFilter,
-  InitiativesTable,
-  PitchGroup,
+	Sample,
+	Logo,
+	Input,
+	SubmitButton,
+	StatusDropdown,
+	ActionDropdown,
+	Tabs,
+	DepartmentDropdown,
+	BannerContent,
+	StatusHeader,
+	Buttons,
+	ButtonType,
+	TableHeader,
+	Avatar,
+	TableLabel,
+	TableContent,
+	PendingVote,
+	TableContentWTitle,
+	ExpandButton,
+	TableDropdown,
+	SortDropdown,
+	ProgressBar,
+	InitiativeCard,
+	TableFilter,
+	InitiativesTable,
+	PitchGroup,
+	PaginationControl,
 };
