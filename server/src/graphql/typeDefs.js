@@ -10,8 +10,8 @@ module.exports = gql`
 		post: String!
 		created_by: String!
 		reason: String!
-		department:[String]
-		members:[String]
+		department: [String]
+		members: [String]
 	}
 
 	input InitiativeTab {
@@ -30,15 +30,37 @@ module.exports = gql`
 		post: String!
 		reason: String!
 		created_by: String!
-		members:[String]!
+		members: [String]!
 		created_date: DateTime!
 		updated_date: DateTime!
 		deleted: Boolean!
 		status: Int!
 	}
 
+	type Department {
+		id: ID!
+		department: String!
+	}
+
+	type Status {
+		id: ID!
+		status: String!
+	}
+
+	type User {
+		userId: String!
+		bindname: String!
+		email: String
+		firstName: String
+		lastName: String
+		position: String
+	}
+
 	type Query {
-		initiatives(status: InitiativeTab):InitiativesPagination
+		initiatives(status: InitiativeTab): InitiativesPagination
+		departments: [Department]
+		status: [Status]
+		hailstormData: [User]
 	}
 
 	type Mutation {
@@ -57,4 +79,3 @@ module.exports = gql`
 		code: String
 	}
 `;
-
