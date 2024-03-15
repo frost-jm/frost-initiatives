@@ -8,7 +8,7 @@ interface CurrentUserData {
 
 interface UserContextData { 
     currentUser: CurrentUserData
-    validateUser: (component: any) => React.ReactElement | HTMLButtonElement
+    validateUser: (component: any) => React.ReactElement
 }
 
 export const UserContext = createContext<UserContextData>({} as UserContextData);
@@ -21,7 +21,7 @@ export const UserProvider = ({ children }: any) => {
         if(isAuthenticated) {
             return component;
         } else {
-            return <button onClick={() => loginWithRedirect()}>Log in</button>;
+            loginWithRedirect()
         }
     }
 
