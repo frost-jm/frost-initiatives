@@ -12,14 +12,14 @@ interface InitiativeData {
   };
   vote: number;
   totalHeads: number;
-  action: () => void;
+  action?: () => void;
 }
 
 interface InitiativeCardProp {
   data: InitiativeData;
 }
 const InitiativeCard = ({ data }: InitiativeCardProp) => {
-  const { title, description, pitcher, vote, action } = data;
+  const { title, description, pitcher, vote, totalHeads, action } = data;
   return (
     <Box
       sx={{
@@ -73,7 +73,7 @@ const InitiativeCard = ({ data }: InitiativeCardProp) => {
             <Avatar label={true} type='single' data={pitcher} />
           </Box>
           <Box margin='24px 0'>
-            <ProgressBar count={vote} totalHeads={26} />
+            <ProgressBar count={vote} totalHeads={totalHeads} />
           </Box>
           <Box>
             <Buttons
@@ -81,7 +81,7 @@ const InitiativeCard = ({ data }: InitiativeCardProp) => {
               maxWidth='100%'
               background='#F2F5F7'
               fontSize='14px'
-              action={action}
+              action={() => console.log('click')}
             >
               View details
             </Buttons>

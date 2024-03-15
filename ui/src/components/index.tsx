@@ -26,6 +26,7 @@ import ProgressBar from '@/components/low-level-components/ProgressBar';
 import InitiativeCard from '@/components/low-level-components/Card/InitiativeCard';
 import TableFilter from './low-level-components/Header/TableFilter';
 import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
+import PitchGroup from './low-level-components/Card/PitchGroup';
 import Sample from '@/components/sample';
 
 export {
@@ -54,4 +55,5 @@ export {
   InitiativeCard,
   TableFilter,
   InitiativesTable,
+  PitchGroup,
 };
