@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { ApolloProvider } from '@apollo/client';
 import { NewApolloClient } from '../graphql/apolloClient';
@@ -35,7 +35,6 @@ const TokenHandler = ({ children }: any) => {
 	  try {
 		const token = await getAccessTokenSilently();
 		setToken(token);
-		return token;
 	  } catch (error) {
 		console.error(error);
 	  }
@@ -43,7 +42,7 @@ const TokenHandler = ({ children }: any) => {
   
 	useEffect(() => {
 	  getToken();
-	}, []);
+	}, [token]);
 	
 	const client = NewApolloClient(token ? token : undefined);
   
