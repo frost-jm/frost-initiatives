@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { ApolloProvider } from '@apollo/client';
 import { NewApolloClient } from '../graphql/apolloClient';
@@ -15,9 +15,7 @@ export const AuthTokenProvider = ({ children }: any) => {
 			domain={import.meta.env.VITE_AUTH0_DOMAIN}
 			clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
 			authorizationParams={{
-				redirect_uri: window.location.origin,
-				// audience: import.meta.env.VITE_PUBLIC_BACKEND_BASE_URL,
-				// scope: "read:current_user update:current_user_metadata"
+				redirect_uri: import.meta.env.VITE_AUTH0_SUCCESS_CALLBACK_URL,
 			}}
 		>
             <TokenHandler>
@@ -35,15 +33,14 @@ const TokenHandler = ({ children }: any) => {
 	  try {
 		const token = await getAccessTokenSilently();
 		setToken(token);
-		return token;
 	  } catch (error) {
 		console.error(error);
 	  }
 	};
   
 	useEffect(() => {
-	  getToken();
-	}, []);
+		getToken();
+	}, [token]);
 	
 	const client = NewApolloClient(token ? token : undefined);
   

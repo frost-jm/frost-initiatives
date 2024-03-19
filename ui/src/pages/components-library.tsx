@@ -78,6 +78,8 @@ const initiativeCardData = {
 
 // Dummy Data for Avatar
 import dummyData from '../testdata.json';
+import { UserContext } from '@/context/UserContext';
+import { useContext } from 'react';
 
 // Add the components here
 const components = [
