@@ -31,6 +31,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						lineHeight: '18px',
 						gap: '8px',
 						color: 'rgba(29, 36, 79, 0.8)',
+						userSelect: 'none',
 					}}
 				>
 					<MUIAvatar

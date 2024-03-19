@@ -7,9 +7,11 @@ import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/compon
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/formatDate';
 import { useMode } from '@/context/DataContext';
+import { useUser } from '@/context/userContext';
 
 const Form = () => {
 	const { department, formData, setFormData, setDisabled, disabled } = useMode();
+	const { currentUser } = useUser();
 	const [isFocus, setIsFocus] = useState<boolean>(false);
 
 	// Handle  Mutation for creating post
@@ -21,13 +23,6 @@ const Form = () => {
 		}
 	};
 
-	// dummy data for current user
-
-	const pitcher = {
-		firstName: 'Donelle',
-		lastName: 'Agudo',
-	};
-
 	const date = new Date();
 	const currentDate = formatDate(date);
 
@@ -35,6 +30,7 @@ const Form = () => {
 		setFormData((prevFormData: any) => ({
 			...prevFormData,
 			department: department,
+			created_by: currentUser && currentUser.userId,
 		}));
 	}, [department]);
 
@@ -131,7 +127,7 @@ const Form = () => {
 								<Avatar
 									label={true}
 									type='single'
-									data={pitcher}
+									data={currentUser}
 								/>
 								<Box
 									sx={{

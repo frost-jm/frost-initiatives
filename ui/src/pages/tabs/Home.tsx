@@ -7,6 +7,20 @@ import { useMode } from '@/context/DataContext';
 const Home = () => {
 	const { modalOpen, setModalOpen, setDepartment, setFormData } = useMode();
 
+	const resetForm = () => {
+		setFormData({
+			postId: '',
+			title: '',
+			post: '',
+			reason: '',
+			department: [],
+			members: '',
+			status: '',
+			created_by: '',
+			updated_at: '',
+		});
+	};
+
 	const handleModalOpen = () => {
 		setModalOpen(true);
 	};
@@ -14,7 +28,7 @@ const Home = () => {
 	const handleModalClose = () => {
 		setModalOpen(false);
 		setDepartment([]);
-		setFormData('');
+		resetForm();
 	};
 
 	return (
