@@ -7,8 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Navigate } from 'react-router-dom';
 
 const App = () => {
-    const { isAuthenticated, logout, user } = useAuth0();
-    console.log("isAuthenticated: ", isAuthenticated)
+    const { isAuthenticated, user } = useAuth0();
+
     return (
       <>
         {
@@ -20,7 +20,6 @@ const App = () => {
           >
             <LogoHeader />
             <TabsLanding />
-            <button onClick={() => logout()}>Logout</button>
           </Box> 
           :
           <><Navigate to="/authorize"/></>
