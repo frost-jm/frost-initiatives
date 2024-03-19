@@ -1,25 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { FormControl, ListItemText, MenuItem, OutlinedInput, Checkbox, Select, SelectChangeEvent } from '@mui/material';
+import { useMode } from '@/context/DataContext';
 
-const departments = ['Content', 'Design', 'Dev', 'Execom', 'Mancomm', 'Org-wide', 'PMO', 'TMG'];
+import { GET_DEPARTMENTS } from '@/graphql/queries';
+import { useQuery } from '@apollo/client';
 
 const DepartmentDropdown = () => {
-	const [department, setDepartment] = useState<string[]>([]);
+	const { department, setDepartment } = useMode();
+	const { data } = useQuery(GET_DEPARTMENTS);
 	const [open, setOpen] = useState<boolean>(false);
-
-	const handleClose = () => {
-		setOpen(false);
-	};
-
-	const handleOpen = () => {
-		setOpen(true);
-	};
+	const [selectedDeptNames, setSelectedDeptNames] = useState<string[]>([]);
 
 	const handleChange = (event: SelectChangeEvent<typeof department>) => {
-		const {
-			target: { value },
-		} = event;
-		setDepartment(typeof value === 'string' ? value.split(',') : value);
+		const { value } = event.target;
+
+		const selectedDepartments = Array.isArray(value) ? value.map((item) => item) : [value];
+		const selectedDepartmentIds = Array.isArray(value) ? value.map((item) => item.id) : [value];
+
+		setDepartment(selectedDepartmentIds);
+
+		setSelectedDeptNames(selectedDepartments);
 	};
 
 	return (
@@ -37,12 +38,12 @@ const DepartmentDropdown = () => {
 			<Select
 				multiple
 				displayEmpty
-				value={department}
-				onClose={handleClose}
-				onOpen={handleOpen}
+				value={selectedDeptNames}
+				onClose={() => setOpen(false)}
+				onOpen={() => setOpen(true)}
 				onChange={handleChange}
 				input={<OutlinedInput />}
-				renderValue={(selected) => {
+				renderValue={(selected: (string | { department: string })[]) => {
 					if (selected.length === 0) {
 						return (
 							<>
@@ -52,7 +53,7 @@ const DepartmentDropdown = () => {
 						);
 					}
 
-					return selected.join(', ');
+					return selected.map((item) => (typeof item === 'string' ? item : item.department)).join(', ');
 				}}
 				MenuProps={{
 					PaperProps: {
@@ -123,52 +124,53 @@ const DepartmentDropdown = () => {
 					<span className='placeholder'>Required</span>
 					<span>*</span>
 				</MenuItem>
-				{departments.map((dept) => (
-					<MenuItem
-						disableRipple
-						key={dept}
-						value={dept}
-						sx={{
-							color: 'var(--input-color)',
-							padding: '12px 8px 12px 12px',
-							height: '40px',
-							justifyContent: 'space-between',
-							'&:not(:last-of-type):not(.Mui-selected)': {
-								borderBottom: '1px solid #E9EDEE',
-							},
-							'&:hover, &.Mui-selected, &.Mui-selected:hover': {
-								background: '#F8FAFB!important',
-							},
-						}}
-					>
-						<ListItemText
-							primary={dept}
-							sx={{
-								all: 'unset',
-								span: {
-									fontFamily: 'Figtree-Medium',
-									fontWeight: '500',
-									fontSize: '14px',
-									lineHeight: '14px',
-									opacity: '0.8',
-								},
-							}}
-						/>
-						<Checkbox
+				{data &&
+					data.departments.map((dept: any, index: number) => (
+						<MenuItem
 							disableRipple
-							checked={department.indexOf(dept) > -1}
-							icon={<CheckMarkDefault />}
-							checkedIcon={<CheckMark />}
+							key={index}
+							value={dept}
 							sx={{
-								color: '#D6DAE0',
-
-								'&.Mui-checked': {
-									color: '#576BCD',
+								color: 'var(--input-color)',
+								padding: '12px 8px 12px 12px',
+								height: '40px',
+								justifyContent: 'space-between',
+								'&:not(:last-of-type):not(.Mui-selected)': {
+									borderBottom: '1px solid #E9EDEE',
+								},
+								'&:hover, &.Mui-selected, &.Mui-selected:hover': {
+									background: '#F8FAFB!important',
 								},
 							}}
-						/>
-					</MenuItem>
-				))}
+						>
+							<ListItemText
+								primary={dept.department}
+								sx={{
+									all: 'unset',
+									span: {
+										fontFamily: 'Figtree-Medium',
+										fontWeight: '500',
+										fontSize: '14px',
+										lineHeight: '14px',
+										opacity: '0.8',
+									},
+								}}
+							/>
+							<Checkbox
+								disableRipple
+								checked={selectedDeptNames.indexOf(dept) > -1}
+								icon={<CheckMarkDefault />}
+								checkedIcon={<CheckMark />}
+								sx={{
+									color: '#D6DAE0',
+
+									'&.Mui-checked': {
+										color: '#576BCD',
+									},
+								}}
+							/>
+						</MenuItem>
+					))}
 			</Select>
 		</FormControl>
 	);
@@ -209,9 +211,9 @@ const CheckMark = () => {
 			<path
 				d='M5 8L7 10L11 6'
 				stroke='white'
-				stroke-width='2'
-				stroke-linecap='round'
-				stroke-linejoin='round'
+				strokeWidth='2'
+				strokeLinecap='round'
+				strokeLinejoin='round'
 			/>
 		</svg>
 	);

@@ -31,6 +31,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						lineHeight: '18px',
 						gap: '8px',
 						color: 'rgba(29, 36, 79, 0.8)',
+						userSelect: 'none',
 					}}
 				>
 					<MUIAvatar
@@ -40,7 +41,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 							background: 'green',
 							fontFamily: 'Figtree-SemiBold, sans-serif',
 							fontSize: '12px',
-							lineHeight: '14.4px',
+							lineHeight: '1',
 						}}
 					>
 						{singleUserData.firstName[0]}

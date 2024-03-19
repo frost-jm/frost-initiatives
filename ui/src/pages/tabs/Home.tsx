@@ -1,45 +1,83 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import TableHeader from '@/components/low-level-components/Table/TableHeader';
+import Form from '@/components/high-level-components/Form/Form';
+import Modal from '@/components/low-level-components/Modal/Modal';
+import { useMode } from '@/context/DataContext';
 
 const Home = () => {
-  return (
-    <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Box sx={{ width: '100%' }}>
-          <TableHeader text='Initiatives for Voting' />
-        </Box>
+	const { modalOpen, setModalOpen, setDepartment, setFormData } = useMode();
 
-        <Box
-          sx={{
-            display: 'flex',
-            gap: '4px',
-            width: '100%',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Box
-            sx={{
-              color: '#576BCD',
-              fontFamily: 'Figtree-SemiBold, sans-serif',
-              fontWeight: '600',
-              fontSize: '12px',
-              lineHeight: '1',
-              cursor: 'pointer',
-            }}
-          >
-            Show all initiatives
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
+	const resetForm = () => {
+		setFormData({
+			postId: '',
+			title: '',
+			post: '',
+			reason: '',
+			department: [],
+			members: '',
+			status: '',
+			created_by: '',
+			updated_at: '',
+		});
+	};
+
+	const handleModalOpen = () => {
+		setModalOpen(true);
+	};
+
+	const handleModalClose = () => {
+		setModalOpen(false);
+		setDepartment([]);
+		resetForm();
+	};
+
+	return (
+		<>
+			<Modal
+				isOpen={modalOpen}
+				onClose={handleModalClose}
+			>
+				<Form />
+			</Modal>
+			<Button onClick={handleModalOpen}>Open Modal</Button>
+
+			<Box>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+					}}
+				>
+					<Box sx={{ width: '100%' }}>
+						<TableHeader text='Initiatives for Voting' />
+					</Box>
+
+					<Box
+						sx={{
+							display: 'flex',
+							gap: '4px',
+							width: '100%',
+							justifyContent: 'flex-end',
+						}}
+					>
+						<Box
+							sx={{
+								color: '#576BCD',
+								fontFamily: 'Figtree-SemiBold, sans-serif',
+								fontWeight: '600',
+								fontSize: '12px',
+								lineHeight: '1',
+								cursor: 'pointer',
+							}}
+						>
+							Show all initiatives
+						</Box>
+					</Box>
+				</Box>
+			</Box>
+		</>
+	);
 };
 
 export default Home;
