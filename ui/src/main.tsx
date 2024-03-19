@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
@@ -7,6 +6,9 @@ import ComponentsLibrary from './pages/components-library.tsx';
 import Error from './pages/error-page.tsx';
 import { UserProvider } from './context/userContext.tsx';
 import { AuthTokenProvider } from './context/authTokenContext.tsx';
+import Authorize from './pages/authorize.tsx';
+import Success from './pages/success.tsx';
+import React from 'react';
 
 const Index = () => {
 	const router = createBrowserRouter([
@@ -20,6 +22,16 @@ const Index = () => {
 			element: <ComponentsLibrary />,
 			errorElement: <Error />,
 		},
+		{
+			path: '/authorize',
+			element: <Authorize /> ,
+			errorElement: <Error />,
+		},
+		{
+			path: '/success',
+			element: <Success />,
+			errorElement: <Error />
+		}
 	]);
 	
 	return (

@@ -15,9 +15,7 @@ export const AuthTokenProvider = ({ children }: any) => {
 			domain={import.meta.env.VITE_AUTH0_DOMAIN}
 			clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
 			authorizationParams={{
-				redirect_uri: window.location.origin,
-				// audience: import.meta.env.VITE_PUBLIC_BACKEND_BASE_URL,
-				// scope: "read:current_user update:current_user_metadata"
+				redirect_uri: 'http://localhost:5173/success',
 			}}
 		>
             <TokenHandler>
@@ -41,7 +39,7 @@ const TokenHandler = ({ children }: any) => {
 	};
   
 	useEffect(() => {
-	  getToken();
+		getToken();
 	}, [token]);
 	
 	const client = NewApolloClient(token ? token : undefined);
