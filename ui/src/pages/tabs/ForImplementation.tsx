@@ -1,7 +1,10 @@
 import React from 'react';
+import EmptyState from '@/sections/EmptyState';
+import { InitiativesTable } from '@/components';
 
 const ForImplementation = () => {
-	return <div>ForImplementation</div>;
+  const count = 0;
+  return count > 0 ? <InitiativesTable /> : <EmptyState />;
 };
 
 export default ForImplementation;
