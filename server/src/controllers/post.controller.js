@@ -3,23 +3,29 @@ const poolQuery = require('util').promisify(pool.query).bind(pool);
 
 const getAllInitiatives = async ({ status = 1 }) => {
 	try {
-		let parameters = {
-			status: status
-		}
-
 		let query = `SELECT * FROM initiatives WHERE status = ${status}`
 
 		let results = await poolQuery(query, status);
 
-		console.log(results);
-
 		return {
-			
+			initiatives: results
 		};
 	} catch (error) {
 		throw error;
 	}
 };
+
+const getInitiativeById = async (id) => {
+	try {
+		let query = `SELECT * FROM initiatives WHERE id = ${id}`;
+
+		let result = await poolQuery(query, id);
+
+		return result
+	} catch (error) {
+		throw error;
+	}
+}
 
 const createInitiative = async (data) => {
 	try {
@@ -34,5 +40,6 @@ const createInitiative = async (data) => {
 
 module.exports = {
 	getAllInitiatives,
+	getInitiativeById,
 	createInitiative,
 };

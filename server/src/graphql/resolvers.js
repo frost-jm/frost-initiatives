@@ -1,5 +1,5 @@
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tags.controller');
-const { getAllInitiatives, createInitiative } = require('../controllers/post.controller');
+const { getAllInitiatives,getInitiativeById, createInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -81,6 +81,19 @@ const resolvers = {
 		initiatives: async (_, { status, pagination }) => {
 			try {
 				await getAllInitiatives(status);
+			} catch (error) {
+				throw error;
+			}
+		},
+		initiative:  async (_, { id }) => {
+			try {
+				let initiative = await getInitiativeById(id);
+
+				if(initiative.length == 0) {
+					throw new Error('Initiative not found');
+				}
+
+				return initiative[0];
 			} catch (error) {
 				throw error;
 			}

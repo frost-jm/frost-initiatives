@@ -30,8 +30,8 @@ module.exports = gql`
 		title: String!
 		post: String!
 		reason: String!
-		created_by: String!
-		members: [String]!
+		created_by: Int!
+		members: String!
 		created_date: DateTime!
 		updated_date: DateTime!
 		deleted: Boolean!
@@ -60,6 +60,7 @@ module.exports = gql`
 
 	type Query {
 		initiatives(status: InitiativeTab): InitiativesPagination
+		initiative(id: ID!): Initiative
 		departments: [Department]
 		status: [Status]
 		hailstormData: [User]
