@@ -4,28 +4,38 @@ import LogoHeader from './sections/LogoHeader';
 import TabsLanding from './sections/TabsLanding';
 
 import { useAuth0 } from '@auth0/auth0-react';
-import { Navigate } from 'react-router-dom';
 
 const App = () => {
-    const { isAuthenticated, user } = useAuth0();
+	const { isAuthenticated, isLoading, user, loginWithRedirect } = useAuth0();
 
-    return (
-      <>
-        {
-          isAuthenticated && user ? 
-          <Box
-            sx={{
-              width: '100%',
-            }}
-          >
-            <LogoHeader />
-            <TabsLanding />
-          </Box> 
-          :
-          <><Navigate to="/authorize"/></>
-        }
-      </>
-    )
+	if (!isAuthenticated && !isLoading) {
+		loginWithRedirect();
+		return null;
+	}
+	return (
+		<>
+			{isAuthenticated && user ? (
+				<Box
+					sx={{
+						width: '100%',
+					}}
+				>
+					<LogoHeader />
+					<TabsLanding />
+				</Box>
+			) : (
+				<Box
+					width='100vw'
+					height='100vh'
+					display='flex'
+					justifyContent='center'
+					alignItems='center'
+				>
+					Loading...
+				</Box>
+			)}
+		</>
+	);
 };
 
 export default App;
