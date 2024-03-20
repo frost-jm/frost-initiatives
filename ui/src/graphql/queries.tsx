@@ -20,6 +20,24 @@ export const GET_INITIATIVES = gql`
 	}
 `;
 
+export const GET_INITIATIVE_BY_ID = gql`
+	query Initiative($initiativeId: ID!) {
+		initiative(id: $initiativeId) {
+		created_by
+		created_date
+		deleted
+		id
+		members
+		post
+		reason
+		status
+		summary
+		title
+		updated_date
+		}
+	}
+`
+
 export const CREATE_INITIATIVE = gql`
 	mutation Mutation($input: InitiativeCreate) {
 		createdInitiative(input: $input) {
