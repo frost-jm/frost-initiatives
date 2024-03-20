@@ -71,16 +71,41 @@ const resolvers = {
 	Mutation: {
 		createdInitiative: async (_, { input }) => {
 			try {
-				createInitiative(input);
+				let { post, reason, summary, title, department} = input;
+
+				if(!post || !reason || !summary || !title || !department) {
+					throw new Error('Missing required field/s');
+				}
+
+				let newInitiative = await createInitiative(input);
+
+				return { 
+					data: newInitiative, 
+					success: true, 
+					message: 'Post created successfully', 
+					error: null 
+				}
+
 			} catch (error) {
 				throw error;
 			}
 		},
+		updateInitiative: async (_, { id, input }) => { 
+			try {
+                updateInitiative(id, input);
+            } catch (error) {
+                throw error;
+            }
+		}
 	},
 	Query: {
 		initiatives: async (_, { status, pagination }) => {
 			try {
-				await getAllInitiatives(status);
+				let initiatives = await getAllInitiatives(status);
+
+				return {
+					items: initiatives
+				};
 			} catch (error) {
 				throw error;
 			}
