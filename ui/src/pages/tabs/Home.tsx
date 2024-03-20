@@ -1,14 +1,14 @@
 import React from 'react';
 import { Box } from '@mui/material';
 import TableHeader from '@/components/low-level-components/Table/TableHeader';
-import LandingBannerr from '@/sections/Banners/LandingBanner';
+import LandingBanner from '@/sections/Banners/LandingBanner';
 import PitchGroup from '@/components/low-level-components/Card/PitchGroup';
 import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
 
 const Home = () => {
   return (
     <Box sx={{ padding: '12px 0 80px 0' }}>
-      <LandingBannerr />
+      <LandingBanner />
       <Box sx={{ padding: '24px 0 16px 0' }}>
         <TableHeader text='Top 3 Initiatives' />
       </Box>
