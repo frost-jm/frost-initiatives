@@ -5,6 +5,8 @@ const { getAllComments, getCommentByID, updateComment, deleteComment, insertComm
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
 
+const { sendEmail } = require('../utils/mailer');
+
 const { OpenAI } = require('openai');
 const axios = require('axios');
 
@@ -73,10 +75,16 @@ const resolvers = {
 		createdInitiative: async (_, { input }) => {},
 		addComment: async (_, { input }) => {
 			try {
-				console.log('comment', input);
-				const commentId = await insertComment(input);
+				const { initiativeID, author, commentor } = input;
+
+				const { id: authorId } = author;
+				const { comment } = commentor;
+
+				const commentId = await insertComment({ initiativeID, author: authorId, comment });
 
 				const insertedComment = await getCommentByID(commentId);
+
+				await sendEmail(input);
 
 				return { data: insertedComment, success: true, message: 'Comment added successfully', error: null };
 			} catch (error) {

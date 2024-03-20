@@ -11,7 +11,6 @@ const getAllComments = async (postId) => {
 };
 
 const getCommentByID = async (commentID) => {
-	console.log('here', commentID);
 	try {
 		const comment = await poolQuery('SELECT * FROM initiative_comments WHERE id = ?', [commentID]);
 		return comment;

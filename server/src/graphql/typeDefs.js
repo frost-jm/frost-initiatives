@@ -67,8 +67,20 @@ module.exports = gql`
 
 	input CommentInput {
 		initiativeID: ID!
-		author: Int!
+		initiativeTitle: String!
+		author: AuthorInput!
+		commentor: CommentorInput!
+	}
+
+	input AuthorInput {
+		id: Int!
+		email: String!
+	}
+
+	input CommentorInput {
 		comment: String!
+		name: String!
+		initials: String!
 	}
 
 	type Query {
