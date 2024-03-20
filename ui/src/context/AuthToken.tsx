@@ -15,7 +15,7 @@ export const AuthTokenProvider = ({ children }: any) => {
 			domain={import.meta.env.VITE_AUTH0_DOMAIN}
 			clientId={import.meta.env.VITE_AUTH0_CLIENT_ID}
 			authorizationParams={{
-				redirect_uri: window.location.origin,
+				redirect_uri: import.meta.env.VITE_AUTH0_SUCCESS_CALLBACK_URL,
 			}}
 		>
 			<TokenHandler>{children}</TokenHandler>
