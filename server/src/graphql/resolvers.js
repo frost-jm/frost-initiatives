@@ -1,5 +1,5 @@
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tags.controller');
-const { getAllPosts, getPostById, createPost, updatePost, deletePost } = require('../controllers/post.controller');
+const { getAllInitiatives, createInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -69,10 +69,22 @@ const getAnalyzedData = async (text) => {
 
 const resolvers = {
 	Mutation: {
-		createdInitiative: async (_, { input }) => {},
+		createdInitiative: async (_, { input }) => {
+			try {
+				createInitiative(input);
+			} catch (error) {
+				throw error;
+			}
+		},
 	},
 	Query: {
-		initiatives: async (_, { status, pagination }) => {},
+		initiatives: async (_, { status, pagination }) => {
+			try {
+				await getAllInitiatives(status);
+			} catch (error) {
+				throw error;
+			}
+		},
 		departments: async () => {
 			try {
 				const results = await poolQuery(`SELECT * FROM departments;`);

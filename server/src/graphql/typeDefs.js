@@ -8,23 +8,24 @@ module.exports = gql`
 	input InitiativeCreate {
 		title: String!
 		post: String!
-		created_by: String!
+		created_by: Int!
 		reason: String!
-		department: [String]
-		members: [String]
+		summary: String!
+		department: [String]!
+		members: String!
 	}
 
 	input InitiativeTab {
-		status: String
+		status: Int
 	}
 
 	type InitiativesPagination {
-		items: [Post]!
+		items: [Initiative]!
 		count: Int!
 		currentPage: Int!
 	}
 
-	type Post {
+	type Initiative {
 		id: ID
 		title: String!
 		post: String!
@@ -35,6 +36,7 @@ module.exports = gql`
 		updated_date: DateTime!
 		deleted: Boolean!
 		status: Int!
+		summary: String!
 	}
 
 	type Department {
@@ -44,7 +46,7 @@ module.exports = gql`
 
 	type Status {
 		id: ID!
-		status: String!
+		status: Int!
 	}
 
 	type User {
