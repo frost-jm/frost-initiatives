@@ -1,8 +1,8 @@
 import { LinearProgress, Box } from '@mui/material';
 
 interface ProgressBarProps {
-	count: number;
-	totalHeads: number;
+	count?: number;
+	totalHeads?: number;
 }
 const ProgressBar = ({ count, totalHeads }: ProgressBarProps) => {
 	return (
