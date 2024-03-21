@@ -11,7 +11,7 @@ const Voting = () => {
     <>
       <Box sx={{ padding: '12px 0 119px 0' }}>
         <VotingBanner />
-        <Box sx={{ padding: '24px 0 16px' }}>
+        <Box sx={{ padding: '24px 24px 16px' }}>
           <TableFilter />
         </Box>
         <InitiativesTable />
