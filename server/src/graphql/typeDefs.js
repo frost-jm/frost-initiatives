@@ -74,6 +74,7 @@ module.exports = gql`
 	type Mutation {
 		createdInitiative(input: InitiativeCreate): Message
 		updateInitiative(id: ID!, input: InitiativeUpdate): Message
+		deleteInitiative(id: ID!): Message
 	}
 
 	type Message {

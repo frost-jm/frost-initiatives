@@ -39,10 +39,18 @@ const createInitiative = async (data) => {
 
 const updateInitiative = async (id, data) => {
 	try {
-
  		await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [data, id]);
 		
 	}  catch (error) {
+		throw error;
+	}
+}
+
+const deleteInitiative = async (id) => {
+    try { 
+		await poolQuery(`UPDATE initiatives SET deleted = 1 WHERE id = ?`, [id]);
+
+	} catch (error) { 
 		throw error;
 	}
 }
@@ -52,4 +60,5 @@ module.exports = {
 	getInitiativeById,
 	createInitiative,
 	updateInitiative,
+	deleteInitiative
 };

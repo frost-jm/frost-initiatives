@@ -23,17 +23,17 @@ export const GET_INITIATIVES = gql`
 export const GET_INITIATIVE_BY_ID = gql`
 	query Initiative($initiativeId: ID!) {
 		initiative(id: $initiativeId) {
-		created_by
-		created_date
-		deleted
-		id
-		members
-		post
-		reason
-		status
-		summary
-		title
-		updated_date
+			created_by
+			created_date
+			deleted
+			id
+			members
+			post
+			reason
+			status
+			summary
+			title
+			updated_date
 		}
 	}
 `
@@ -55,13 +55,27 @@ export const CREATE_INITIATIVE = gql`
 export const UPDATE_INITIATIVE = gql`
 	mutation Mutation($updateInitiativeId: ID!, $input: InitiativeUpdate) {
 		updateInitiative(id: $updateInitiativeId, input: $input) {
-		data
-		message
-		success
-		error {
-			code
+			data
 			message
+			success
+			error {
+				code
+				message
+			}
 		}
+	}
+`
+
+export const DELETE_INITIATIVE = gql`
+	mutation DeleteInitiative($deleteInitiativeId: ID!) {
+		deleteInitiative(id: $deleteInitiativeId) {
+			data
+			message
+			success
+			error {
+				code
+				message
+			}
 		}
 	}
 `

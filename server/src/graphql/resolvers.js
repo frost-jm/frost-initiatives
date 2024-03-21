@@ -1,5 +1,5 @@
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tags.controller');
-const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative } = require('../controllers/post.controller');
+const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -87,7 +87,15 @@ const resolvers = {
 				}
 
 			} catch (error) {
-				throw error;
+				return {
+					data: null, 
+					success: false, 
+					message: 'Failed to create initiative.', 
+					error: {
+						message: error.message,
+						code: 'INITIATIVE_CREATE_ERROR',
+					}
+				}
 			}
 		},
 		updateInitiative: async (_, { id, input }) => { 
@@ -112,12 +120,49 @@ const resolvers = {
 				return { 
 					data: current.id, 
 					success: true, 
-					message: 'Post created successfully', 
+					message: 'Initiative updated successfully', 
 					error: null 
 				}
             } catch (error) {
-                throw error;
+                return {
+					data: null, 
+					success: false, 
+					message: 'Initiative update failed', 
+					error: {
+						message: error.message,
+						code: 'INITIATIVE_UPDATE_ERROR',
+					}
+				}
             }
+		},
+		deleteInitiative: async(_, { id }) => {
+			try {
+
+				let current = await getInitiativeById(id);
+
+				if(!current) {
+					throw new Error('Initiative not found');
+				}
+
+				await deleteInitiative(id);
+
+				return { 
+					data: id, 
+					success: true, 
+					message: 'Initiative deleted!', 
+					error: null 
+				}
+			} catch (error) {
+				return {
+					data: null, 
+					success: false, 
+					message: 'Initiative delete failed!', 
+					error: {
+						message: error.message,
+						code: 'INITIATIVE_DELETE_ERROR',
+					}
+				}
+			}
 		}
 	},
 	Query: {
