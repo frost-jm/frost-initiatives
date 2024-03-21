@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <Box sx={{ padding: '12px 0 80px 0' }}>
       <LandingBanner />
-      <Box sx={{ padding: '24px 0 16px 0' }}>
+      <Box sx={{ padding: '24px 0 16px 24px' }}>
         <TableHeader text='Top 3 Initiatives' />
       </Box>
       <PitchGroup />
@@ -17,7 +17,7 @@ const Home = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          padding: '48px 0 16px 0',
+          padding: '48px 24px 16px',
         }}
       >
         <Box sx={{ width: '100%' }}>
