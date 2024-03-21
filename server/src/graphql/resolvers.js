@@ -1,7 +1,10 @@
+const { getAllComments, getCommentByID, updateComment, deleteComment, insertComment } = require('../controllers/comment.controller');
 const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative, joinInitiative, leaveInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
+
+const { sendEmail } = require('../utils/mailer');
 
 const { OpenAI } = require('openai');
 const axios = require('axios');
@@ -68,6 +71,72 @@ const getAnalyzedData = async (text) => {
 
 const resolvers = {
 	Mutation: {
+		addComment: async (_, { input }) => {
+			try {
+				const { initiativeID, author, commentor } = input;
+
+				const { id: authorId } = author;
+				const { comment } = commentor;
+
+				const commentId = await insertComment({ initiativeID, author: authorId, comment });
+
+				const insertedComment = await getCommentByID(commentId);
+
+				await sendEmail(input);
+
+				return { data: insertedComment, success: true, message: 'Comment added successfully', error: null };
+			} catch (error) {
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to add comment',
+					error: {
+						message: error.message,
+						code: 'COMMENT_INSERTION_ERROR',
+					},
+				};
+			}
+		},
+		editComment: async (_, { commentID, newComment }) => {
+			try {
+				const updatedCommentData = {
+					comment: newComment,
+					updated_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+				};
+
+				const updatedCommentID = await updateComment(commentID, updatedCommentData);
+
+				const updatedComment = await getCommentByID(updatedCommentID);
+
+				return { data: updatedComment, success: true, message: 'Comment updated successfully', error: null };
+			} catch (error) {
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to update comment',
+					error: {
+						message: error.message,
+						code: 'COMMENT_UPDATE_ERROR',
+					},
+				};
+			}
+		},
+		removeComment: async (_, { commentID }) => {
+			try {
+				await deleteComment(commentID);
+				return { success: true, message: 'Comment deleted successfully', error: null };
+			} catch (error) {
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to delete comment',
+					error: {
+						message: error.message,
+						code: 'COMMENT_DELETE_ERROR',
+					},
+				};
+			}
+		},
 		createdInitiative: async (_, { input }) => {
 			try {
 				let { post, reason, title, department, created_by } = input;
@@ -255,6 +324,28 @@ const resolvers = {
 				return res.data.users;
 			} catch (error) {
 				throw new Error('Failed to fetch data', error);
+			}
+		},
+		commentID: async (_, { commentID }) => {
+			try {
+				const comment = await getCommentByID(commentID);
+
+				if (!comment || comment.length === 0) {
+					throw new Error('Comment not found');
+				}
+
+				return comment[0];
+			} catch (error) {
+				throw new Error('Failed to fetch comment by ID', error);
+			}
+		},
+		comments: async (_, { postID }) => {
+			try {
+				const comments = await getAllComments(postID);
+
+				return comments;
+			} catch (error) {
+				throw new Error('Failed to fetch comments', error);
 			}
 		},
 	},
