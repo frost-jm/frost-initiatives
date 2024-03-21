@@ -8,33 +8,39 @@ module.exports = gql`
 	input InitiativeCreate {
 		title: String!
 		post: String!
-		created_by: String!
+		created_by: Int!
 		reason: String!
-		department: [String]
-		members: [String]
+		summary: String
+		department: [String]!
+	}
+
+	input InitiativeUpdate {
+		title: String
+        post: String
+        reason: String
+        summary: String
 	}
 
 	input InitiativeTab {
-		status: String
+		status: Int
 	}
 
 	type InitiativesPagination {
-		items: [Post]!
-		count: Int!
-		currentPage: Int!
+		items: [Initiative]!
 	}
 
-	type Post {
+	type Initiative {
 		id: ID
 		title: String!
 		post: String!
 		reason: String!
-		created_by: String!
-		members: [String]!
+		created_by: Int!
+		members: String!
 		created_date: DateTime!
 		updated_date: DateTime!
 		deleted: Boolean!
 		status: Int!
+		summary: String!
 	}
 
 	type Department {
@@ -44,7 +50,7 @@ module.exports = gql`
 
 	type Status {
 		id: ID!
-		status: String!
+		status: Int!
 	}
 
 	type User {
@@ -58,6 +64,7 @@ module.exports = gql`
 
 	type Query {
 		initiatives(status: InitiativeTab): InitiativesPagination
+		initiative(id: ID!): Initiative
 		departments: [Department]
 		status: [Status]
 		hailstormData: [User]
@@ -65,6 +72,8 @@ module.exports = gql`
 
 	type Mutation {
 		createdInitiative(input: InitiativeCreate): Message
+		updateInitiative(id: ID!, input: InitiativeUpdate): Message
+		deleteInitiative(id: ID!): Message
 	}
 
 	type Message {
