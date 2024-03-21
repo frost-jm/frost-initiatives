@@ -3,24 +3,37 @@ import { Box } from '@mui/material';
 import LogoHeader from './sections/LogoHeader';
 import TabsLanding from './sections/TabsLanding';
 
-import { useUser } from './context/userContext';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const App = () => {
-	const { validateUser } = useUser();
+	const { isAuthenticated, isLoading, user, loginWithRedirect } = useAuth0();
+
+	if (!isAuthenticated && !isLoading) {
+		loginWithRedirect();
+		return null;
+	}
 
 	return (
 		<>
-			{validateUser(
-				<>
-					<Box
-						sx={{
-							width: '100%',
-						}}
-					>
-						<LogoHeader />
-						<TabsLanding />
-					</Box>
-				</>
+			{isAuthenticated && user ? (
+				<Box
+					sx={{
+						width: '100%',
+					}}
+				>
+					<LogoHeader />
+					<TabsLanding />
+				</Box>
+			) : (
+				<Box
+					width='100vw'
+					height='100vh'
+					display='flex'
+					justifyContent='center'
+					alignItems='center'
+				>
+					Loading...
+				</Box>
 			)}
 		</>
 	);

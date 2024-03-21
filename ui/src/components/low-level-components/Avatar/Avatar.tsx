@@ -96,7 +96,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 				</Box>
 			)}
 
-			{type === 'table' && (
+			{type === 'table' && Array.isArray(data) && (
 				<Box
 					sx={{
 						display: 'flex',

@@ -7,7 +7,7 @@ import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/compon
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/formatDate';
 import { useMode } from '@/context/DataContext';
-import { useUser } from '@/context/userContext';
+import { useUser } from '@/context/UserContext';
 
 const Form = () => {
 	const { department, formData, setFormData, setDisabled, disabled } = useMode();

@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from '@emotion/styled';
 import { Box, Pagination } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 interface PostListData {
 	totalPages?: number | undefined;
@@ -10,7 +11,7 @@ interface PostListData {
 	handlePageChange?: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostListData) => {
+const PaginationControl = ({ totalPages }: PostListData) => {
 	const [page, setPage] = useState(1);
 	const theme = useTheme();
 	const isTablet = useMediaQuery(theme.breakpoints.down('md'));
@@ -64,7 +65,7 @@ const PaginationControl = ({ totalPages, currentPage, handlePageChange }: PostLi
 		}
 	`;
 
-	const handleChange = (event, page) => {
+	const handleChange = (_event: any, page: SetStateAction<number>) => {
 		setPage(page);
 	};
 

@@ -3,19 +3,20 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { gql, useQuery } from '@apollo/client';
 
+import { departmentToPositions, assignDepartments } from '../utils/assignDepartments.js';
 interface UserData {
 	userId: string;
 	firstName: string;
 	lastName: string;
 	bindname: string;
 	email: string;
-	position?: string;
+	position: string;
 	picture?: string;
+	department?: string[];
 }
 
 interface UserContextData {
 	currentUser: UserData | null;
-	validateUser: (component: React.ReactElement) => React.ReactElement | HTMLButtonElement;
 }
 
 interface UserProviderProps {
@@ -39,29 +40,23 @@ const GET_HAILSTORM = gql`
 
 export const UserProvider = ({ children }: UserProviderProps) => {
 	const [currentUser, setCurrentUser] = useState<UserData | null>(null);
-	const { loading, data } = useQuery(GET_HAILSTORM);
-	const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-	const validateUser = (component: React.ReactElement) => {
-		if (isAuthenticated) {
-			return component;
-		} else {
-			return <button onClick={() => loginWithRedirect()}>Log in</button>;
-		}
-	};
+	const { loading, data } = useQuery(GET_HAILSTORM);
+	const { user } = useAuth0();
 
 	useEffect(() => {
 		if (!currentUser && !loading && data) {
 			if (data.hailstormData && user) {
 				const hs_user: UserData = data.hailstormData.find((hs_user: UserData) => hs_user.email === user.email);
-				setCurrentUser({
-					...hs_user,
-				});
+				if (hs_user) {
+					const userWithDepartment = assignDepartments([hs_user], departmentToPositions)[0];
+					setCurrentUser(userWithDepartment);
+				}
 			}
 		}
 	}, [currentUser, loading, data, user]);
 
-	return <UserContext.Provider value={{ currentUser, validateUser }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ currentUser }}>{children}</UserContext.Provider>;
 };
 
 export const useUser = (): UserContextData => {
