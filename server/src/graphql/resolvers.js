@@ -1,5 +1,5 @@
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tags.controller');
-const { getAllInitiatives,getInitiativeById, createInitiative } = require('../controllers/post.controller');
+const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -82,7 +82,7 @@ const resolvers = {
 				return { 
 					data: newInitiative, 
 					success: true, 
-					message: 'Post created successfully', 
+					message: 'Post updated successfully', 
 					error: null 
 				}
 
@@ -92,7 +92,29 @@ const resolvers = {
 		},
 		updateInitiative: async (_, { id, input }) => { 
 			try {
-                updateInitiative(id, input);
+				let { post, reason, summary, title } = input;
+				let current = await getInitiativeById(id);
+
+				if(!current) {
+					throw new Error('Initiative not found');
+				}
+		
+				let newInitiative = {
+					post: post || current.post,
+					reason: reason || current.reason,
+					summary: summary || current.summary,
+					title: title || current.title,
+					updated_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+				}
+
+               	await updateInitiative(id, newInitiative);
+
+				return { 
+					data: current.id, 
+					success: true, 
+					message: 'Post created successfully', 
+					error: null 
+				}
             } catch (error) {
                 throw error;
             }
@@ -114,7 +136,7 @@ const resolvers = {
 			try {
 				let initiative = await getInitiativeById(id);
 
-				if(initiative.length == 0) {
+				if(!initiative) {
 					throw new Error('Initiative not found');
 				}
 

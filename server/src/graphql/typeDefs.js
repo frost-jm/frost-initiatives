@@ -20,8 +20,6 @@ module.exports = gql`
         post: String
         reason: String
         summary: String
-        department: [String]
-        members: String
 	}
 
 	input InitiativeTab {
