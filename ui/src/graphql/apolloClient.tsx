@@ -10,8 +10,7 @@ export const NewApolloClient = (token: string | undefined) => {
 		return {
 			headers: {
 				...headers,
-				// authorization: token ? `Bearer ${token}` : '',
-				authorization: `Bearer 1234sampletoken`,
+				authorization: token ? `Bearer ${token}` : '',
 			},
 		};
 	});

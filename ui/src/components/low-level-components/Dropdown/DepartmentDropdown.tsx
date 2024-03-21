@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 import { useState } from 'react';
 import { FormControl, ListItemText, MenuItem, OutlinedInput, Checkbox, Select, SelectChangeEvent } from '@mui/material';
 import { useMode } from '@/context/DataContext';

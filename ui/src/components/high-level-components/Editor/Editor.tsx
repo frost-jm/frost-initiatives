@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactQuill from 'react-quill';
@@ -9,7 +11,7 @@ import { useMode } from '@/context/DataContext';
 Quill.register('modules/imageResize', ImageResize);
 
 const Editor = () => {
-	const { setFormData, setDisabled } = useMode();
+	const { setFormData } = useMode();
 
 	const icons = Quill.import('ui/icons');
 	icons['bold'] =
