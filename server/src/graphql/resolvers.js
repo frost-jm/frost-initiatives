@@ -1,5 +1,5 @@
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tags.controller');
-const { getAllPosts, getPostById, createPost, updatePost, deletePost } = require('../controllers/post.controller');
+const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -69,10 +69,129 @@ const getAnalyzedData = async (text) => {
 
 const resolvers = {
 	Mutation: {
-		createdInitiative: async (_, { input }) => {},
+		createdInitiative: async (_, { input }) => {
+			try {
+				let { post, reason, title, department, created_by} = input;
+
+				if( !post || !reason || !created_by || !title || !department ) {
+					throw new Error('Missing required field/s');
+				}
+
+				let resultID = await createInitiative(input);
+				
+				let newInitiative = await getInitiativeById(resultID);
+
+				return { 
+					data: newInitiative, 
+					success: true, 
+					message: 'Initiative created successfully.', 
+					error: null 
+				}
+
+			} catch (error) {
+				return {
+					data: null, 
+					success: false, 
+					message: 'Failed to create initiative.', 
+					error: {
+						message: error.message,
+						code: 'INITIATIVE_CREATE_ERROR',
+					}
+				}
+			}
+		},
+		updateInitiative: async (_, { id, input }) => { 
+			try {
+				let { post, reason, summary, title } = input;
+				let current = await getInitiativeById(id);
+
+				if(!current) {
+					throw new Error('Initiative not found');
+				}
+		
+				let newInitiative = {
+					post: post || current.post,
+					reason: reason || current.reason,
+					summary: summary || current.summary,
+					title: title || current.title,
+					updated_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
+				}
+
+               	await updateInitiative(id, newInitiative);
+
+				let updatedInitiative = await getInitiativeById(current.id);
+
+				return { 
+					data: updatedInitiative, 
+					success: true, 
+					message: 'Initiative updated successfully', 
+					error: null 
+				}
+            } catch (error) {
+                return {
+					data: null, 
+					success: false, 
+					message: 'Initiative update failed', 
+					error: {
+						message: error.message,
+						code: 'INITIATIVE_UPDATE_ERROR',
+					}
+				}
+            }
+		},
+		deleteInitiative: async(_, { id }) => {
+			try {
+
+				let current = await getInitiativeById(id);
+
+				if(!current) {
+					throw new Error('Initiative not found');
+				}
+
+				await deleteInitiative(id);
+
+				return { 
+					success: true, 
+					message: 'Initiative deleted!', 
+					error: null 
+				}
+			} catch (error) {
+				return {
+					success: false, 
+					message: 'Initiative delete failed!', 
+					error: {
+						message: error.message,
+						code: 'INITIATIVE_DELETE_ERROR',
+					}
+				}
+			}
+		}
 	},
 	Query: {
-		initiatives: async (_, { status, pagination }) => {},
+		initiatives: async (_, { status, pagination }) => {
+			try {
+				let initiatives = await getAllInitiatives(status);
+
+				return {
+					items: initiatives
+				};
+			} catch (error) {
+				throw error;
+			}
+		},
+		initiative:  async (_, { id }) => {
+			try {
+				let initiative = await getInitiativeById(id);
+
+				if(!initiative) {
+					throw new Error('Initiative not found');
+				}
+
+				return initiative[0];
+			} catch (error) {
+				throw error;
+			}
+		},
 		departments: async () => {
 			try {
 				const results = await poolQuery(`SELECT * FROM departments;`);
