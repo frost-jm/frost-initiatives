@@ -71,9 +71,9 @@ const resolvers = {
 	Mutation: {
 		createdInitiative: async (_, { input }) => {
 			try {
-				let { post, reason, title, department, created_by} = input;
+				let { post, reason, title, department, created_by, members} = input;
 
-				if(!post || !reason || created_by || !title || !department) {
+				if(!post || !reason || !created_by || !title || !department || !members) {
 					throw new Error('Missing required field/s');
 				}
 
