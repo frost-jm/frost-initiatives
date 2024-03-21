@@ -8,7 +8,7 @@ const Archived = () => {
   return count > 0 ? (
     <>
       <Box>
-        <Box sx={{ padding: '24px 0 16px' }}>
+        <Box sx={{ padding: '24px 24px 16px' }}>
           <TableFilter tableheader='Initiatives Archived' quantity={4} />
         </Box>
         <InitiativesTable />
