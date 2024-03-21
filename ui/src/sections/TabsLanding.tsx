@@ -13,7 +13,7 @@ const tabsData = [
 
 const TabsLanding = () => {
 	return (
-		<Box>
+		<Box overflow='hidden'>
 			<Tabs data={tabsData} />
 		</Box>
 	);
