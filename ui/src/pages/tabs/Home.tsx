@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mui/material';
 import TableHeader from '@/components/low-level-components/Table/TableHeader';
 import LandingBanner from '@/sections/Banners/LandingBanner';
