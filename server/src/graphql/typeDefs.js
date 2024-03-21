@@ -16,13 +16,18 @@ module.exports = gql`
 
 	input InitiativeUpdate {
 		title: String
-        post: String
-        reason: String
-        summary: String
+		post: String
+		reason: String
+		summary: String
 	}
 
 	input InitiativeTab {
 		status: Int
+	}
+
+	input InitiativeMembers {
+		initiativeId: ID!
+		userId: String!
 	}
 
 	type InitiativesPagination {
@@ -74,6 +79,8 @@ module.exports = gql`
 		createdInitiative(input: InitiativeCreate): Message
 		updateInitiative(id: ID!, input: InitiativeUpdate): Message
 		deleteInitiative(id: ID!): Message
+		joinInitiative(input: InitiativeMembers): Initiative
+		leaveInitiative(input: InitiativeMembers): Initiative
 	}
 
 	type Message {
