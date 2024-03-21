@@ -71,9 +71,9 @@ const resolvers = {
 	Mutation: {
 		createdInitiative: async (_, { input }) => {
 			try {
-				let { post, reason, summary, title, department} = input;
+				let { post, reason, title, department, created_by} = input;
 
-				if(!post || !reason || !summary || !title || !department) {
+				if(!post || !reason || created_by || !title || !department) {
 					throw new Error('Missing required field/s');
 				}
 
@@ -82,7 +82,7 @@ const resolvers = {
 				return { 
 					data: newInitiative, 
 					success: true, 
-					message: 'Post updated successfully', 
+					message: 'Initiative created successfully.', 
 					error: null 
 				}
 

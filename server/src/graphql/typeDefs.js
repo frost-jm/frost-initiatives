@@ -10,7 +10,7 @@ module.exports = gql`
 		post: String!
 		created_by: Int!
 		reason: String!
-		summary: String!
+		summary: String
 		department: [String]!
 		members: String!
 	}
