@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
+const { ApolloServerPluginCacheControl } = require('apollo-server-core');
 
 require('dotenv').config();
 
@@ -17,8 +18,12 @@ const server = new ApolloServer({
 	cors: true,
 	typeDefs,
 	resolvers,
+	cache: {
+		max: 100,
+		ttl: 3600,
+	},
+	plugins: [ApolloServerPluginCacheControl({ defaultMaxAge: 60 })],
 	context: ({ req }) => {
-	
 		const user = req.headers.authorization ? true : false;
 
 		if (!user) {
