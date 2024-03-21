@@ -3,7 +3,6 @@ import {
 	Sample,
 	Logo,
 	SubmitButton,
-	Input,
 	StatusDropdown,
 	ActionDropdown,
 	Tabs,
