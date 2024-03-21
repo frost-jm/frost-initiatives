@@ -79,8 +79,8 @@ module.exports = gql`
 		createdInitiative(input: InitiativeCreate): Message
 		updateInitiative(id: ID!, input: InitiativeUpdate): Message
 		deleteInitiative(id: ID!): Message
-		joinInitiative(input: InitiativeMembers): Initiative
-		leaveInitiative(input: InitiativeMembers): Initiative
+		joinInitiative(input: InitiativeMembers): Message
+		leaveInitiative(input: InitiativeMembers): Message
 	}
 
 	type Message {

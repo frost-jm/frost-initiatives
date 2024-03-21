@@ -167,18 +167,45 @@ const resolvers = {
 			try {
 				const { initiativeId, userId } = input;
 
-				console.log('initiative', initiativeId);
-				console.log('id', userId);
+				await joinInitiative(initiativeId, userId);
 
-				const initiative = await joinInitiative(initiativeId, userId);
-				return initiative;
+				const currentInitiative = await getInitiativeById(initiativeId);
+				return {
+					data: currentInitiative,
+					success: true,
+					message: 'Succesfully joined the initiative',
+					error: null,
+				};
 			} catch (error) {
-				console.error(error);
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to join the initiative',
+					error: error,
+				};
 			}
 		},
-		leaveInitiative: async (_, { initiativeId }, { currentUser }) => {
-			const initiative = await leaveInitiative(initiativeId, currentUser.id);
-			return initiative;
+		leaveInitiative: async (_, { input }) => {
+			try {
+				const { initiativeId, userId } = input;
+
+				await leaveInitiative(initiativeId, userId);
+
+				const currentInitiative = await getInitiativeById(initiativeId);
+				return {
+					data: currentInitiative,
+					success: true,
+					message: 'Succesfully left the initiative',
+					error: null,
+				};
+			} catch (error) {
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to leave the initiative',
+					error: error,
+				};
+			}
 		},
 	},
 	Query: {

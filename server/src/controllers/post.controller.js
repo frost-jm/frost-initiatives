@@ -54,25 +54,21 @@ const deleteInitiative = async (id) => {
 };
 
 const joinInitiative = async (initiativeId, userId) => {
-	console.log('init', initiativeId);
-	console.log('user', userId);
 	try {
 		const [initiative] = await poolQuery('SELECT members FROM initiatives WHERE id = ?', [initiativeId]);
 		if (!initiative) {
 			throw new Error('Initiative not found');
 		}
 
-		const currentMembers = initiative.members || '';
+		let currentMembers = initiative.members || '';
+
+		currentMembers = currentMembers.trim().replace(/^,*/, '');
+
 		const members = new Set(currentMembers.split(',').map((id) => id.trim()));
 		if (!members.has(userId)) {
 			members.add(userId);
 
-			await poolQuery('UPDATE initiatives SET members = ? WHERE id = ?'[(Array.from(members).join(','), initiativeId)]);
-		}
-
-		const updatedInitiative = await poolQuery('SELECT * FROM initiatives WHERE id = ?', [initiativeId]);
-		if (!updatedInitiative) {
-			throw new Error('Updated initiative not found');
+			await poolQuery(`UPDATE initiatives SET members = ? WHERE id = ?`, [Array.from(members).join(','), initiativeId]);
 		}
 
 		return true;
@@ -88,7 +84,9 @@ const leaveInitiative = async (initiativeId, userId) => {
 			throw new Error('Initiative not found');
 		}
 
-		const currentMembers = initiative.members || '';
+		let currentMembers = initiative.members || '';
+
+		currentMembers = currentMembers.trim();
 
 		const members = new Set(currentMembers.split(',').map((id) => id.trim()));
 		if (members.has(userId)) {
