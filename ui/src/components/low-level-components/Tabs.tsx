@@ -144,7 +144,7 @@ const Tabs = ({ data }: TabsProp) => {
 					</MUITabs>
 				</Box>
 			</Box>
-			<Box overflow='auto'>
+			<Box>
 				{data.map((panels, index: number) => {
 					const { page: Component } = panels;
 					return (
