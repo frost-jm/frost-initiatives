@@ -71,13 +71,15 @@ const resolvers = {
 	Mutation: {
 		createdInitiative: async (_, { input }) => {
 			try {
-				let { post, reason, title, department, created_by, members} = input;
+				let { post, reason, title, department, created_by} = input;
 
-				if(!post || !reason || !created_by || !title || !department || !members) {
+				if( !post || !reason || !created_by || !title || !department ) {
 					throw new Error('Missing required field/s');
 				}
 
-				let newInitiative = await createInitiative(input);
+				let resultID = await createInitiative(input);
+				
+				let newInitiative = await getInitiativeById(resultID);
 
 				return { 
 					data: newInitiative, 
@@ -117,8 +119,10 @@ const resolvers = {
 
                	await updateInitiative(id, newInitiative);
 
+				let updatedInitiative = await getInitiativeById(current.id);
+
 				return { 
-					data: current.id, 
+					data: updatedInitiative, 
 					success: true, 
 					message: 'Initiative updated successfully', 
 					error: null 
@@ -147,14 +151,12 @@ const resolvers = {
 				await deleteInitiative(id);
 
 				return { 
-					data: id, 
 					success: true, 
 					message: 'Initiative deleted!', 
 					error: null 
 				}
 			} catch (error) {
 				return {
-					data: null, 
 					success: false, 
 					message: 'Initiative delete failed!', 
 					error: {

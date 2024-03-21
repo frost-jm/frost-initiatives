@@ -12,7 +12,6 @@ module.exports = gql`
 		reason: String!
 		summary: String
 		department: [String]!
-		members: String!
 	}
 
 	input InitiativeUpdate {

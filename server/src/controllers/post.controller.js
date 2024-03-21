@@ -31,7 +31,7 @@ const createInitiative = async (data) => {
 
 		const result = await poolQuery('INSERT INTO initiatives SET ?', [initiativeData]);
 
-		return initiativeData.id 
+		return result.insertId
 	} catch (error) {
 		throw error;
 	}
@@ -39,7 +39,7 @@ const createInitiative = async (data) => {
 
 const updateInitiative = async (id, data) => {
 	try {
- 		await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [data, id]);
+ 		const result = await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [data, id]);
 		
 	}  catch (error) {
 		throw error;
