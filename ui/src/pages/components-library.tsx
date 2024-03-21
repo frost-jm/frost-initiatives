@@ -84,9 +84,9 @@ import dummyData from '../testdata.json';
 const components = [
 	{ name: 'Sample Component', component: Sample },
 	{ name: 'Page logo', component: Logo },
-	{ name: 'Submit button', component: SubmitButton },
+	{ name: 'Submit button', component: SubmitButton, props: { action: console.log('submit button') } },
 	{ name: 'Status Dropdown', component: StatusDropdown },
-	{ name: 'Input Field', component: Input },
+	{ name: 'Input Field', component: Input, props: { variant: 'normal' } },
 	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
 	{ name: 'Department Dropdown', component: DepartmentDropdown },
