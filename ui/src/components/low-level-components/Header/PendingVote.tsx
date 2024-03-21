@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import { Buttons, ButtonType } from '@/components/index';
 
 interface PendingVoteProp {
-	type: 'fixed' | 'block';
+	type?: 'fixed' | 'block';
 }
 
 const PendingVote = ({ type = 'block' }: PendingVoteProp) => {
@@ -67,8 +67,18 @@ const PendingVote = ({ type = 'block' }: PendingVoteProp) => {
 						},
 					}}
 				>
-					<Buttons type={ButtonType.Join}>Yes</Buttons>
-					<Buttons type={ButtonType.Cancel}>No</Buttons>
+					<Buttons
+						type={ButtonType.Join}
+						action={() => console.log('Join')}
+					>
+						Yes
+					</Buttons>
+					<Buttons
+						type={ButtonType.Cancel}
+						action={() => console.log('No')}
+					>
+						No
+					</Buttons>
 				</Box>
 			</Box>
 		</Box>
