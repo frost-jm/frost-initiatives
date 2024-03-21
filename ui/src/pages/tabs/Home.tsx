@@ -3,6 +3,7 @@ import TableHeader from '@/components/low-level-components/Table/TableHeader';
 import Form from '@/components/high-level-components/Form/Form';
 import Modal from '@/components/low-level-components/Modal/Modal';
 import { useMode } from '@/context/DataContext';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
 	const { modalOpen, setModalOpen, setDepartment, setFormData } = useMode();
@@ -68,6 +69,7 @@ const Home = () => {
 					</Box>
 				</Box>
 			</Box>
+			<Link to='/components-library'>Go to Components Library</Link>
 			<Modal
 				isOpen={modalOpen}
 				onClose={handleModalClose}
