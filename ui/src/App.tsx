@@ -12,6 +12,7 @@ const App = () => {
 		loginWithRedirect();
 		return null;
 	}
+
 	return (
 		<>
 			{isAuthenticated && user ? (

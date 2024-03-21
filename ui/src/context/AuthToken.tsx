@@ -9,7 +9,7 @@ interface AuthTokenData {
 
 export const ApolloContext = createContext<AuthTokenData>({} as AuthTokenData);
 
-export const AuthTokenProvider = ({ children }: any) => {
+export const AuthTokenProvider = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<Auth0Provider
 			domain={import.meta.env.VITE_AUTH0_DOMAIN}
@@ -23,22 +23,39 @@ export const AuthTokenProvider = ({ children }: any) => {
 	);
 };
 
-const TokenHandler = ({ children }: any) => {
-	const { getAccessTokenSilently } = useAuth0();
+const TokenHandler = ({ children }: { children: React.ReactNode }) => {
+	const { getAccessTokenSilently, isAuthenticated, getIdTokenClaims } = useAuth0();
 	const [token, setToken] = useState<string | undefined>('');
 
-	const getToken = async () => {
-		try {
-			const token = await getAccessTokenSilently();
-			setToken(token);
-		} catch (error) {
-			console.error(error);
-		}
-	};
-
 	useEffect(() => {
-		getToken();
-	}, [token]);
+		const fetchData = async () => {
+			try {
+				if (isAuthenticated) {
+					const idToken = await getIdTokenClaims();
+					setToken(idToken?.__raw);
+				}
+			} catch (error) {
+				console.error('Error fetching ID token:', error);
+			}
+		};
+
+		fetchData();
+
+		const tokenRefreshTimer = setInterval(async () => {
+			try {
+				if (isAuthenticated) {
+					await getAccessTokenSilently();
+					console.log('Access token renewed.');
+				}
+			} catch (error) {
+				console.error('Error renewing access token:', error);
+			}
+		}, 300000);
+
+		return () => {
+			clearInterval(tokenRefreshTimer);
+		};
+	}, [isAuthenticated, getIdTokenClaims, getAccessTokenSilently]);
 
 	const client = NewApolloClient(token ? token : undefined);
 
