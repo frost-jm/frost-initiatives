@@ -26,6 +26,7 @@ import PaginationControl from '@/components/low-level-components/Pagination';
 import TableFilter from '@/components/low-level-components/Header/TableFilter';
 import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
 import PitchGroup from '@/components/low-level-components/Card/PitchGroup';
+import VoteTooltip from '@/components/low-level-components/Tooltip/VoteTooltip';
 import Sample from '@/components/sample';
 
 export {
@@ -56,4 +57,5 @@ export {
 	InitiativesTable,
 	PitchGroup,
 	PaginationControl,
+	VoteTooltip,
 };

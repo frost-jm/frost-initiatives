@@ -1,15 +1,13 @@
 import { Box } from '@mui/material';
-import TableLabel from './TableLabel';
-import TableContent from './TableContent';
-import TableContentWTitle from './TableContentWTitle';
-import Avatar from '../Avatar/Avatar';
-import ProgressBar from '../ProgressBar';
-import Buttons, { ButtonType } from '../Button/Buttons';
+
 import { tableHeads, tableContents } from './dummyData';
+import { useState } from 'react';
+import { VoteTooltip, TableContentWTitle, TableContent, TableLabel, Avatar, ProgressBar, Buttons, ButtonType } from '@/components';
 
 const InitiativesTable = () => {
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 	return (
-		<Box sx={{ borderRadius: '4px', maxWidth: '1040px', overflow: 'auto' }}>
+		<Box sx={{ borderRadius: '4px', maxWidth: '1040px' }}>
 			<Box
 				sx={{
 					display: 'flex',
@@ -22,8 +20,11 @@ const InitiativesTable = () => {
 					boxSizing: 'border-box',
 				}}
 			>
-				{tableHeads.map((tableHead) => (
-					<Box sx={{ minWidth: tableHead.width }}>
+				{tableHeads.map((tableHead, key) => (
+					<Box
+						sx={{ minWidth: tableHead.width }}
+						key={key}
+					>
 						<TableLabel label={tableHead.label} />
 					</Box>
 				))}
@@ -40,12 +41,14 @@ const InitiativesTable = () => {
 			>
 				{tableContents.map((tableContent, index) => (
 					<Box
+						key={index}
 						sx={{
 							backgroundColor: index % 2 !== 0 ? '#ffffff' : '#F7FAFC',
 							display: 'flex',
 							alignItems: 'flex-start',
 							gap: '32px',
 							padding: '12px 24px',
+							position: 'relative',
 						}}
 					>
 						<Box sx={{ minWidth: '68px' }}>
@@ -65,7 +68,17 @@ const InitiativesTable = () => {
 						<Box sx={{ minWidth: '100px' }}>
 							<TableContent>{tableContent.dept}</TableContent>
 						</Box>
-						<Box sx={{ minWidth: '240px', margin: 'auto' }}>
+						<Box
+							sx={{ minWidth: '240px', margin: 'auto' }}
+							onMouseEnter={() => setHoveredIndex(index)}
+							onMouseLeave={() => setHoveredIndex(null)}
+						>
+							{hoveredIndex === index && (
+								<Box sx={{ position: 'absolute', bottom: '95%', zIndex: '99' }}>
+									<VoteTooltip />
+								</Box>
+							)}
+
 							<ProgressBar
 								count={tableContent.count}
 								totalHeads={tableContent.totalHeads}
