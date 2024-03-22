@@ -115,21 +115,6 @@ const PaginationControl = ({ totalPages }: PostListData) => {
               background: 'transparent',
             },
           },
-          '.Mui-selected': {
-            // borderTop: '2px solid #576BCD',
-            borderRadius: '0',
-            color: '#576BCD',
-            background: 'transparent!important',
-            '&::before': {
-              content: '""',
-              background: '#576BCD',
-              width: '100%',
-              height: '2px',
-              display: 'block',
-              position: 'absolute',
-              top: '-1px',
-            },
-          },
           [paginationArrows]: {
             content: 'url("./icons/pagination-arrow.svg")',
             display: 'block',
@@ -148,12 +133,29 @@ const PaginationControl = ({ totalPages }: PostListData) => {
             fontFamily: 'Figtree-SemiBold, sans-serif',
             fontSize: '16px',
             lineHeight: '1.5',
+            color: '#1D244F',
           },
           [nextArrowText]: {
             content: '"Next"',
             fontFamily: 'Figtree-SemiBold, sans-serif',
             fontSize: '16px',
             lineHeight: '1.5',
+            color: '#1D244F',
+          },
+          '.Mui-selected': {
+            // borderTop: '2px solid #576BCD',
+            borderRadius: '0',
+            background: 'transparent!important',
+            color: '#576BCD!important',
+            '&::before': {
+              content: '""',
+              background: '#576BCD',
+              width: '100%',
+              height: '2px',
+              display: 'block',
+              position: 'absolute',
+              top: '-1px',
+            },
           },
         }}
       >

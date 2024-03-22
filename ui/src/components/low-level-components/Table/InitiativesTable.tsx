@@ -29,8 +29,8 @@ const InitiativesTable = () => {
           boxSizing: 'border-box',
         }}
       >
-        {tableHeads.map((tableHead, key) => (
-          <Box sx={{ minWidth: tableHead.width }} key={key}>
+        {tableHeads.map((tableHead, index) => (
+          <Box sx={{ minWidth: tableHead.width }} key={index}>
             <TableLabel label={tableHead.label} />
           </Box>
         ))}

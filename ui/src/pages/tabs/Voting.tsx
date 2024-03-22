@@ -15,7 +15,7 @@ const Voting = () => {
           <TableFilter />
         </Box>
         <InitiativesTable />
-        <Box sx={{ paddingTop: '24px' }}>
+        <Box>
           <Pagination />
         </Box>
       </Box>

@@ -11,12 +11,13 @@ interface ButtonTypeProps {
 	type: ButtonType;
 	maxWidth?: string;
 	fontSize?: string;
+	borderRadius?: string;
 	background?: string;
 	children: React.ReactNode;
-	action: () => void;
+	action?: () => void;
 }
 
-const Buttons = ({ type, children, maxWidth, action, background, fontSize }: ButtonTypeProps) => {
+const Buttons = ({ type, children, maxWidth, action, background, fontSize, borderRadius }: ButtonTypeProps) => {
 	let btnBgColor, btnColor, btnBorder, btnPadding;
 
 	switch (type) {
@@ -49,7 +50,7 @@ const Buttons = ({ type, children, maxWidth, action, background, fontSize }: But
 				maxWidth: maxWidth ? maxWidth : '64px',
 				width: '100%',
 				boxSizing: 'border-box',
-				borderRadius: '4px',
+				borderRadius: borderRadius ? borderRadius : '4px',
 				textAlign: 'center',
 				fontFamily: 'Figtree-SemiBold, sans-serif',
 				fontWeight: '600',
@@ -61,7 +62,7 @@ const Buttons = ({ type, children, maxWidth, action, background, fontSize }: But
 				border: btnBorder,
 				padding: btnPadding,
 			}}
-			onClick={() => action}
+			onClick={action}
 		>
 			{children}
 		</Box>
