@@ -76,20 +76,6 @@ const PaginationControl = ({ totalPages }: PostListData) => {
 				margin='24px auto 0'
 				color='var(--input-color)'
 				sx={{
-					'.Mui-selected': {
-						// borderTop: '2px solid #576BCD',
-						borderRadius: '0',
-						background: 'transparent!important',
-						'&::before': {
-							content: '""',
-							background: '#576BCD',
-							width: '100%',
-							height: '2px',
-							display: 'block',
-							position: 'absolute',
-							top: '-1px',
-						},
-					},
 					'.MuiPagination-ul > li:first-of-type': {
 						marginRight: 'auto',
 					},
@@ -151,6 +137,21 @@ const PaginationControl = ({ totalPages }: PostListData) => {
 						fontSize: '16px',
 						lineHeight: '1.5',
 						color: '#1D244F',
+					},
+					'.Mui-selected': {
+						// borderTop: '2px solid #576BCD',
+						borderRadius: '0',
+						background: 'transparent!important',
+						color: '#576BCD!important',
+						'&::before': {
+							content: '""',
+							background: '#576BCD',
+							width: '100%',
+							height: '2px',
+							display: 'block',
+							position: 'absolute',
+							top: '-1px',
+						},
 					},
 				}}
 			>
