@@ -1,5 +1,5 @@
 const { getAllComments, getCommentByID, updateComment, deleteComment, insertComment } = require('../controllers/comment.controller');
-const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative } = require('../controllers/post.controller');
+const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative, joinInitiative, leaveInitiative } = require('../controllers/post.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -229,6 +229,50 @@ const resolvers = {
 						message: error.message,
 						code: 'INITIATIVE_DELETE_ERROR',
 					},
+				};
+			}
+		},
+		joinInitiative: async (_, { input }) => {
+			try {
+				const { initiativeId, userId } = input;
+
+				await joinInitiative(initiativeId, userId);
+
+				const currentInitiative = await getInitiativeById(initiativeId);
+				return {
+					data: currentInitiative,
+					success: true,
+					message: 'Succesfully joined the initiative',
+					error: null,
+				};
+			} catch (error) {
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to join the initiative',
+					error: error,
+				};
+			}
+		},
+		leaveInitiative: async (_, { input }) => {
+			try {
+				const { initiativeId, userId } = input;
+
+				await leaveInitiative(initiativeId, userId);
+
+				const currentInitiative = await getInitiativeById(initiativeId);
+				return {
+					data: currentInitiative,
+					success: true,
+					message: 'Succesfully left the initiative',
+					error: null,
+				};
+			} catch (error) {
+				return {
+					data: null,
+					success: false,
+					message: 'Failed to leave the initiative',
+					error: error,
 				};
 			}
 		},

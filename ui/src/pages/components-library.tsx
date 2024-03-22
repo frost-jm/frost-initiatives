@@ -26,6 +26,7 @@ import {
 	InitiativesTable,
 	PitchGroup,
 	PaginationControl,
+	VoteTooltip,
 } from '@/components/index';
 
 import { Home, Archived, ForImplementation, Implemented, InProgress, Voting } from '@/pages/tabs';
@@ -230,6 +231,10 @@ const components = [
 			currentPage: 1,
 			handlePageChange: console.log('test'), // page change logic,
 		},
+	},
+	{
+		name: 'Vote Tooltip',
+		component: VoteTooltip,
 	},
 ];
 

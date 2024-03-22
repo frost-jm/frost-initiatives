@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Avatar as MUIAvatar, Box } from '@mui/material';
+import { Avatar as MUIAvatar, Box, Tooltip } from '@mui/material';
 
 interface AvatarData {
 	firstName: string;
@@ -7,7 +7,7 @@ interface AvatarData {
 }
 
 interface AvatarProps {
-	type: 'single' | 'multiple' | 'table';
+	type: 'single' | 'multiple' | 'table' | 'tooltip';
 	label?: boolean;
 	data: AvatarData[] | AvatarData | null;
 }
@@ -142,6 +142,69 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						>
 							...
 						</MUIAvatar>
+					)}
+				</Box>
+			)}
+			{type === 'tooltip' && Array.isArray(data) && (
+				<Box
+					sx={{
+						display: 'flex',
+					}}
+				>
+					{data &&
+						data.slice(0, 14).map((avatar, index) => {
+							const name = avatar.firstName + ' ' + avatar.lastName;
+							const initials = avatar.firstName[0];
+							const bgColor = colors[index % colors.length];
+
+							return (
+								<Tooltip
+									title={name}
+									key={index}
+								>
+									<MUIAvatar
+										sx={{
+											width: '22px',
+											height: '22px',
+											background: bgColor,
+											fontFamily: 'Figtree-SemiBold, sans-serif',
+											fontSize: '12px',
+											lineHeight: '14.4px',
+											color: '#ffffff',
+											border: '1px solid #ffffff',
+											'&:not(:first-of-type)': {
+												marginLeft: '-6px',
+											},
+										}}
+									>
+										{initials}
+									</MUIAvatar>
+								</Tooltip>
+							);
+						})}
+					{data && data.length > 14 && (
+						<Tooltip
+							title={data
+								.slice(14)
+								.map((avatar) => avatar.firstName + ' ' + avatar.lastName)
+								.join(', ')}
+						>
+							<MUIAvatar
+								sx={{
+									width: '22px',
+									height: '22px',
+									background: 'grey',
+									fontFamily: 'Figtree-SemiBold, sans-serif',
+									fontSize: '12px',
+									lineHeight: '14.4px',
+									color: '#ffffff',
+									border: '1px solid #ffffff',
+									marginLeft: '-4px',
+								}}
+							>
+								...
+							</MUIAvatar>
+						</Tooltip>
 					)}
 				</Box>
 			)}

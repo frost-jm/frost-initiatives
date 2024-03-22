@@ -143,12 +143,14 @@ const PaginationControl = ({ totalPages }: PostListData) => {
 						fontFamily: 'Figtree-SemiBold, sans-serif',
 						fontSize: '16px',
 						lineHeight: '1.5',
+						color: '#1D244F',
 					},
 					[nextArrowText]: {
 						content: '"Next"',
 						fontFamily: 'Figtree-SemiBold, sans-serif',
 						fontSize: '16px',
 						lineHeight: '1.5',
+						color: '#1D244F',
 					},
 				}}
 			>

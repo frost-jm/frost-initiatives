@@ -25,6 +25,11 @@ module.exports = gql`
 		status: Int
 	}
 
+	input InitiativeMembers {
+		initiativeId: ID!
+		userId: String!
+	}
+
 	type InitiativesPagination {
 		items: [Initiative]!
 	}
@@ -106,6 +111,8 @@ module.exports = gql`
 		removeComment(commentID: ID!): Message
 		updateInitiative(id: ID!, input: InitiativeUpdate): Message
 		deleteInitiative(id: ID!): Message
+		joinInitiative(input: InitiativeMembers): Message
+		leaveInitiative(input: InitiativeMembers): Message
 	}
 
 	type Message {
