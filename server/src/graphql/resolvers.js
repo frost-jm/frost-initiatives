@@ -1,5 +1,6 @@
 const { getAllComments, getCommentByID, updateComment, deleteComment, insertComment } = require('../controllers/comment.controller');
 const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative, joinInitiative, leaveInitiative } = require('../controllers/post.controller');
+const { setVote } = require('../controllers/vote.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -276,6 +277,17 @@ const resolvers = {
 				};
 			}
 		},
+		setVote:async (_, { userId, initiativeId }) => {
+			try {
+
+				if(!userId || !initiativeId) {
+					throw new Error('Missing required field/s');
+				}
+
+			} catch (error) {
+
+			}
+		}
 	},
 	Query: {
 		initiatives: async (_, { status, pagination }) => {
