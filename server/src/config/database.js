@@ -6,6 +6,7 @@ const pool = mysql.createPool({
 	password: process.env.DB_PASSWORD || '',
 	database: process.env.DB_NAME,
 	connectionLimit: 10,
+	port: process.env.DB_PORT || 3306,
 });
 
 const keepConnectionAlive = async () => {
