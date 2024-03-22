@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mui/material';
 import EmptyState from '@/sections/EmptyState';
 import VotingBanner from '@/sections/Banners/VotingBanner';
