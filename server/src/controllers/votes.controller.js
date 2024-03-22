@@ -15,11 +15,12 @@ const getVotes = async (id) => {
 
 const setVote = async (userId, initiativeId) => { 
     try {
+		let result = await poolQuery(`INSERT INTO votes (initiativeID, userID) VALUES (?, ?)`, [userId, initiativeId]);
 
-
+		console.log(result);
+		
     } catch (error) { 
-
-
+		throw error;
     }
 
 }
