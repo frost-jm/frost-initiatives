@@ -15,7 +15,7 @@ const getVotes = async (id) => {
 
 const setVote = async (userId, initiativeId) => { 
     try {
-		let result = await poolQuery(`INSERT INTO votes (initiativeID, userID) VALUES (?, ?)`, [userId, initiativeId]);
+		let result = await poolQuery(`INSERT INTO votes (initiativeID, userID) VALUES (?, ?)`, [initiativeId, userId]);
 
 		console.log(result);
 		

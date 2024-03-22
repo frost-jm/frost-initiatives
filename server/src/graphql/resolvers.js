@@ -279,6 +279,7 @@ const resolvers = {
 		},
 		setVote: async (_, { userId, initiativeId }) => {
 			try {
+
 				if(!userId || !initiativeId) {
 					throw new Error('Missing required field/s');
 				}
