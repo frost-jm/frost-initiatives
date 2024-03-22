@@ -12,14 +12,22 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 			open={isOpen}
 			onClose={onClose}
 			sx={{
+				'.MuiModal-backdrop': {
+					background: '#EFF4F7',
+				},
+				'.MuiDialog-scrollPaper': {
+					alignItems: 'flex-start',
+					paddingTop: '40px',
+				},
 				'.MuiDialog-paperFullWidth': {
 					boxShadow: 'none',
 				},
 				'.MuiDialog-paper': {
 					width: '100%',
 					maxWidth: '980px',
-					height: '790px',
 					borderRadius: '12px',
+					boxShadow: 'none',
+					margin: '0 auto',
 				},
 				'.MuiDialogContent-root': {
 					padding: '0 0 24px',
