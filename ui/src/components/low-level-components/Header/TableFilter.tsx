@@ -65,7 +65,13 @@ const sortData = [
   },
 ];
 
-const TableFilter = () => {
+const TableFilter = ({
+  tableheader = 'Initiatives for Voting',
+  quantity = 5,
+}: {
+  tableheader?: string;
+  quantity: number;
+}) => {
   return (
     <Box>
       <Box
@@ -76,7 +82,7 @@ const TableFilter = () => {
         }}
       >
         <Box sx={{ width: '100%' }}>
-          <TableHeader text='Initiatives for Voting' quantity='5' />
+          <TableHeader text={tableheader} quantity={quantity} />
         </Box>
 
         <Box
