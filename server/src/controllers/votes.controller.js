@@ -15,9 +15,7 @@ const getVotes = async (id) => {
 
 const getVoteByID = async (id) => {
 	try {
-		let query = `SELECT * FROM votes WHERE id = ${id}`;
-
-		let result = await poolQuery(query, id);
+		let result = await poolQuery(`SELECT * FROM votes WHERE id = ? `, [id]);
 
 		return result[0];
 	} catch (error) {
