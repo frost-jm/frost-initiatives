@@ -12,6 +12,7 @@ const resolvers = require('./src/graphql/resolvers');
 const { errorHandler } = require('./src/utils/error');
 
 const app = express();
+
 app.use(cors());
 
 const server = new ApolloServer({
@@ -40,20 +41,19 @@ const server = new ApolloServer({
 async function startServer() {
 	await server.start();
 	server.applyMiddleware({ app, path: '/graphql' });
-
-	// Middleware
-	app.use(express.json(), express.urlencoded({ extended: true }));
-
-	app.use(errorHandler);
-
-	app.get('/', (req, res) => {
-		res.json({ message: 'Welcome to the Initiatives API' });
-	});
-
-	const PORT = process.env.PORT || 8081;
-	app.listen(PORT, () => {
-		console.log(`GraphQL server running at http://localhost:${PORT}/graphql`);
-	});
 }
+
+app.use(express.json(), express.urlencoded({ extended: true }));
+
+app.use(errorHandler);
+
+app.get('/', (req, res) => {
+	res.json({ message: 'Welcome to the Initiatives API' });
+});
+
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => {
+	console.log(`GraphQL server running at http://localhost:${PORT}/graphql`);
+});
 
 startServer();
