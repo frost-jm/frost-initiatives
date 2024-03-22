@@ -56,6 +56,8 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 		}
 	}, [currentUser, loading, data, user]);
 
+	console.log('current User', currentUser);
+
 	return <UserContext.Provider value={{ currentUser }}>{children}</UserContext.Provider>;
 };
 
