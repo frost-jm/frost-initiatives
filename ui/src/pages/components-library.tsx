@@ -3,7 +3,6 @@ import {
 	Sample,
 	Logo,
 	SubmitButton,
-	Input,
 	StatusDropdown,
 	ActionDropdown,
 	Tabs,
@@ -86,8 +85,8 @@ const components = [
 	{ name: 'Page logo', component: Logo },
 	{ name: 'Submit button', component: SubmitButton, props: { action: console.log('submit button') } },
 	{ name: 'Status Dropdown', component: StatusDropdown },
-	{ name: 'Input Field', component: Input, props: { variant: 'normal' } },
-	{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
+	//{ name: 'Input Field', component: Input, props: { variant: 'normal' } },
+	//{ name: 'Comment Field', component: Input, props: { variant: 'comment' } },
 	{ name: 'Action Dropdown', component: ActionDropdown },
 	{ name: 'Department Dropdown', component: DepartmentDropdown },
 	{

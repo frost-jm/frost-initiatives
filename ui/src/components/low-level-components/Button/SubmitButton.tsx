@@ -12,9 +12,10 @@ interface SubmitButtonProps {
 	lineHeight?: string;
 }
 
-const SubmitButton = ({ text = 'Submit an initiative' }: SubmitButtonProps) => {
+const SubmitButton = ({ text = 'Submit an initiative', action }: SubmitButtonProps) => {
 	return (
 		<Box
+			onClick={action}
 			sx={{
 				backgroundColor: 'var(--secondary-color)',
 				color: 'var(--primary-color)',

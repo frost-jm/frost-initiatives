@@ -9,7 +9,7 @@ interface AvatarData {
 interface AvatarProps {
 	type: 'single' | 'multiple' | 'table' | 'tooltip';
 	label?: boolean;
-	data: AvatarData[] | AvatarData;
+	data: AvatarData[] | AvatarData | null;
 }
 
 const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#2c3e50', '#27ae60', '#c0392b'];
@@ -31,6 +31,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						lineHeight: '18px',
 						gap: '8px',
 						color: 'rgba(29, 36, 79, 0.8)',
+						userSelect: 'none',
 					}}
 				>
 					<MUIAvatar
@@ -40,7 +41,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 							background: 'green',
 							fontFamily: 'Figtree-SemiBold, sans-serif',
 							fontSize: '12px',
-							lineHeight: '14.4px',
+							lineHeight: '1',
 						}}
 					>
 						{singleUserData.firstName[0]}

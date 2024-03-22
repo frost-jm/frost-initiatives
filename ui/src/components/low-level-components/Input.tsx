@@ -1,16 +1,14 @@
 import { Avatar, Input as MInput, Box } from '@mui/material';
-import { useState } from 'react';
+
 interface InputProps {
 	variant: 'normal' | 'comment';
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	value: string;
+	name?: string;
+	isFocused?: boolean;
 }
 
-const Input = ({ variant = 'normal' }: InputProps) => {
-	const [input, setInput] = useState<string>('');
-
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setInput(event.target.value);
-	};
-
+const Input = ({ variant = 'normal', onChange, value, name, isFocused }: InputProps) => {
 	const commonStyles = {
 		width: '100%',
 		boxSizing: 'border-box',
@@ -52,7 +50,10 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 		}
 	};
 	return (
-		<Box position='relative'>
+		<Box
+			position='relative'
+			width='100%'
+		>
 			{variant === 'comment' && (
 				<>
 					<Avatar sx={{ width: 24, height: 24, fontFamily: 'Figtree-SemiBold,sans-serif', fontSize: '12px', lineHeight: '14.4px', background: '#EA5825', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>H</Avatar>
@@ -60,8 +61,8 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 						placeholder='Add a comment'
 						autoComplete='off'
 						sx={styles()}
-						onChange={handleInputChange}
-						value={input}
+						onChange={onChange}
+						value={value}
 					/>
 				</>
 			)}
@@ -70,11 +71,13 @@ const Input = ({ variant = 'normal' }: InputProps) => {
 					placeholder='Required'
 					autoComplete='off'
 					sx={styles()}
-					onChange={handleInputChange}
-					value={input}
+					onChange={onChange}
+					value={value}
+					name={name}
+					endAdornment={!isFocused && <span style={{ color: 'red', position: 'absolute', left: '70px' }}>*</span>}
 				/>
 			)}
-			{variant === 'comment' && input.trim() !== '' && (
+			{variant === 'comment' && value.trim() !== '' && (
 				<img
 					src='./icons/comment-icon.svg'
 					style={{
