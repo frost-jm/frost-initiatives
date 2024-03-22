@@ -1,6 +1,6 @@
 const { getAllComments, getCommentByID, updateComment, deleteComment, insertComment } = require('../controllers/comment.controller');
 const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative, joinInitiative, leaveInitiative } = require('../controllers/post.controller');
-const { setVote } = require('../controllers/votes.controller');
+const { getVoteByID, setVote } = require('../controllers/votes.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -277,17 +277,37 @@ const resolvers = {
 				};
 			}
 		},
-		setVote: async (_, { userId, initiativeId }) => {
+		setVote: async (_, { userID, initiativeID }) => {
 			try {
-
-				if(!userId || !initiativeId) {
+				if(!userID || !initiativeID) {
 					throw new Error('Missing required field/s');
 				}
 
-				await setVote(userId, initiativeId);
+				let existingVote = await poolQuery('SELECT * FROM votes WHERE initiativeID = ? AND userID = ?', [initiativeID, userID])
 
+				if(existingVote.length > 0) {
+					throw new Error('User has already voted for this initiative!');
+				}
+
+				let voteID = await setVote(userID, initiativeID);
+				let vote = await getVoteByID(voteID);
+
+				return {
+					data: vote,
+					success: true,
+					message: 'Vote was successful!',
+					error: null,
+				};
 			} catch (error) {
-
+				return {
+					data: null,
+					success: false,
+					message: "Failed to set vote",
+					error: {
+						message: error.message,
+						code: 'VOTE_SET_FAILED',
+					},
+				};
 			}
 		}
 	},

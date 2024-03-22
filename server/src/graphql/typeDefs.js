@@ -113,6 +113,7 @@ module.exports = gql`
 		deleteInitiative(id: ID!): Message
 		joinInitiative(input: InitiativeMembers): Message
 		leaveInitiative(input: InitiativeMembers): Message
+		getVotes(initativeID: ID!) : Message
 		setVote(userID: ID!, initiativeID: ID!) : Message
 	}
 
