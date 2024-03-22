@@ -3,19 +3,20 @@ import { gql } from '@apollo/client';
 export const GET_INITIATIVES = gql`
 	query Initiatives($status: InitiativeTab) {
 		initiatives(status: $status) {
-		items {
-			created_by
-			created_date
-			deleted
-			id
-			members
-			post
-			reason
-			status
-			summary
-			title
-			updated_date
-		}
+			items {
+				created_by
+				created_date
+				deleted
+				id
+				members
+				department
+				post
+				reason
+				status
+				summary
+				title
+				updated_date
+			}
 		}
 	}
 `;
@@ -36,7 +37,7 @@ export const GET_INITIATIVE_BY_ID = gql`
 			updated_date
 		}
 	}
-`
+`;
 
 export const CREATE_INITIATIVE = gql`
 	mutation Mutation($input: InitiativeCreate) {
@@ -50,7 +51,7 @@ export const CREATE_INITIATIVE = gql`
 			}
 		}
 	}
-`
+`;
 
 export const UPDATE_INITIATIVE = gql`
 	mutation UpdateInitiative($updateInitiativeId: ID!, $input: InitiativeUpdate) {
@@ -64,7 +65,7 @@ export const UPDATE_INITIATIVE = gql`
 			}
 		}
 	}
-`
+`;
 
 export const DELETE_INITIATIVE = gql`
 	mutation DeleteInitiative($deleteInitiativeId: ID!) {
@@ -78,7 +79,7 @@ export const DELETE_INITIATIVE = gql`
 			}
 		}
 	}
-`
+`;
 
 export const GET_DEPARTMENTS = gql`
 	query {

@@ -17,6 +17,7 @@ interface UserData {
 
 interface UserContextData {
 	currentUser: UserData | null;
+	hailstorm: UserData[];
 }
 
 interface UserProviderProps {
@@ -41,24 +42,22 @@ const GET_HAILSTORM = gql`
 export const UserProvider = ({ children }: UserProviderProps) => {
 	const [currentUser, setCurrentUser] = useState<UserData | null>(null);
 
-	const { loading, data } = useQuery(GET_HAILSTORM);
+	const { loading, data: hailstorm } = useQuery(GET_HAILSTORM);
 	const { user } = useAuth0();
 
 	useEffect(() => {
-		if (!currentUser && !loading && data) {
-			if (data.hailstormData && user) {
-				const hs_user: UserData = data.hailstormData.find((hs_user: UserData) => hs_user.email === user.email);
+		if (!currentUser && !loading && hailstorm) {
+			if (hailstorm.hailstormData && user) {
+				const hs_user: UserData = hailstorm.hailstormData.find((hs_user: UserData) => hs_user.email === user.email);
 				if (hs_user) {
 					const userWithDepartment = assignDepartments([hs_user], departmentToPositions)[0];
 					setCurrentUser(userWithDepartment);
 				}
 			}
 		}
-	}, [currentUser, loading, data, user]);
+	}, [currentUser, loading, hailstorm, user]);
 
-	console.log('current User', currentUser);
-
-	return <UserContext.Provider value={{ currentUser }}>{children}</UserContext.Provider>;
+	return <UserContext.Provider value={{ currentUser, hailstorm }}>{children}</UserContext.Provider>;
 };
 
 export const useUser = (): UserContextData => {

@@ -49,6 +49,7 @@ module.exports = gql`
 		post: String!
 		reason: String!
 		created_by: Int!
+		department: String
 		members: String!
 		created_date: DateTime!
 		updated_date: DateTime!

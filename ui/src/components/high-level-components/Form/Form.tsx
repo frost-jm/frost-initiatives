@@ -5,9 +5,11 @@ import { Box, Input as MInput } from '@mui/material';
 import Editor from '../Editor/Editor';
 import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
 import React, { useEffect, useState } from 'react';
-import { formatDate } from '@/utils/formatDate';
+import { formatDate } from '@/utils/helpers';
 import { useMode } from '@/context/DataContext';
 import { useUser } from '@/context/UserContext';
+import { useMutation } from '@apollo/client';
+import { CREATE_INITIATIVE, UPDATE_INITIATIVE } from '@/graphql/queries';
 
 const Form = () => {
 	const { department, formData, setFormData, setDisabled, disabled } = useMode();
@@ -15,9 +17,36 @@ const Form = () => {
 	const [isFocus, setIsFocus] = useState<boolean>(false);
 
 	// Handle  Mutation for creating post
+
+	const [createPost] = useMutation(CREATE_INITIATIVE);
+	const [updatePost] = useMutation(UPDATE_INITIATIVE);
+
 	const handleSubmit = async () => {
 		try {
-			console.log('submit');
+			const { created_by, department, post, reason, title } = formData;
+
+			//const isUpdate = false;
+			const mutation = createPost;
+
+			const variables = {
+				input: {
+					post,
+					title,
+					department,
+					reason,
+					created_by,
+				},
+			};
+
+			const { data } = await mutation({
+				variables,
+			});
+
+			console.log('data', data);
+
+			// if (data.createdPost && !data.createdPost.success) {
+			// 	console.log('data', data);
+			// }
 		} catch (error) {
 			console.error('Error creating post:', error);
 		}
@@ -30,7 +59,7 @@ const Form = () => {
 		setFormData((prevFormData: any) => ({
 			...prevFormData,
 			department: department,
-			created_by: currentUser && currentUser.userId,
+			created_by: currentUser && parseInt(currentUser.userId),
 		}));
 	}, [department]);
 
