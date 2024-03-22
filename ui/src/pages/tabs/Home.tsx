@@ -69,7 +69,7 @@ const Home = () => {
 					</Box>
 				</Box>
 			</Box>
-			<Link to='/components-library'>Go to Components Library</Link>
+
 			<Modal
 				isOpen={modalOpen}
 				onClose={handleModalClose}
@@ -77,6 +77,9 @@ const Home = () => {
 				<Form />
 			</Modal>
 			<Button onClick={handleModalOpen}>Open Modal</Button>
+			<Box>
+				<Link to='/components-library'>Go to Components Library</Link>
+			</Box>
 		</>
 	);
 };
