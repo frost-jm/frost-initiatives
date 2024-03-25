@@ -41,10 +41,16 @@ const DepartmentDropdown = () => {
 	};
 
 	useEffect(() => {
-		if (selectedInitiative) {
-			setSelectedDeptNames(selectedInitiative.department.split(','));
+		if (selectedInitiative && data) {
+			const departmentNames = selectedInitiative.department.split(',');
+			const selectedDepartments = data.departments.filter((department) => departmentNames.some((name) => name.trim() === department.department.trim()));
+
+			const selectedDepartmentIds = selectedDepartments.map((department) => department.id);
+
+			setDepartment(selectedDepartmentIds);
+			setSelectedDeptNames(selectedDepartments);
 		}
-	}, [selectedInitiative]);
+	}, [selectedInitiative, setDepartment, data]);
 
 	return (
 		<FormControl

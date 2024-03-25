@@ -29,6 +29,12 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 		};
 	}, []);
 
+	// useEffect(() => {
+	// 	if (mode === 'view') {
+	// 		setPopupOpen(false);
+	// 	}
+	// }, [mode, popupOpen]);
+
 	return (
 		<Dialog
 			open={isOpen}
@@ -92,7 +98,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 									top: '29px',
 								}}
 							>
-								<ActionDropdown />
+								<ActionDropdown setIsOpen={setPopupOpen} />
 							</Box>
 						)}
 					</Box>

@@ -10,7 +10,7 @@ import { useMode, FormData } from '@/context/DataContext';
 Quill.register('modules/imageResize', ImageResize);
 
 const Editor = () => {
-	const { formData, setFormData, selectedInitiative } = useMode();
+	const { formData, setFormData, selectedInitiative, mode } = useMode();
 
 	const icons = Quill.import('ui/icons');
 	icons['bold'] =
@@ -46,8 +46,10 @@ const Editor = () => {
 			post: content,
 		}));
 	};
+
 	return (
 		<ReactQuill
+			readOnly={mode === 'view'}
 			modules={modules}
 			formats={formats}
 			onChange={handleChange}

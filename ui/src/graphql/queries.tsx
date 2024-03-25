@@ -40,7 +40,7 @@ export const GET_INITIATIVE_BY_ID = gql`
 `;
 
 export const CREATE_INITIATIVE = gql`
-	mutation Mutation($input: InitiativeCreate) {
+	mutation Mutation($input: InitiativeInput) {
 		createdInitiative(input: $input) {
 			data
 			message
@@ -54,7 +54,7 @@ export const CREATE_INITIATIVE = gql`
 `;
 
 export const UPDATE_INITIATIVE = gql`
-	mutation UpdateInitiative($updateInitiativeId: ID!, $input: InitiativeUpdate) {
+	mutation UpdateInitiative($updateInitiativeId: ID!, $input: InitiativeInput) {
 		updateInitiative(id: $updateInitiativeId, input: $input) {
 			data
 			message

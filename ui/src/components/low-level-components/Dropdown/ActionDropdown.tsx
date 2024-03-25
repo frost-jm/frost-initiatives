@@ -3,8 +3,8 @@ import { useMutation } from '@apollo/client';
 import { Box } from '@mui/material';
 import { DELETE_INITIATIVE } from '@/graphql/queries';
 
-const ActionDropdown = () => {
-	const { setMode, selectedInitiative, setModalOpen, setActionNotif, setActionMessage } = useMode();
+const ActionDropdown = ({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) => {
+	const { setMode, selectedInitiative, setSelectedInitiative, setModalOpen, setActionNotif, setActionMessage } = useMode();
 	const [deletePost] = useMutation(DELETE_INITIATIVE);
 
 	const actions = [
@@ -12,8 +12,9 @@ const ActionDropdown = () => {
 			type: 'Edit post',
 			icon: './icons/edit-icon.svg',
 			onClick: () => {
-				console.log('edit');
 				setMode('edit');
+				setSelectedInitiative(null);
+				setIsOpen(false);
 			},
 		},
 		{
