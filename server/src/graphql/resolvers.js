@@ -331,7 +331,7 @@ const resolvers = {
 					throw new Error('Initiative not found');
 				}
 
-				return initiative[0];
+				return initiative;
 			} catch (error) {
 				throw error;
 			}
