@@ -78,7 +78,6 @@ const Form = () => {
 	const date = new Date();
 	const currentDate = formatDate(date);
 
-	console.log('disabled', disabled);
 	useEffect(() => {
 		if (selectedInitiative) {
 			setFormData((prevFormData: FormData) => ({
@@ -224,7 +223,7 @@ const Form = () => {
 								}}
 								value={selectedInitiative?.reason || formData?.reason || ''}
 								name='reason'
-								isFocused={(selectedInitiative && (mode === 'edit' || mode === 'view')) || (!selectedInitiative && mode === 'edit' && formData?.reason.trim() !== '') || isFocus}
+								isFocused={(mode === 'edit' || mode === 'view') && formData?.reason.trim() !== '' ? true : isFocus}
 							/>
 						</Box>
 
