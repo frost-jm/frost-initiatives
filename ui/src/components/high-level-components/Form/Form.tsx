@@ -223,7 +223,7 @@ const Form = () => {
 								}}
 								value={selectedInitiative?.reason || formData?.reason || ''}
 								name='reason'
-								isFocused={selectedInitiative || mode === 'edit' ? true : isFocus}
+								isFocused={(selectedInitiative && (mode === 'edit' || mode === 'view')) || (!selectedInitiative && mode === 'edit' && formData?.reason.trim() !== '') || isFocus}
 							/>
 						</Box>
 
