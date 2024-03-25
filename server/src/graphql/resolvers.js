@@ -1,6 +1,6 @@
 const { getAllComments, getCommentByID, updateComment, deleteComment, insertComment } = require('../controllers/comment.controller');
 const { getAllInitiatives, getInitiativeById, createInitiative, updateInitiative, deleteInitiative, joinInitiative, leaveInitiative } = require('../controllers/post.controller');
-const { getVoteByID, setVote } = require('../controllers/votes.controller');
+const { getVotes, getVoteByID, setVote } = require('../controllers/votes.controller');
 
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
@@ -380,6 +380,27 @@ const resolvers = {
 				return comments;
 			} catch (error) {
 				throw new Error('Failed to fetch comments', error);
+			}
+		},
+		getVotes: async (_, { initativeID }) => { 
+			try {
+				let result = await getVotes(initativeID);
+				
+				return {
+					data: result,
+					success: true,
+                    message: 'Vote count retrieved successfully',
+                    error: null,
+				}
+			} catch (error) { 
+				return {
+					success: false,
+					message: error.message,
+					error: {
+						message: error.message,
+						code: 'GET_VOTES_ERROR',
+					},
+				};
 			}
 		},
 	},
