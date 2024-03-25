@@ -1,13 +1,23 @@
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
+const { getVotes } = require('../controllers/votes.controller');
 
 const getAllInitiatives = async ({ status = 1 }) => {
 	try {
-		let query = `SELECT * FROM initiatives WHERE status = ${status}`;
+		let results = await poolQuery( `SELECT * FROM initiatives WHERE status = ?`, status);
+		let initiativesData = [];
 
-		let results = await poolQuery(query, status);
+		if(results.length > 0) {
+			initiativesData = await Promise.all(results.map(async (result) => {
+				let voteData = await getVotes(result.id);
+				return {
+					...result,
+					votes: voteData
+				};
+			}));
+		}
 
-		return results;
+		return initiativesData;
 	} catch (error) {
 		throw error;
 	}
