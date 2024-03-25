@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import ReactQuill from 'react-quill';
 import Quill from 'quill';
+//@ts-ignore
 import ImageResize from 'quill-image-resize-module-react';
 import 'react-quill/dist/quill.snow.css';
-import { useMode } from '@/context/DataContext';
+import { useMode, FormData } from '@/context/DataContext';
 
 Quill.register('modules/imageResize', ImageResize);
 
 const Editor = () => {
-	const { setFormData } = useMode();
+	const { formData, setFormData, selectedInitiative } = useMode();
 
 	const icons = Quill.import('ui/icons');
 	icons['bold'] =
@@ -41,8 +40,8 @@ const Editor = () => {
 	};
 	const formats = ['bold', 'italic', 'underline', 'list', 'bullet', 'image', 'link'];
 
-	const handleChange = (content: any, _delta: any, _source: any, _editor: any) => {
-		setFormData((prevFormData: any) => ({
+	const handleChange = (content: string) => {
+		setFormData((prevFormData: FormData) => ({
 			...prevFormData,
 			post: content,
 		}));
@@ -52,6 +51,7 @@ const Editor = () => {
 			modules={modules}
 			formats={formats}
 			onChange={handleChange}
+			value={formData?.post || selectedInitiative?.post || ''}
 			theme='snow'
 			placeholder='Input an abstract/description regarding your initiative'
 		/>

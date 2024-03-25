@@ -27,6 +27,8 @@ import TableFilter from '@/components/low-level-components/Header/TableFilter';
 import InitiativesTable from '@/components/low-level-components/Table/InitiativesTable';
 import PitchGroup from '@/components/low-level-components/Card/PitchGroup';
 import VoteTooltip from '@/components/low-level-components/Tooltip/VoteTooltip';
+import Modal from '@/components/low-level-components/Modal/Modal';
+import Form from '@/components/high-level-components/Form/Form';
 import Sample from '@/components/sample';
 
 export {
@@ -58,4 +60,6 @@ export {
 	PitchGroup,
 	PaginationControl,
 	VoteTooltip,
+	Modal,
+	Form,
 };

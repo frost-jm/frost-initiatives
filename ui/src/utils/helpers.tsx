@@ -2,8 +2,9 @@
 
 // Date Format: Jan. 01, 2024
 export function formatDate(date: Date): string {
+	const _this = new Date(date);
 	const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric', year: 'numeric' };
-	return date.toLocaleDateString('en-US', options);
+	return _this.toLocaleDateString('en-US', options);
 }
 
 // Date Format:  01/01/24
