@@ -241,6 +241,7 @@ const Form = () => {
 					>
 						<Box
 							sx={{
+								minWidth: '560px',
 								'.ql-container': {
 									width: '100%',
 									maxWidth: mode === 'view' ? '560px' : '100%',
