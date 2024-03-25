@@ -64,7 +64,18 @@ const createInitiative = async (data) => {
 
 const updateInitiative = async (id, data) => {
 	try {
-		const result = await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [data, id]);
+		let { department, ...initiativeData } = data;
+
+		await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [initiativeData, id]);
+
+		if (department && department.length > 0) {
+			await poolQuery('DELETE FROM initiative_departments WHERE initiative_id = ?', [id]);
+
+			const dept = department.map((deptId) => [id, deptId]);
+			await poolQuery('INSERT INTO initiative_departments (initiative_id, department_id) VALUES ?', [dept]);
+		}
+
+		return id;
 	} catch (error) {
 		throw error;
 	}
