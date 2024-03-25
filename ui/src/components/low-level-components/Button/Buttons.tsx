@@ -64,7 +64,6 @@ const Buttons = ({ type, children, maxWidth, action, background, fontSize, borde
 				border: btnBorder,
 				padding: btnPadding,
 				opacity: loading ? '0.2' : '1',
-				pointerEvents: loading ? 'none' : 'auto',
 			}}
 			onClick={action}
 		>

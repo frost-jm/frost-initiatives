@@ -72,8 +72,6 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 		}
 	}, [loading, hailstorm, colors]);
 
-	console.log('hailstorm', hailstormUsers);
-
 	return <UserContext.Provider value={{ currentUser, hailstorm, hailstormUsers }}>{children}</UserContext.Provider>;
 };
 

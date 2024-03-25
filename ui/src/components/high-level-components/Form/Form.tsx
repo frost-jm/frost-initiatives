@@ -78,6 +78,7 @@ const Form = () => {
 	const date = new Date();
 	const currentDate = formatDate(date);
 
+	console.log('disabled', disabled);
 	useEffect(() => {
 		if (selectedInitiative) {
 			setFormData((prevFormData: FormData) => ({
