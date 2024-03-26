@@ -11,12 +11,25 @@ async function sendEmail(comments) {
 
 		const { author, initiativeTitle } = comments[0];
 
+		const commenterColors = {};
+
 		const commentData = comments.map(({ commentor }) => {
+			let color;
+
+			if (commenterColors[commentor.name]) {
+				color = commenterColors[commentor.name];
+			} else {
+				const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#2c3e50', '#27ae60', '#c0392b'];
+				color = colors[Math.floor(Math.random() * colors.length)];
+				commenterColors[commentor.name] = color;
+			}
+
 			return {
 				commenter_name: commentor.name,
 				body: commentor.comment,
 				timestamp: formattedDate,
 				initials: commentor.initials,
+				color: color,
 			};
 		});
 
