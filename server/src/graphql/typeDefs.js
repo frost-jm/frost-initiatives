@@ -107,8 +107,8 @@ module.exports = gql`
 	}
 
 	input FilterParams {
-		department: ID!
-		byDate: String!
+		department: ID
+		byDate: String
 		byVoteCount: String
 	}
 

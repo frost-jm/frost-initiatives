@@ -6,10 +6,10 @@ const getAllInitiatives = async (
 	status = 1, 
 	pagination = {
 		page: 1,
-		limit: 2,
+		limit: 5,
 	},
 	filterParams = {
-		department: 1,
+		department: null,
 		byDate: 'latest',
 		byVoteCount: null,
 	}) => {
@@ -40,18 +40,19 @@ const getAllInitiatives = async (
 					p.status = ?
 				AND
 					p.deleted = false
-				AND 
-					id.department_id = ?
+				${department != null ? 'AND id.department_id = ?' : ''}
 				GROUP BY 
 					p.id
 				ORDER BY
-					p.created_date ${ byDate.toLowerCase() == "oldest" ? 'ASC' : 'DESC' }
+					p.created_date ${ byDate ? 
+						byDate.toLowerCase() == "oldest" ? 'ASC' : 'DESC' 
+						: 'DESC' }
 					${byVoteCount ? 
 						byVoteCount.toLowerCase() == 'most' ? ', VoteCount DESC' : ', VoteCount ASC'  
 						: '' 
 					}
 				LIMIT ?, ?;`;
-		
+
 			let countQuery = `
 				SELECT 
 					p.*,
@@ -70,15 +71,21 @@ const getAllInitiatives = async (
 					p.status = ?
 				AND
 					p.deleted = false
-				AND 
-					id.department_id = ?
+				${department != null ? 'AND id.department_id = ?' : ''}
 				GROUP BY 
 					p.id;`;
-					
-			let results = await poolQuery(query, [status, department, offset, limit]);
-			let count = await poolQuery(countQuery, [status, department]);
-
+				
+			let results;
+			let count;
 			let initiativesData = [];
+
+			if(department) {
+				results = await poolQuery(query, [status, department, offset, limit]);
+				count = await poolQuery(countQuery, [status, department]);
+			} else {
+				results = await poolQuery(query, [status, offset, limit]);
+				count = await poolQuery(countQuery, [status]);
+			}
 
 			if(results.length > 0) {
 				initiativesData = await Promise.all(results.map(async (result) => {
