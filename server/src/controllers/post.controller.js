@@ -1,11 +1,18 @@
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
 
-const getAllInitiatives = async ({ status = 1 }) => {
-	try {
-		let query = `
+const getAllInitiatives = async ( 
+	status = 1, 
+	pagination = {
+		page: 1,
+		limit: 2,
+	}) => {
+		try {
+			let { page, limit } = pagination;
+			let offset = (page - 1) * limit;
+			let query = `
 				SELECT 
-    			p.*,
+				p.*,
 				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
 				FROM 
 					initiatives p
@@ -18,18 +25,47 @@ const getAllInitiatives = async ({ status = 1 }) => {
 				ON 
 					id.department_id = d.id
 				WHERE 
-					p.status = 1
+					p.status = ?
+				AND
+					p.deleted = false
+				GROUP BY 
+					p.id
+				LIMIT ?, ?;`;
+
+			let countQuery = `
+				SELECT 
+				p.*,
+				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
+				FROM 
+					initiatives p
+				LEFT JOIN 
+					initiative_departments id 
+				ON 
+					p.id = id.initiative_id 
+				LEFT JOIN 
+					departments d 
+				ON 
+					id.department_id = d.id
+				WHERE 
+					p.status = ?
 				AND
 					p.deleted = false
 				GROUP BY 
 					p.id;`;
+					
+			let results = await poolQuery(query, [status, offset, limit]);
+			let count = await poolQuery(countQuery, [status]);
 
-		let results = await poolQuery(query, status);
-
-		return results;
-	} catch (error) {
-		throw error;
-	}
+			return {
+				items: results,
+				paginationData: {
+					page: page,
+					total: count.length,
+				}
+			};
+		} catch (error) {
+			throw error;
+		}
 };
 
 const getInitiativeById = async (id) => {

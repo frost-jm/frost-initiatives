@@ -281,10 +281,11 @@ const resolvers = {
 	Query: {
 		initiatives: async (_, { status, pagination }) => {
 			try {
-				let initiatives = await getAllInitiatives(status);
+				let {items, paginationData} = await getAllInitiatives(status, pagination);
 
 				return {
-					items: initiatives,
+					items: items,
+					pagination: paginationData
 				};
 			} catch (error) {
 				throw error;
