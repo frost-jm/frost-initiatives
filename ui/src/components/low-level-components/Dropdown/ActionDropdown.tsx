@@ -1,7 +1,7 @@
 import { useMode } from '@/context/DataContext';
 import { useMutation } from '@apollo/client';
 import { Box } from '@mui/material';
-import { DELETE_INITIATIVE, DELETE_COMMENT, EDIT_COMMENT } from '@/graphql/queries';
+import { DELETE_INITIATIVE, DELETE_COMMENT } from '@/graphql/queries';
 
 interface CommentData {
 	id: string;

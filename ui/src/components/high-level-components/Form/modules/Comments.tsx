@@ -119,6 +119,10 @@ const Comments = () => {
 
 	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (editableIndex === null && event.key === 'Enter') {
+			if (!formData?.comment) {
+				return;
+			}
+
 			handleAddComment();
 		}
 

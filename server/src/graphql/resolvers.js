@@ -14,7 +14,10 @@ const openai = new OpenAI({
 	apiKey: process.env.OPENAI_KEY,
 });
 
-const getSummarizedData = async (text) => {
+const pendingComments = [];
+let isSendingEmails = false;
+
+const getAnalyzedData = async (text) => {
 	let summary = '';
 	let startTime = Date.now();
 	let gpt_response = {
@@ -82,7 +85,11 @@ const resolvers = {
 
 				const insertedComment = await getCommentByID(commentId);
 
-				await sendEmail(input);
+				pendingComments.push(input);
+
+				if (pendingComments.length >= 5) {
+					await sendBatchEmails();
+				}
 
 				return { data: insertedComment, success: true, message: 'Comment added successfully', error: null };
 			} catch (error) {
@@ -279,13 +286,13 @@ const resolvers = {
 		},
 		setVote: async (_, { userID, initiativeID }) => {
 			try {
-				if(!userID || !initiativeID) {
+				if (!userID || !initiativeID) {
 					throw new Error('Missing required field/s');
 				}
 
-				let existingVote = await poolQuery('SELECT * FROM votes WHERE initiativeID = ? AND userID = ?', [initiativeID, userID])
+				let existingVote = await poolQuery('SELECT * FROM votes WHERE initiativeID = ? AND userID = ?', [initiativeID, userID]);
 
-				if(existingVote.length > 0) {
+				if (existingVote.length > 0) {
 					throw new Error('User has already voted for this initiative!');
 				}
 
@@ -302,22 +309,23 @@ const resolvers = {
 				return {
 					data: null,
 					success: false,
-					message: "Failed to set vote",
+					message: 'Failed to set vote',
 					error: {
 						message: error.message,
 						code: 'VOTE_SET_FAILED',
 					},
 				};
 			}
-		}
+		},
 	},
 	Query: {
-		initiatives: async (_, { status, pagination }) => {
+		initiatives: async (_, { status, pagination, filter }) => {
 			try {
-				let initiatives = await getAllInitiatives(status);
+				let {items, paginationData} = await getAllInitiatives(status, pagination, filter);
 
 				return {
-					items: initiatives,
+					items: items,
+					pagination: paginationData
 				};
 			} catch (error) {
 				throw error;
@@ -382,17 +390,17 @@ const resolvers = {
 				throw new Error('Failed to fetch comments', error);
 			}
 		},
-		getVotes: async (_, { initativeID }) => { 
+		getVotes: async (_, { initativeID }) => {
 			try {
 				let result = await getVotes(initativeID);
-				
+
 				return {
 					data: result,
 					success: true,
-                    message: 'Vote count retrieved successfully',
-                    error: null,
-				}
-			} catch (error) { 
+					message: 'Vote count retrieved successfully',
+					error: null,
+				};
+			} catch (error) {
 				return {
 					success: false,
 					message: error.message,
@@ -405,5 +413,28 @@ const resolvers = {
 		},
 	},
 };
+
+async function sendBatchEmails() {
+	if (pendingComments.length === 0 || isSendingEmails) {
+		return;
+	}
+
+	isSendingEmails = true;
+
+	const commentsToSend = [...pendingComments];
+	pendingComments.length = 0;
+	try {
+		await sendEmail(commentsToSend);
+
+		console.log('Batch emails sent successfully');
+	} catch (error) {
+		console.error('Error sending batch emails:', error);
+	} finally {
+		isSendingEmails = false;
+	}
+}
+
+//setInterval(sendBatchEmails, 5 * 60 * 1000);
+setInterval(sendBatchEmails, 1 * 60 * 1000);
 
 module.exports = resolvers;

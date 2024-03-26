@@ -25,6 +25,7 @@ module.exports = gql`
 
 	type InitiativesPagination {
 		items: [Initiative]!
+		pagination: PaginationData
 	}
 
 	type Comment {
@@ -77,6 +78,11 @@ module.exports = gql`
 		position: String
 	}
 
+	type PaginationData {
+		page: Int!
+        total: Int!
+	}
+
 	input CommentInput {
 		initiativeID: ID!
 		initiativeTitle: String!
@@ -95,8 +101,19 @@ module.exports = gql`
 		id: String!
 	}
 
+	input PaginationInput {
+		page: Int!
+        limit: Int!
+	}
+
+	input FilterParams {
+		department: ID
+		byDate: String
+		byVoteCount: String
+	}
+
 	type Query {
-		initiatives(status: InitiativeTab): InitiativesPagination
+		initiatives(status: InitiativeTab, pagination: PaginationInput, filter: FilterParams): InitiativesPagination
 		initiative(id: ID!): Initiative
 		departments: [Department]
 		status: [Status]
