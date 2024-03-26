@@ -14,14 +14,12 @@ interface ActionDropdownProps {
 	type: string;
 	commentData?: CommentData;
 	onEdit?: () => void;
-	inputValue?: string;
 }
 
-const ActionDropdown = ({ setIsOpen, type, commentData, onEdit, inputValue }: ActionDropdownProps) => {
+const ActionDropdown = ({ setIsOpen, type, commentData, onEdit }: ActionDropdownProps) => {
 	const { setMode, selectedInitiative, setSelectedInitiative, setModalOpen, setActionNotif, setActionMessage } = useMode();
 	const [deletePost] = useMutation(DELETE_INITIATIVE);
 	const [deleteComment] = useMutation(DELETE_COMMENT);
-	const [editComment] = useMutation(EDIT_COMMENT);
 
 	const handleEditClick = () => {
 		if (type === 'modal') {

@@ -37,7 +37,7 @@ const Comments = () => {
 	const [openedIndex, setOpenedIndex] = useState(-1);
 	const [isEditable, setIsEditable] = useState<boolean>(false);
 	const [comments, setComments] = useState<string[]>([]);
-	const [selectedComment, setSelectedComment] = useState();
+	const [selectedComment, setSelectedComment] = useState<Comment | null>(null);
 
 	const [editableIndex, setEditableIndex] = useState<number | null>(null);
 
@@ -81,7 +81,7 @@ const Comments = () => {
 			const mutation = editComment;
 
 			const variables = {
-				commentId: selectedComment?.id,
+				commentId: selectedComment && selectedComment.id,
 				newComment: getCurrentInputValue(),
 			};
 
@@ -138,7 +138,7 @@ const Comments = () => {
 		}
 	};
 
-	const handleShowAction = (index: number, data: any) => {
+	const handleShowAction = (index: number, data: Comment) => {
 		setOpenedIndex(index);
 
 		setSelectedComment(data);
@@ -272,7 +272,7 @@ const Comments = () => {
 												right: '0',
 												cursor: 'pointer',
 											}}
-											onClick={handleAddComment}
+											onClick={editableIndex !== null ? handleEditComment : handleAddComment}
 										/>
 									)}
 
@@ -305,7 +305,6 @@ const Comments = () => {
 											type='comment'
 											commentData={comment}
 											onEdit={() => handleEditClick(index)}
-											inputValue={getCurrentInputValue()}
 										/>
 									</Box>
 								)}
