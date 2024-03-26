@@ -14,9 +14,10 @@ interface ActionDropdownProps {
 	type: string;
 	commentData?: CommentData;
 	onEdit?: () => void;
+	inputValue?: string;
 }
 
-const ActionDropdown = ({ setIsOpen, type, commentData, onEdit }: ActionDropdownProps) => {
+const ActionDropdown = ({ setIsOpen, type, commentData, onEdit, inputValue }: ActionDropdownProps) => {
 	const { setMode, selectedInitiative, setSelectedInitiative, setModalOpen, setActionNotif, setActionMessage } = useMode();
 	const [deletePost] = useMutation(DELETE_INITIATIVE);
 	const [deleteComment] = useMutation(DELETE_COMMENT);
@@ -28,7 +29,6 @@ const ActionDropdown = ({ setIsOpen, type, commentData, onEdit }: ActionDropdown
 			setSelectedInitiative(null);
 		} else {
 			onEdit?.();
-			handleEditComment();
 		}
 		setIsOpen(false);
 	};
@@ -69,27 +69,6 @@ const ActionDropdown = ({ setIsOpen, type, commentData, onEdit }: ActionDropdown
 			}
 		} catch (error) {
 			console.error('Error', error);
-		}
-	};
-
-	const handleEditComment = async () => {
-		try {
-			const mutation = editComment;
-
-			const variables = {
-				commentId: commentData?.id,
-				newComment: '',
-			};
-
-			const { data } = await mutation({
-				variables,
-			});
-
-			if (data.addComment && data.addComment.success) {
-				//
-			}
-		} catch (error) {
-			console.error('Error adding comment:', error);
 		}
 	};
 

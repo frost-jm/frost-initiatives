@@ -3,7 +3,7 @@ import { useMode, FormData } from '@/context/DataContext';
 import { useUser } from '@/context/UserContext';
 import { Box, Input as MInput } from '@mui/material';
 import { getEmailOfUserId } from '@/utils/helpers';
-import { ADD_COMMENT, EDIT_COMMENT, GET_COMMENTS, GET_INITIATIVE_BY_ID } from '@/graphql/queries';
+import { ADD_COMMENT, GET_COMMENTS, EDIT_COMMENT, GET_INITIATIVE_BY_ID } from '@/graphql/queries';
 import { useMutation, useQuery } from '@apollo/client';
 
 import { formatTimestamp, getNameForUserId } from '@/utils/helpers';
@@ -16,6 +16,7 @@ interface Comment {
 	created_date: Date;
 	initiativeID: string;
 }
+
 const Comments = () => {
 	const { mode, setFormData, formData, selectedInitiative, resetForm } = useMode();
 	const { currentUser, hailstorm } = useUser();
@@ -36,6 +37,8 @@ const Comments = () => {
 	const [openedIndex, setOpenedIndex] = useState(-1);
 	const [isEditable, setIsEditable] = useState<boolean>(false);
 	const [comments, setComments] = useState<string[]>([]);
+	const [selectedComment, setSelectedComment] = useState();
+
 	const [editableIndex, setEditableIndex] = useState<number | null>(null);
 
 	const handleAddComment = async () => {
@@ -73,35 +76,72 @@ const Comments = () => {
 		}
 	};
 
-	const handleEditComment = (index: number, newValue: string) => {
+	const handleEditComment = async () => {
+		try {
+			const mutation = editComment;
+
+			const variables = {
+				commentId: selectedComment?.id,
+				newComment: getCurrentInputValue(),
+			};
+
+			const { data } = await mutation({
+				variables,
+			});
+
+			if (data.editComment && data.editComment.success) {
+				refetch();
+				setEditableIndex(null);
+				setIsEditable(false);
+			}
+		} catch (error) {
+			console.error('Error adding comment:', error);
+		}
+	};
+
+	const handleGetCommentValue = (index: number, newValue: string) => {
 		const updatedComments = [...comments];
 		updatedComments[index] = newValue;
 		setComments(updatedComments);
+	};
+
+	const getCurrentInputValue = () => {
+		if (editableIndex !== null) {
+			return comments[editableIndex];
+		}
+		return '';
+	};
+
+	const handleEditClick = (index: number) => {
+		setIsEditable(!isEditable);
 		setEditableIndex(index);
 	};
 
-	const handleEditClick = () => {
-		setIsEditable(!isEditable);
-	};
-
 	const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter') {
+		if (editableIndex === null && event.key === 'Enter') {
 			handleAddComment();
 		}
 
-		if (event.key === 'Escape' && editableIndex !== null) {
-			setComments((prevComments) => {
-				const updatedComments = [...prevComments];
-				updatedComments[editableIndex] = data.comments[editableIndex].comment;
-				return updatedComments;
-			});
-			setEditableIndex(null);
-			setIsEditable(false);
+		if (editableIndex !== null) {
+			if (event.key === 'Escape') {
+				setComments((prevComments) => {
+					const updatedComments = [...prevComments];
+					updatedComments[editableIndex] = data.comments[editableIndex].comment;
+					return updatedComments;
+				});
+				setEditableIndex(null);
+				setIsEditable(false);
+			}
+			if (event.key === 'Enter') {
+				handleEditComment();
+			}
 		}
 	};
 
-	const handleShowAction = (index: number) => {
+	const handleShowAction = (index: number, data: any) => {
 		setOpenedIndex(index);
+
+		setSelectedComment(data);
 	};
 
 	useEffect(() => {
@@ -125,19 +165,20 @@ const Comments = () => {
 	}, []);
 
 	return (
-		<Box
-			sx={{
-				padding: '0 58px',
-				display: mode === 'view' ? 'block' : 'none',
-			}}
-		>
-			{data &&
-				data.comments.map((comment: Comment, index: number) => {
-					const getCommentorName = getNameForUserId(hailstorm, comment.author);
-					const { firstName, lastName } = getCommentorName;
-					const currentUser = user ? parseInt(user) : user;
-					return (
-						<>
+		<>
+			<Box
+				sx={{
+					padding: '0 58px',
+					display: mode === 'view' ? 'block' : 'none',
+				}}
+			>
+				{data &&
+					data.comments.map((comment: Comment, index: number) => {
+						const getCommentorName = getNameForUserId(hailstorm, comment.author);
+						const { firstName, lastName } = getCommentorName;
+						const currentUser = user ? parseInt(user) : user;
+
+						return (
 							<Box
 								key={index}
 								sx={{
@@ -149,7 +190,7 @@ const Comments = () => {
 										right: '0',
 										top: '16px',
 										cursor: 'pointer',
-										display: comment.author === currentUser ? 'block' : 'none',
+										display: comment.author === currentUser && !(isEditable && index === editableIndex) ? 'block' : 'none',
 									},
 								}}
 							>
@@ -158,6 +199,7 @@ const Comments = () => {
 										display: 'flex',
 										gap: '8px',
 										alignItems: 'center',
+										userSelect: 'none',
 									}}
 								>
 									<Avatar
@@ -184,6 +226,7 @@ const Comments = () => {
 											marginTop: '4px',
 											fontSize: '10px',
 											paddingLeft: '33px',
+											userSelect: 'none',
 											span: {
 												color: 'var(--input-color)',
 												fontFamily: 'Figtree-SemiBold,sans-serif',
@@ -193,12 +236,14 @@ const Comments = () => {
 								>
 									<MInput
 										value={comments[index] !== undefined ? comments[index] : comment.comment}
-										onChange={(event) => handleEditComment(index, event.target.value)}
+										onChange={(event) => {
+											handleGetCommentValue(index, event.target.value);
+										}}
 										onKeyDown={handleKeyPress}
 										name='update-comment'
-										readOnly={!isEditable}
+										readOnly={editableIndex !== index}
 										autoComplete='off'
-										autoFocus={isEditable}
+										autoFocus={editableIndex === index}
 										sx={{
 											caretColor: isEditable ? 'initial' : 'transparent',
 											position: 'relative',
@@ -242,7 +287,7 @@ const Comments = () => {
 									className='comment-kebab'
 									src='./icons/kebab.svg'
 									alt='kebab'
-									onClick={() => handleShowAction(index)}
+									onClick={() => handleShowAction(index, comment)}
 								/>
 								{openedIndex === index && (
 									<Box
@@ -259,30 +304,31 @@ const Comments = () => {
 											setIsOpen={() => setOpenedIndex(-1)}
 											type='comment'
 											commentData={comment}
-											onEdit={handleEditClick}
+											onEdit={() => handleEditClick(index)}
+											inputValue={getCurrentInputValue()}
 										/>
 									</Box>
 								)}
 							</Box>
-						</>
-					);
-				})}
+						);
+					})}
 
-			<Input
-				variant='comment'
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-					setFormData((prevFormData: FormData) => ({
-						...prevFormData,
-						comment: e.target.value,
-					}));
-				}}
-				value={formData?.comment}
-				name='comment'
-				currentAvatarUser={currentUser && currentUser}
-				handlePressEnter={handleKeyPress}
-				handleAddComment={handleAddComment}
-			/>
-		</Box>
+				<Input
+					variant='comment'
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						setFormData((prevFormData: FormData) => ({
+							...prevFormData,
+							comment: e.target.value,
+						}));
+					}}
+					value={formData?.comment}
+					name='comment'
+					currentAvatarUser={currentUser && currentUser}
+					handlePressEnter={handleKeyPress}
+					handleAddComment={handleAddComment}
+				/>
+			</Box>
+		</>
 	);
 };
 
