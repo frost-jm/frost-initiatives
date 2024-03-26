@@ -49,6 +49,13 @@ module.exports = gql`
 		deleted: Boolean!
 		status: Int!
 		summary: String!
+		votes: Votes!
+	}
+
+	type Votes {
+		voted: [Int]
+		notVoted: [Int]
+		maxVotes: Int
 	}
 
 	type Department {
@@ -96,6 +103,7 @@ module.exports = gql`
 		hailstormData: [User]
 		commentID(commentID: ID!): Comment
 		comments(postID: ID!): [Comment]!
+		getVotes(initativeID: ID!) : Message
 	}
 
 	type Mutation {
@@ -107,6 +115,7 @@ module.exports = gql`
 		deleteInitiative(id: ID!): Message
 		joinInitiative(input: InitiativeMembers): Message
 		leaveInitiative(input: InitiativeMembers): Message
+		setVote(userID: ID!, initiativeID: ID!) : Message
 	}
 
 	type Message {
