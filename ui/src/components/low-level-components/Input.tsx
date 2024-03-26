@@ -1,17 +1,21 @@
 import { useMode } from '@/context/DataContext';
+import { UserData, useUser } from '@/context/UserContext';
 import { Avatar, Input as MInput, Box } from '@mui/material';
-
+import { getAvatarColor } from '@/utils/helpers';
 interface InputProps {
 	variant: 'normal' | 'comment';
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string | undefined;
 	name?: string;
 	isFocused?: boolean;
-	currentAvatarUser?: string;
+	currentAvatarUser?: UserData | null;
+	handlePressEnter?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+	handleAddComment?: () => void;
 }
 
-const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAvatarUser = 'A' }: InputProps) => {
+const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAvatarUser, handlePressEnter, handleAddComment }: InputProps) => {
 	const { mode } = useMode();
+	const { hailstormUsers } = useUser();
 	const commonStyles = {
 		width: '100%',
 		boxSizing: 'border-box',
@@ -52,6 +56,7 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAv
 			};
 		}
 	};
+
 	return (
 		<Box
 			position='relative'
@@ -63,15 +68,30 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAv
 				},
 			}}
 		>
-			{variant === 'comment' && (
+			{variant === 'comment' && currentAvatarUser && (
 				<>
-					<Avatar sx={{ width: 24, height: 24, fontFamily: 'Figtree-SemiBold,sans-serif', fontSize: '12px', lineHeight: '14.4px', background: '#EA5825', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>{currentAvatarUser}</Avatar>
+					<Avatar
+						sx={{
+							width: 24,
+							height: 24,
+							fontFamily: 'Figtree-SemiBold,sans-serif',
+							fontSize: '12px',
+							lineHeight: '14.4px',
+							background: getAvatarColor(hailstormUsers, currentAvatarUser.firstName, currentAvatarUser.lastName) ?? '#EA5825',
+							position: 'absolute',
+							top: '50%',
+							transform: 'translateY(-50%)',
+						}}
+					>
+						{currentAvatarUser?.firstName[0]}
+					</Avatar>
 					<MInput
 						placeholder='Add a comment'
 						autoComplete='off'
 						sx={styles()}
 						onChange={onChange}
 						value={value}
+						onKeyDown={handlePressEnter}
 					/>
 				</>
 			)}
@@ -87,7 +107,7 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAv
 					endAdornment={!isFocused && <span style={{ color: 'red', position: 'absolute', left: '70px' }}>*</span>}
 				/>
 			)}
-			{variant === 'comment' && value.trim() !== '' && (
+			{variant === 'comment' && value?.trim() !== '' && (
 				<img
 					src='./icons/comment-icon.svg'
 					style={{
@@ -97,6 +117,7 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAv
 						right: '0',
 						cursor: 'pointer',
 					}}
+					onClick={handleAddComment}
 				/>
 			)}
 		</Box>

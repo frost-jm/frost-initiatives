@@ -98,3 +98,49 @@ export const GET_STATUS = gql`
 		}
 	}
 `;
+
+export const ADD_COMMENT = gql`
+	mutation AddComment($input: CommentInput!) {
+		addComment(input: $input) {
+			data
+			message
+			success
+			error {
+				code
+				message
+			}
+		}
+	}
+`;
+
+export const EDIT_COMMENT = gql`
+	mutation EditComment($commentId: ID!, $newComment: String!) {
+		editComment(commentID: $commentId, newComment: $newComment) {
+			data
+			message
+			success
+		}
+	}
+`;
+
+export const DELETE_COMMENT = gql`
+	mutation RemoveComment($commentId: ID!) {
+		removeComment(commentID: $commentId) {
+			data
+			message
+			success
+		}
+	}
+`;
+
+export const GET_COMMENTS = gql`
+	query Comments($postId: ID!) {
+		comments(postID: $postId) {
+			author
+			comment
+			created_date
+			id
+			initiativeID
+		}
+	}
+`;
