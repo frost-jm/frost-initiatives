@@ -38,7 +38,7 @@ const getInitiativeById = async (id) => {
 
 		let result = await poolQuery(query, id);
 
-		return result[0];
+		return result;
 	} catch (error) {
 		throw error;
 	}

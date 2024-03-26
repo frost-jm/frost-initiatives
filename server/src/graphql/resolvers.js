@@ -73,16 +73,15 @@ const resolvers = {
 	Mutation: {
 		addComment: async (_, { input }) => {
 			try {
-				const { initiativeID, author, commentor } = input;
+				const { initiativeID, commentor } = input;
 
-				const { id: authorId } = author;
-				const { comment } = commentor;
+				const { comment, id } = commentor;
 
-				const commentId = await insertComment({ initiativeID, author: authorId, comment });
+				const commentId = await insertComment({ initiativeID, author: id, comment });
 
 				const insertedComment = await getCommentByID(commentId);
 
-				await sendEmail(input);
+				// await sendEmail(input);
 
 				return { data: insertedComment, success: true, message: 'Comment added successfully', error: null };
 			} catch (error) {
