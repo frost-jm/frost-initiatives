@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 export enum ButtonType {
 	View = 'View',
@@ -15,9 +15,10 @@ interface ButtonTypeProps {
 	background?: string;
 	children: React.ReactNode;
 	action?: () => void;
+	loading?: boolean;
 }
 
-const Buttons = ({ type, children, maxWidth, action, background, fontSize, borderRadius }: ButtonTypeProps) => {
+const Buttons = ({ type, children, maxWidth, action, background, fontSize, borderRadius, loading }: ButtonTypeProps) => {
 	let btnBgColor, btnColor, btnBorder, btnPadding;
 
 	switch (type) {
@@ -49,6 +50,7 @@ const Buttons = ({ type, children, maxWidth, action, background, fontSize, borde
 			sx={{
 				maxWidth: maxWidth ? maxWidth : '64px',
 				width: '100%',
+				minWidth: loading ? '94px' : 'unset',
 				boxSizing: 'border-box',
 				borderRadius: borderRadius ? borderRadius : '4px',
 				textAlign: 'center',
@@ -61,10 +63,20 @@ const Buttons = ({ type, children, maxWidth, action, background, fontSize, borde
 				backgroundColor: background ? background : btnBgColor,
 				border: btnBorder,
 				padding: btnPadding,
+				opacity: loading ? '0.2' : '1',
 			}}
 			onClick={action}
 		>
-			{children}
+			{loading ? (
+				<CircularProgress
+					size={13}
+					sx={{
+						color: 'var(--primary-color)',
+					}}
+				/>
+			) : (
+				children
+			)}
 		</Box>
 	);
 };

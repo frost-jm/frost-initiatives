@@ -45,3 +45,8 @@ body {
 body::-webkit-scrollbar {
 	display: none;
 }
+
+.MuiSnackbarContent-root {
+	background-color: #576bcd !important;
+	font-family: Figtree-Regular !important;
+}

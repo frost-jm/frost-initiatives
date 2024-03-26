@@ -1,31 +1,15 @@
 import { Box } from '@mui/material';
 import { SubmitButton } from '@/components';
-import Form from '@/components/high-level-components/Form/Form';
-import Modal from '@/components/low-level-components/Modal/Modal';
 import { useMode } from '@/context/DataContext';
 
 const EmptyState = () => {
-	const { modalOpen, setModalOpen, setDepartment, setFormData } = useMode();
+	const { setModalOpen, setMode } = useMode();
 
-	const resetForm = () => {
-		setFormData({
-			postId: '',
-			title: '',
-			post: '',
-			reason: '',
-			department: [],
-			members: '',
-			status: '',
-			created_by: '',
-			updated_at: '',
-		});
+	const handleModalOpen = () => {
+		setModalOpen(true);
+		setMode('create');
 	};
 
-	const handleModalClose = () => {
-		setModalOpen(false);
-		setDepartment([]);
-		resetForm();
-	};
 	return (
 		<>
 			<Box
@@ -71,16 +55,10 @@ const EmptyState = () => {
 				<Box sx={{ marginTop: '24px' }}>
 					<SubmitButton
 						text='Submit an initiative'
-						action={() => setModalOpen(true)}
+						action={handleModalOpen}
 					/>
 				</Box>
 			</Box>
-			<Modal
-				isOpen={modalOpen}
-				onClose={handleModalClose}
-			>
-				<Form />
-			</Modal>
 		</>
 	);
 };

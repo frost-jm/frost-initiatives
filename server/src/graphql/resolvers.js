@@ -170,7 +170,7 @@ const resolvers = {
 		},
 		updateInitiative: async (_, { id, input }) => {
 			try {
-				let { post, reason, summary, title } = input;
+				let { post, reason, title, department } = input;
 				let current = await getInitiativeById(id);
 
 				if (!current) {
@@ -180,7 +180,8 @@ const resolvers = {
 				let newInitiative = {
 					post: post || current.post,
 					reason: reason || current.reason,
-					summary: summary || current.summary,
+					//summary: summary || current.summary,
+					department: department || current.department,
 					title: title || current.title,
 					updated_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
 				};

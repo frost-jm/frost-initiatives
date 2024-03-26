@@ -5,19 +5,71 @@ import { Box, Input as MInput } from '@mui/material';
 import Editor from '../Editor/Editor';
 import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
 import React, { useEffect, useState } from 'react';
-import { formatDate } from '@/utils/formatDate';
-import { useMode } from '@/context/DataContext';
+import { formatDate } from '@/utils/helpers';
+import { useMode, FormData } from '@/context/DataContext';
 import { useUser } from '@/context/UserContext';
+import { useMutation } from '@apollo/client';
+import { CREATE_INITIATIVE, UPDATE_INITIATIVE } from '@/graphql/queries';
 
 const Form = () => {
-	const { department, formData, setFormData, setDisabled, disabled } = useMode();
+	const { department, formData, setFormData, setDisabled, disabled, selectedInitiative, mode, setModalOpen, setActionNotif, setMode, setActionMessage } = useMode();
 	const { currentUser } = useUser();
 	const [isFocus, setIsFocus] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	// Handle  Mutation for creating post
+
+	const [createPost] = useMutation(CREATE_INITIATIVE);
+	const [updatePost] = useMutation(UPDATE_INITIATIVE);
+
+	const isUpdate = mode === 'edit';
+
 	const handleSubmit = async () => {
 		try {
-			console.log('submit');
+			if (formData) {
+				const { created_by, department, post, reason, title } = formData;
+
+				// Set loading and submitting state to true
+				setLoading(true);
+
+				const mutation = mode === 'create' ? createPost : updatePost;
+
+				const variables = {
+					updateInitiativeId: isUpdate ? formData.postId || undefined : undefined,
+					input: {
+						post,
+						title,
+						department,
+						reason,
+						...(isUpdate ? {} : { created_by: created_by }),
+					},
+				};
+
+				const { data } = await mutation({
+					variables,
+				});
+
+				const handleSuccess = () => {
+					setActionNotif(true);
+					setLoading(false);
+					setMode('view');
+					if (!isUpdate) {
+						setTimeout(() => {
+							setModalOpen(false);
+						}, 1500);
+					}
+				};
+
+				if (data.createdInitiative && data.createdInitiative.success) {
+					setActionMessage(data.createdInitiative.message);
+					handleSuccess();
+				}
+
+				if (data.updateInitiative && data.updateInitiative.success) {
+					setActionMessage(data.updateInitiative.message);
+					handleSuccess();
+				}
+			}
 		} catch (error) {
 			console.error('Error creating post:', error);
 		}
@@ -27,27 +79,44 @@ const Form = () => {
 	const currentDate = formatDate(date);
 
 	useEffect(() => {
-		setFormData((prevFormData: any) => ({
-			...prevFormData,
-			department: department,
-			created_by: currentUser && currentUser.userId,
-		}));
-	}, [department]);
+		if (selectedInitiative) {
+			setFormData((prevFormData: FormData) => ({
+				...prevFormData,
+				postId: selectedInitiative.id,
+				title: selectedInitiative.title,
+				post: selectedInitiative.post,
+				reason: selectedInitiative.reason,
+				department: selectedInitiative.department,
+				created_by: '',
+				created_date: selectedInitiative.created_date,
+			}));
+		} else if (mode === 'create') {
+			setFormData((prevFormData: FormData) => ({
+				...prevFormData,
+				department: department,
+				created_by: currentUser && parseInt(currentUser.userId),
+			}));
+		} else {
+			setFormData((prevFormData: FormData) => ({
+				...prevFormData,
+				department: department,
+			}));
+		}
+	}, [selectedInitiative, department]);
 
 	useEffect(() => {
-		// Checking fields value
-		console.log('form data', formData);
+		if (formData) {
+			const requiredFields: (keyof FormData)[] = ['title', 'post', 'reason', 'department'];
 
-		const requiredFields = ['title', 'post', 'reason', 'department'];
+			const emptyFields = requiredFields.filter((field) => {
+				return field === 'department' ? !formData[field]?.length : !formData[field];
+			});
 
-		const emptyFields = requiredFields.filter((field) => !formData[field] || (field === 'department' && formData[field].length === 0));
-
-		if (emptyFields.length > 0 || formData.post.trim() === '<p><br></p>') {
-			setDisabled(true);
+			emptyFields.length > 0 || formData?.post?.trim() === '<p><br></p>' ? setDisabled(true) : setDisabled(false);
 		} else {
-			setDisabled(false);
+			setDisabled(true);
 		}
-	}, [formData]);
+	}, [formData, setDisabled]);
 
 	return (
 		<>
@@ -67,6 +136,7 @@ const Form = () => {
 							title: e.target.value,
 						}))
 					}
+					value={selectedInitiative?.title || formData?.title || ''}
 					sx={{
 						fontSize: '32px',
 						lineHeight: '1.5',
@@ -136,7 +206,7 @@ const Form = () => {
 										width: '1px',
 									}}
 								/>
-								{currentDate}
+								{selectedInitiative ? formatDate(selectedInitiative.created_date) : currentDate}
 							</Box>
 						</Box>
 						<Box>
@@ -151,9 +221,9 @@ const Form = () => {
 
 									e.target.value.trim() === '' ? setIsFocus(false) : setIsFocus(true);
 								}}
-								value={formData.reason}
+								value={selectedInitiative?.reason || formData?.reason || ''}
 								name='reason'
-								isFocused={isFocus}
+								isFocused={(mode === 'edit' || mode === 'view') && formData?.reason.trim() !== '' ? true : isFocus}
 							/>
 						</Box>
 
@@ -163,66 +233,115 @@ const Form = () => {
 						</Box>
 					</Box>
 					<Box
-						marginTop='24px'
 						sx={{
-							'.ql-container': {
-								height: '400px',
-								fontSize: '16px',
-								color: 'var(--input-color)',
-							},
-							'.ql-container.ql-snow': {
-								border: 'none',
-							},
-							'.ql-toolbar.ql-snow': {
-								border: 'unset',
-								borderTop: '1px solid #E9EDEE',
-								borderBottom: '1px solid #E9EDEE',
-								padding: '12px 0 12px 58px',
-								'@media screen and (max-width:767px)': {
-									padding: '12px 0',
-								},
-							},
-							'.ql-editor': {
-								lineHeight: '1.5',
-								padding: '24px 0',
-								'&::-webkit-scrollbar': {
-									display: 'none',
-								},
-								ol: {
-									fontFamily: 'Figtree-Regular',
-								},
-							},
-							'.ql-editor.ql-blank::before': {
-								color: 'rgba(29, 36, 79, 0.2)',
-								fontFamily: 'Figtree-Medium',
-								fontSize: '16px',
-								left: '0',
-							},
-							'.ql-snow.ql-toolbar button': {
-								padding: '0',
-								height: '100%',
-								width: 'max-content',
-								'&:not(:first-of-type)': {
-									marginLeft: '4px',
-								},
-							},
-							'.ql-toolbar.ql-snow .ql-formats': {
-								marginRight: '4px',
-							},
-							'.ql-snow .ql-toolbar button svg': {
-								display: 'unset',
-								height: 'unset',
-							},
+							display: mode === 'view' ? 'flex' : 'block',
+							gap: '24px',
+							padding: mode === 'view' ? '40px 0' : '24px 0',
 						}}
 					>
-						<Editor />
+						<Box
+							sx={{
+								minWidth: '560px',
+								'.ql-container': {
+									width: '100%',
+									maxWidth: mode === 'view' ? '560px' : '100%',
+									height: mode === 'view' ? 'auto' : '400px',
+									fontSize: '16px',
+									color: 'var(--input-color)',
+								},
+								'.ql-container.ql-snow': {
+									border: 'none',
+								},
+								'.ql-toolbar.ql-snow': {
+									display: mode === 'view' ? 'none' : 'block',
+									border: 'unset',
+									borderTop: '1px solid #E9EDEE',
+									borderBottom: '1px solid #E9EDEE',
+									padding: '12px 0 12px 58px',
+									'@media screen and (max-width:767px)': {
+										padding: '12px 0',
+									},
+								},
+								'.ql-editor': {
+									lineHeight: '1.5',
+									padding: mode === 'view' ? '0' : '24px 0',
+									'&::-webkit-scrollbar': {
+										display: 'none',
+									},
+									ol: {
+										fontFamily: 'Figtree-Regular',
+									},
+								},
+								'.ql-editor.ql-blank::before': {
+									color: 'rgba(29, 36, 79, 0.2)',
+									fontFamily: 'Figtree-Medium',
+									fontSize: '16px',
+									left: '0',
+								},
+								'.ql-snow.ql-toolbar button': {
+									padding: '0',
+									height: '100%',
+									width: 'max-content',
+									'&:not(:first-of-type)': {
+										marginLeft: '4px',
+									},
+								},
+								'.ql-toolbar.ql-snow .ql-formats': {
+									marginRight: '4px',
+								},
+								'.ql-snow .ql-toolbar button svg': {
+									display: 'unset',
+									height: 'unset',
+								},
+							}}
+						>
+							<Editor />
+						</Box>
+						{selectedInitiative || mode === 'view' ? (
+							<Box
+								sx={{
+									display: mode === 'view' ? 'block' : 'none',
+									width: '100%',
+									maxWidth: '280px',
+									ul: {
+										padding: ' 0 0 0 24px',
+										margin: '12px 0 16px 0',
+										color: 'rgba(29,36,79,0.7)',
+										fontFamily: 'Figtree-Regular,sans-serif',
+										fontSize: '16px',
+										lineHeight: '1.4',
+										'li:not(:first-of-type)': {
+											marginTop: '16px',
+										},
+									},
+									'.preamble': {
+										fontFamily: 'Figtree-Bold,sans-serif',
+										fontSize: '12px',
+										lineHeight: '1.5',
+										color: 'rgba(29,36,79,0.3)',
+										paddingLeft: '24px',
+										'&.main': {
+											fontSize: '14px',
+											color: 'var(--input-color)',
+										},
+									},
+								}}
+							>
+								<Box className='preamble main'>Summary</Box>
+								<ul>
+									<li>Ensure uniformity in style, tone, and format across all documentation, enhancing readability and professionalism. Save time and effort by providing a structured framework for creating various types of documents, from reports and proposals to guidelines and manuals.</li>
+									<li>Ensure uniformity in style, tone, and format across all documentation, enhancing readability and professionalism. Save time and effort by providing a structured framework for creating various types of documents, from reports and proposals to guidelines and manuals.</li>
+								</ul>
+								<Box className='preamble'>Generated by ChatGPT</Box>
+							</Box>
+						) : null}
 					</Box>
 				</Box>
 			</Box>
 			<Box
 				sx={{
 					borderTop: '1px solid rgba(233, 237, 238, 1)',
-					display: 'flex',
+					display: mode === 'view' ? 'none' : 'flex',
 					justifyContent: 'flex-end',
 				}}
 			>
@@ -242,10 +361,30 @@ const Form = () => {
 						borderRadius='63px'
 						fontSize='16px'
 						action={() => handleSubmit()}
+						loading={loading}
 					>
-						Submit
+						{isUpdate ? 'Update' : 'Submit'}
 					</Buttons>
 				</Box>
+			</Box>
+			<Box
+				sx={{
+					padding: '0 58px',
+					display: mode === 'view' ? 'block' : 'none',
+				}}
+			>
+				<Input
+					variant='comment'
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+						setFormData((prevFormData: any) => ({
+							...prevFormData,
+							comment: e.target.value,
+						}));
+					}}
+					value={formData?.comment}
+					name='comment'
+					currentAvatarUser={currentUser?.firstName[0]}
+				/>
 			</Box>
 		</>
 	);

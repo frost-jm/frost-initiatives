@@ -1,4 +1,7 @@
+import { useMode } from '@/context/DataContext';
 import { Box, Dialog, DialogContent, DialogTitle } from '@mui/material';
+import { ActionDropdown } from '@/components/index';
+import { useState, useRef, useEffect } from 'react';
 
 interface ModalProps {
 	isOpen: boolean;
@@ -7,6 +10,31 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+	const { mode } = useMode();
+	const popupRef = useRef<HTMLDivElement>(null);
+
+	const [popupOpen, setPopupOpen] = useState<boolean>(false);
+
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+				setPopupOpen(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
+	// useEffect(() => {
+	// 	if (mode === 'view') {
+	// 		setPopupOpen(false);
+	// 	}
+	// }, [mode, popupOpen]);
+
 	return (
 		<Dialog
 			open={isOpen}
@@ -30,7 +58,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 					margin: '0 auto',
 				},
 				'.MuiDialogContent-root': {
-					padding: '0 0 24px',
+					padding: mode === 'view' ? '0 0 40px' : '0 0 24px',
 					'&::-webkit-scrollbar': {
 						display: 'none',
 					},
@@ -47,21 +75,39 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 						display: 'flex',
 						justifyContent: 'flex-end',
 						cursor: 'pointer',
+						gap: '4px',
 					}}
-					onClick={onClose}
 				>
-					<svg
-						width='24'
-						height='24'
-						viewBox='0 0 24 24'
-						fill='none'
-						xmlns='http://www.w3.org/2000/svg'
+					<Box
+						position='relative'
+						height='24px'
 					>
-						<path
-							d='M13.46 12L19 17.54V19H17.54L12 13.46L6.46 19H5V17.54L10.54 12L5 6.46V5H6.46L12 10.54L17.54 5H19V6.46L13.46 12Z'
-							fill='#A5A7B9'
+						<img
+							src='./icons/kebab.svg'
+							alt='kebab'
+							onClick={() => setPopupOpen(true)}
 						/>
-					</svg>
+						{popupOpen && (
+							<Box
+								ref={popupRef}
+								sx={{
+									position: 'absolute',
+									zIndex: '3',
+									width: 'max-content',
+									right: '44px',
+									top: '29px',
+								}}
+							>
+								<ActionDropdown setIsOpen={setPopupOpen} />
+							</Box>
+						)}
+					</Box>
+
+					<img
+						src='./icons/light-close-icon.svg'
+						alt='close-icon'
+						onClick={onClose}
+					/>
 				</Box>
 			</DialogTitle>
 			<DialogContent className='modal-content'>{children}</DialogContent>

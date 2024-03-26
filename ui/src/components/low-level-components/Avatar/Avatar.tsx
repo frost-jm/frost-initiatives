@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { UserData, useUser } from '@/context/UserContext';
 import { Avatar as MUIAvatar, Box, Tooltip } from '@mui/material';
 
 interface AvatarData {
 	firstName: string;
 	lastName: string;
+	color?: string;
 }
 
 interface AvatarProps {
@@ -15,9 +18,15 @@ interface AvatarProps {
 const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#2c3e50', '#27ae60', '#c0392b'];
 
 const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
-	let singleUserData;
+	const { hailstormUsers } = useUser();
+	let singleUserData: AvatarData | null = null;
 
 	!Array.isArray(data) ? (singleUserData = data) : null;
+
+	const getAvatarColor = (firstName: string, lastName: string): string | undefined => {
+		const user = hailstormUsers?.find((user: UserData) => user.firstName === firstName && user.lastName === lastName);
+		return user?.color;
+	};
 
 	return (
 		<>
@@ -38,7 +47,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						sx={{
 							width: '24px',
 							height: '24px',
-							background: 'green',
+							background: getAvatarColor(singleUserData.firstName, singleUserData.lastName) ?? 'green',
 							fontFamily: 'Figtree-SemiBold, sans-serif',
 							fontSize: '12px',
 							lineHeight: '1',
@@ -59,11 +68,11 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 					}}
 				>
 					{data &&
-						data.map((avatar: { firstName: string | any[]; lastName: string }, index: number) => {
+						data.map((avatar: { firstName: string; lastName: string }, index: number) => {
 							const initials = avatar.firstName[0];
 							const fullname = avatar.firstName + ' ' + avatar.lastName;
 
-							const bgColor = colors[index % colors.length];
+							const bgColor = getAvatarColor(avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
 							return (
 								<Box
 									key={index}
@@ -105,7 +114,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 					{data &&
 						data.slice(0, 3).map((avatar, index) => {
 							const initials = avatar.firstName[0];
-							const bgColor = colors[index % colors.length];
+							const bgColor = getAvatarColor(avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
 
 							return (
 								<MUIAvatar
