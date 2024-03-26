@@ -50,6 +50,13 @@ module.exports = gql`
 		deleted: Boolean!
 		status: Int!
 		summary: String!
+		votes: Votes!
+	}
+
+	type Votes {
+		voted: [Int]
+		notVoted: [Int]
+		maxVotes: Int
 	}
 
 	type Department {
@@ -99,14 +106,21 @@ module.exports = gql`
         limit: Int!
 	}
 
+	input FilterParams {
+		department: ID!
+		byDate: String!
+		byVoteCount: String
+	}
+
 	type Query {
-		initiatives(status: InitiativeTab, pagination: PaginationInput): InitiativesPagination
+		initiatives(status: InitiativeTab, pagination: PaginationInput, filter: FilterParams): InitiativesPagination
 		initiative(id: ID!): Initiative
 		departments: [Department]
 		status: [Status]
 		hailstormData: [User]
 		commentID(commentID: ID!): Comment
 		comments(postID: ID!): [Comment]!
+		getVotes(initativeID: ID!) : Message
 	}
 
 	type Mutation {
@@ -118,6 +132,7 @@ module.exports = gql`
 		deleteInitiative(id: ID!): Message
 		joinInitiative(input: InitiativeMembers): Message
 		leaveInitiative(input: InitiativeMembers): Message
+		setVote(userID: ID!, initiativeID: ID!) : Message
 	}
 
 	type Message {

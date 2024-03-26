@@ -1,19 +1,27 @@
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
+const { getVotes } = require('../controllers/votes.controller');
 
 const getAllInitiatives = async ( 
 	status = 1, 
 	pagination = {
 		page: 1,
 		limit: 2,
+	},
+	filterParams = {
+		department: 1,
+		byDate: 'latest',
+		byVoteCount: null,
 	}) => {
 		try {
+			let { department, byDate, byVoteCount } = filterParams;
 			let { page, limit } = pagination;
 			let offset = (page - 1) * limit;
 			let query = `
 				SELECT 
-				p.*,
-				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
+					p.*,
+				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department,
+				COUNT(v.initiativeID) AS VoteCount
 				FROM 
 					initiatives p
 				LEFT JOIN 
@@ -24,17 +32,29 @@ const getAllInitiatives = async (
 					departments d 
 				ON 
 					id.department_id = d.id
+				LEFT JOIN
+					votes v
+				ON
+					p.id = v.initiativeID
 				WHERE 
 					p.status = ?
 				AND
 					p.deleted = false
+				AND 
+					id.department_id = ?
 				GROUP BY 
 					p.id
+				ORDER BY
+					p.created_date ${ byDate.toLowerCase() == "oldest" ? 'ASC' : 'DESC' }
+					${byVoteCount ? 
+						byVoteCount.toLowerCase() == 'most' ? ', VoteCount DESC' : ', VoteCount ASC'  
+						: '' 
+					}
 				LIMIT ?, ?;`;
-
+		
 			let countQuery = `
 				SELECT 
-				p.*,
+					p.*,
 				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
 				FROM 
 					initiatives p
@@ -50,31 +70,52 @@ const getAllInitiatives = async (
 					p.status = ?
 				AND
 					p.deleted = false
+				AND 
+					id.department_id = ?
 				GROUP BY 
 					p.id;`;
 					
-			let results = await poolQuery(query, [status, offset, limit]);
-			let count = await poolQuery(countQuery, [status]);
+			let results = await poolQuery(query, [status, department, offset, limit]);
+			let count = await poolQuery(countQuery, [status, department]);
+
+			let initiativesData = [];
+
+			if(results.length > 0) {
+				initiativesData = await Promise.all(results.map(async (result) => {
+					let voteData = await getVotes(result.id);
+					return {
+						...result,
+						votes: voteData
+					};
+				}));
+			}
 
 			return {
-				items: results,
+				items: initiativesData,
 				paginationData: {
 					page: page,
 					total: count.length,
 				}
-			};
-		} catch (error) {
-			throw error;
-		}
+			}
+	} catch (error) {
+		throw error;
+	}
 };
 
 const getInitiativeById = async (id) => {
 	try {
-		let query = `SELECT * FROM initiatives WHERE id = ${id}`;
+		let result = await poolQuery(`SELECT * FROM initiatives WHERE id = ?`, id);
 
-		let result = await poolQuery(query, id);
+		if(result.length == 0) {
+			throw new Error('Initiative not found!');
+		}
 
-		return result[0];
+		let voteData = await getVotes(result[0].id);
+
+		return {
+			...result[0],
+            votes: voteData
+		};
 	} catch (error) {
 		throw error;
 	}
