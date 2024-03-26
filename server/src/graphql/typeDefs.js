@@ -5,20 +5,13 @@ module.exports = gql`
 	scalar Int
 	scalar DateTime
 
-	input InitiativeCreate {
+	input InitiativeInput {
 		title: String!
 		post: String!
-		created_by: Int!
+		created_by: Int
 		reason: String!
 		summary: String
-		department: [String]!
-	}
-
-	input InitiativeUpdate {
-		title: String
-		post: String
-		reason: String
-		summary: String
+		department: [String]
 	}
 
 	input InitiativeTab {
@@ -49,6 +42,7 @@ module.exports = gql`
 		post: String!
 		reason: String!
 		created_by: Int!
+		department: String
 		members: String!
 		created_date: DateTime!
 		updated_date: DateTime!
@@ -105,11 +99,11 @@ module.exports = gql`
 	}
 
 	type Mutation {
-		createdInitiative(input: InitiativeCreate): Message
+		createdInitiative(input: InitiativeInput): Message
 		addComment(input: CommentInput!): Message
 		editComment(commentID: ID!, newComment: String!): Message
 		removeComment(commentID: ID!): Message
-		updateInitiative(id: ID!, input: InitiativeUpdate): Message
+		updateInitiative(id: ID!, input: InitiativeInput): Message
 		deleteInitiative(id: ID!): Message
 		joinInitiative(input: InitiativeMembers): Message
 		leaveInitiative(input: InitiativeMembers): Message

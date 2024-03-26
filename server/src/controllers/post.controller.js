@@ -3,7 +3,26 @@ const poolQuery = require('util').promisify(pool.query).bind(pool);
 
 const getAllInitiatives = async ({ status = 1 }) => {
 	try {
-		let query = `SELECT * FROM initiatives WHERE status = ${status}`;
+		let query = `
+				SELECT 
+    			p.*,
+				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
+				FROM 
+					initiatives p
+				LEFT JOIN 
+					initiative_departments id 
+				ON 
+					p.id = id.initiative_id 
+				LEFT JOIN 
+					departments d 
+				ON 
+					id.department_id = d.id
+				WHERE 
+					p.status = 1
+				AND
+					p.deleted = false
+				GROUP BY 
+					p.id;`;
 
 		let results = await poolQuery(query, status);
 
@@ -30,8 +49,14 @@ const createInitiative = async (data) => {
 		let { department, ...initiativeData } = data;
 
 		const result = await poolQuery('INSERT INTO initiatives SET ?', [initiativeData]);
+		const postId = result.insertId;
 
-		return result.insertId;
+		if (department && department.length > 0) {
+			const dept = department.map((deptId) => [postId, deptId]);
+			await poolQuery('INSERT INTO initiative_departments (initiative_id, department_id) VALUES ?', [dept]);
+		}
+
+		return postId;
 	} catch (error) {
 		throw error;
 	}
@@ -39,7 +64,18 @@ const createInitiative = async (data) => {
 
 const updateInitiative = async (id, data) => {
 	try {
-		const result = await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [data, id]);
+		let { department, ...initiativeData } = data;
+
+		await poolQuery('UPDATE initiatives SET ? WHERE id = ?', [initiativeData, id]);
+
+		if (department && department.length > 0) {
+			await poolQuery('DELETE FROM initiative_departments WHERE initiative_id = ?', [id]);
+
+			const dept = department.map((deptId) => [id, deptId]);
+			await poolQuery('INSERT INTO initiative_departments (initiative_id, department_id) VALUES ?', [dept]);
+		}
+
+		return id;
 	} catch (error) {
 		throw error;
 	}

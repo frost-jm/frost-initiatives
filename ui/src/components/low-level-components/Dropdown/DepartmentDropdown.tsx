@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 //@ts-nocheck
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormControl, ListItemText, MenuItem, OutlinedInput, Checkbox, Select, SelectChangeEvent } from '@mui/material';
 import { useMode } from '@/context/DataContext';
 
@@ -9,21 +9,48 @@ import { GET_DEPARTMENTS } from '@/graphql/queries';
 import { useQuery } from '@apollo/client';
 
 const DepartmentDropdown = () => {
-	const { department, setDepartment } = useMode();
+	const { department, setDepartment, selectedInitiative, mode } = useMode();
 	const { data } = useQuery(GET_DEPARTMENTS);
 	const [open, setOpen] = useState<boolean>(false);
 	const [selectedDeptNames, setSelectedDeptNames] = useState<string[]>([]);
 
+	const [isOrgWideSelectedPrev, setIsOrgWideSelectedPrev] = useState(false);
+
 	const handleChange = (event: SelectChangeEvent<typeof department>) => {
 		const { value } = event.target;
 
-		const selectedDepartments = Array.isArray(value) ? value.map((item) => item) : [value];
-		const selectedDepartmentIds = Array.isArray(value) ? value.map((item) => item.id) : [value];
+		const isOrgWideSelected = value.some((item: { department: string }) => item.department === 'Org-wide');
+		const orgWide = data.departments.find((department) => department.department === 'Org-wide');
 
+		let selectedDepartments = value;
+		let selectedDepartmentIds = value.map((item: { id: string }) => item.id);
+
+		if (!isOrgWideSelectedPrev && isOrgWideSelected) {
+			selectedDepartments = [orgWide];
+			selectedDepartmentIds = [orgWide?.id];
+		}
+
+		if (isOrgWideSelectedPrev && isOrgWideSelected) {
+			selectedDepartments = selectedDepartments.filter((dep) => dep.department !== 'Org-wide');
+			selectedDepartmentIds = selectedDepartmentIds.filter((id) => id !== orgWide?.id);
+		}
+
+		setIsOrgWideSelectedPrev(isOrgWideSelected);
 		setDepartment(selectedDepartmentIds);
-
 		setSelectedDeptNames(selectedDepartments);
 	};
+
+	useEffect(() => {
+		if (selectedInitiative && data) {
+			const departmentNames = selectedInitiative.department.split(',');
+			const selectedDepartments = data.departments.filter((department) => departmentNames.some((name) => name.trim() === department.department.trim()));
+
+			const selectedDepartmentIds = selectedDepartments.map((department) => department.id);
+
+			setDepartment(selectedDepartmentIds);
+			setSelectedDeptNames(selectedDepartments);
+		}
+	}, [selectedInitiative, setDepartment, data]);
 
 	return (
 		<FormControl
@@ -32,14 +59,20 @@ const DepartmentDropdown = () => {
 				'.MuiList-root-MuiMenu-list': {
 					padding: '0',
 				},
+				'.Mui-disabled': {
+					color: 'var(--input-color)',
+					WebkitTextFillColor: 'unset!important',
+				},
 				svg: {
 					color: 'var(--input-color)',
+					display: mode === 'view' ? 'none' : 'block',
 				},
 			}}
 		>
 			<Select
 				multiple
 				displayEmpty
+				disabled={mode === 'view'}
 				value={selectedDeptNames}
 				onClose={() => setOpen(false)}
 				onOpen={() => setOpen(true)}
@@ -78,7 +111,7 @@ const DepartmentDropdown = () => {
 					fontWeight: '500',
 					fontSize: '14px',
 					color: 'var(--input-color)',
-					background: '#F8FAFB',
+					background: mode === 'view' ? 'transparent' : '#F8FAFB',
 					height: '40px',
 					border: 'none',
 					borderRadius: open ? '4px 4px 0 0' : '4px',
@@ -100,32 +133,6 @@ const DepartmentDropdown = () => {
 					},
 				}}
 			>
-				<MenuItem
-					disabled
-					value=''
-					sx={{
-						background: '#F8FAFB',
-						color: 'var(--input-color)',
-						padding: '12px 8px 12px 12px',
-						height: '40px',
-						fontFamily: 'Figtree-Medium',
-						fontWeight: '500',
-						fontSize: '14px',
-						lineHeight: '14px',
-						'&.Mui-disabled': {
-							opacity: '1',
-						},
-						'&.Mui-disabled .placeholder': {
-							opacity: '0.4',
-						},
-						'span:last-of-type': {
-							color: '#FF0000',
-						},
-					}}
-				>
-					<span className='placeholder'>Required</span>
-					<span>*</span>
-				</MenuItem>
 				{data &&
 					data.departments.map((dept: any, index: number) => (
 						<MenuItem

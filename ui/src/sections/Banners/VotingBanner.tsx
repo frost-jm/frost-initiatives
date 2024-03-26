@@ -2,12 +2,16 @@ import { BannerContent, SubmitButton } from '@/components';
 import { Box } from '@mui/material';
 
 import Asset from '../../assets/voting-banner-asset.png';
+import { useMode } from '@/context/DataContext';
 
 const VotingBanner = () => {
+	const { setModalOpen, setMode } = useMode();
+
 	const bannerContent = {
 		title: 'Got any suggestions for us?',
 		description: 'Let us know by pitching your own internal initiative.',
 	};
+
 	return (
 		<Box
 			sx={{
@@ -55,7 +59,12 @@ const VotingBanner = () => {
 					},
 				}}
 			>
-				<SubmitButton action={() => console.log('submit initiative')} />
+				<SubmitButton
+					action={() => {
+						setModalOpen(true);
+						setMode('create');
+					}}
+				/>
 			</Box>
 		</Box>
 	);

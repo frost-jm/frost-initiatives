@@ -1,14 +1,17 @@
+import { useMode } from '@/context/DataContext';
 import { Avatar, Input as MInput, Box } from '@mui/material';
 
 interface InputProps {
 	variant: 'normal' | 'comment';
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-	value: string;
+	value: string | undefined;
 	name?: string;
 	isFocused?: boolean;
+	currentAvatarUser?: string;
 }
 
-const Input = ({ variant = 'normal', onChange, value, name, isFocused }: InputProps) => {
+const Input = ({ variant = 'normal', onChange, value, name, isFocused, currentAvatarUser = 'A' }: InputProps) => {
+	const { mode } = useMode();
 	const commonStyles = {
 		width: '100%',
 		boxSizing: 'border-box',
@@ -42,7 +45,7 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused }: InputPr
 				fontFamily: 'Figtree-Medium',
 				fontSize: '14px',
 				lineHeight: '14px',
-				background: '#F8FAFB',
+				background: mode === 'view' ? 'transparent' : '#F8FAFB',
 				padding: '12px',
 				borderRadius: '4px',
 				...commonStyles,
@@ -53,10 +56,16 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused }: InputPr
 		<Box
 			position='relative'
 			width='100%'
+			sx={{
+				'.Mui-disabled': {
+					color: 'var(--input-color)',
+					WebkitTextFillColor: 'unset!important',
+				},
+			}}
 		>
 			{variant === 'comment' && (
 				<>
-					<Avatar sx={{ width: 24, height: 24, fontFamily: 'Figtree-SemiBold,sans-serif', fontSize: '12px', lineHeight: '14.4px', background: '#EA5825', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>H</Avatar>
+					<Avatar sx={{ width: 24, height: 24, fontFamily: 'Figtree-SemiBold,sans-serif', fontSize: '12px', lineHeight: '14.4px', background: '#EA5825', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>{currentAvatarUser}</Avatar>
 					<MInput
 						placeholder='Add a comment'
 						autoComplete='off'
@@ -68,6 +77,7 @@ const Input = ({ variant = 'normal', onChange, value, name, isFocused }: InputPr
 			)}
 			{variant === 'normal' && (
 				<MInput
+					disabled={mode === 'view'}
 					placeholder='Required'
 					autoComplete='off'
 					sx={styles()}

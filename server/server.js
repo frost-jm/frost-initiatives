@@ -43,7 +43,7 @@ async function startServer() {
 	server.applyMiddleware({ app, path: '/graphql' });
 }
 
-app.use(express.json(), express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '100mb' }), express.urlencoded({ extended: true, limit: '100mb' }));
 
 app.use(errorHandler);
 
