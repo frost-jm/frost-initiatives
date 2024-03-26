@@ -2,11 +2,60 @@ const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
 const { getVotes } = require('../controllers/votes.controller');
 
-const getAllInitiatives = async ({ status = 1 }) => {
-	try {
-		let query = `
+const getAllInitiatives = async ( 
+	status = 1, 
+	pagination = {
+		page: 1,
+		limit: 5,
+	},
+	filterParams = {
+		department: null,
+		byDate: 'latest',
+		byVoteCount: null,
+	}) => {
+		try {
+			let { department, byDate, byVoteCount } = filterParams;
+			let { page, limit } = pagination;
+			let offset = (page - 1) * limit;
+			let query = `
 				SELECT 
-    			p.*,
+					p.*,
+				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department,
+				COUNT(v.initiativeID) AS VoteCount
+				FROM 
+					initiatives p
+				LEFT JOIN 
+					initiative_departments id 
+				ON 
+					p.id = id.initiative_id 
+				LEFT JOIN 
+					departments d 
+				ON 
+					id.department_id = d.id
+				LEFT JOIN
+					votes v
+				ON
+					p.id = v.initiativeID
+				WHERE 
+					p.status = ?
+				AND
+					p.deleted = false
+				${department != null ? 'AND id.department_id = ?' : ''}
+				GROUP BY 
+					p.id
+				ORDER BY
+					p.created_date ${ byDate ? 
+						byDate.toLowerCase() == "oldest" ? 'ASC' : 'DESC' 
+						: 'DESC' }
+					${byVoteCount ? 
+						byVoteCount.toLowerCase() == 'most' ? ', VoteCount DESC' : ', VoteCount ASC'  
+						: '' 
+					}
+				LIMIT ?, ?;`;
+
+			let countQuery = `
+				SELECT 
+					p.*,
 				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
 				FROM 
 					initiatives p
@@ -22,25 +71,41 @@ const getAllInitiatives = async ({ status = 1 }) => {
 					p.status = ?
 				AND
 					p.deleted = false
+				${department != null ? 'AND id.department_id = ?' : ''}
 				GROUP BY 
 					p.id;`;
+				
+			let results;
+			let count;
+			let initiativesData = [];
 
-		let initiativesData = [];
-		let results = await poolQuery(query, [status]);
+			if(department) {
+				results = await poolQuery(query, [status, department, offset, limit]);
+				count = await poolQuery(countQuery, [status, department]);
+			} else {
+				results = await poolQuery(query, [status, offset, limit]);
+				count = await poolQuery(countQuery, [status]);
+			}
 
-		if (results.length > 0) {
-			initiativesData = await Promise.all(
-				results.map(async (result) => {
-					let voteData = await getVotes(result.id);
-					return {
-						...result,
-						votes: voteData,
-					};
-				})
-			);
-		}
+			if (results.length > 0) {
+				initiativesData = await Promise.all(
+					results.map(async (result) => {
+						let voteData = await getVotes(result.id);
+						return {
+							...result,
+							votes: voteData,
+						};
+					})
+				);
+			}
 
-		return initiativesData;
+			return {
+				items: initiativesData,
+				paginationData: {
+					page: page,
+					total: count.length,
+				}
+			}
 	} catch (error) {
 		throw error;
 	}
