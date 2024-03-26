@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { UserData, useUser } from '@/context/UserContext';
+import { useUser } from '@/context/UserContext';
 import { Avatar as MUIAvatar, Box, Tooltip } from '@mui/material';
-
+import { getAvatarColor } from '@/utils/helpers';
 interface AvatarData {
 	firstName: string;
 	lastName: string;
@@ -12,7 +13,7 @@ interface AvatarData {
 interface AvatarProps {
 	type: 'single' | 'multiple' | 'table' | 'tooltip';
 	label?: boolean;
-	data: AvatarData[] | AvatarData | null;
+	data: AvatarData[] | AvatarData | null | number;
 }
 
 const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#2c3e50', '#27ae60', '#c0392b'];
@@ -20,13 +21,8 @@ const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c'
 const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 	const { hailstormUsers } = useUser();
 	let singleUserData: AvatarData | null = null;
-
+	//@ts-ignore
 	!Array.isArray(data) ? (singleUserData = data) : null;
-
-	const getAvatarColor = (firstName: string, lastName: string): string | undefined => {
-		const user = hailstormUsers?.find((user: UserData) => user.firstName === firstName && user.lastName === lastName);
-		return user?.color;
-	};
 
 	return (
 		<>
@@ -47,7 +43,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						sx={{
 							width: '24px',
 							height: '24px',
-							background: getAvatarColor(singleUserData.firstName, singleUserData.lastName) ?? 'green',
+							background: getAvatarColor(hailstormUsers, singleUserData.firstName, singleUserData.lastName) ?? 'green',
 							fontFamily: 'Figtree-SemiBold, sans-serif',
 							fontSize: '12px',
 							lineHeight: '1',
@@ -72,7 +68,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 							const initials = avatar.firstName[0];
 							const fullname = avatar.firstName + ' ' + avatar.lastName;
 
-							const bgColor = getAvatarColor(avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
+							const bgColor = getAvatarColor(hailstormUsers, avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
 							return (
 								<Box
 									key={index}
@@ -114,7 +110,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 					{data &&
 						data.slice(0, 3).map((avatar, index) => {
 							const initials = avatar.firstName[0];
-							const bgColor = getAvatarColor(avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
+							const bgColor = getAvatarColor(hailstormUsers, avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
 
 							return (
 								<MUIAvatar

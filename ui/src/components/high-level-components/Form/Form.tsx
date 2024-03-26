@@ -10,6 +10,7 @@ import { useMode, FormData } from '@/context/DataContext';
 import { useUser } from '@/context/UserContext';
 import { useMutation } from '@apollo/client';
 import { CREATE_INITIATIVE, UPDATE_INITIATIVE } from '@/graphql/queries';
+import Comments from './modules/Comments';
 
 const Form = () => {
 	const { department, formData, setFormData, setDisabled, disabled, selectedInitiative, mode, setModalOpen, setActionNotif, setMode, setActionMessage } = useMode();
@@ -94,7 +95,8 @@ const Form = () => {
 			setFormData((prevFormData: FormData) => ({
 				...prevFormData,
 				department: department,
-				created_by: currentUser && parseInt(currentUser.userId),
+				//created_by: currentUser && parseInt(currentUser.userId),
+				created_by: 42, // hard coded for testing
 			}));
 		} else {
 			setFormData((prevFormData: FormData) => ({
@@ -197,7 +199,7 @@ const Form = () => {
 								<Avatar
 									label={true}
 									type='single'
-									data={currentUser}
+									data={selectedInitiative ? selectedInitiative.created_by : currentUser}
 								/>
 								<Box
 									sx={{
@@ -367,25 +369,7 @@ const Form = () => {
 					</Buttons>
 				</Box>
 			</Box>
-			<Box
-				sx={{
-					padding: '0 58px',
-					display: mode === 'view' ? 'block' : 'none',
-				}}
-			>
-				<Input
-					variant='comment'
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setFormData((prevFormData: any) => ({
-							...prevFormData,
-							comment: e.target.value,
-						}));
-					}}
-					value={formData?.comment}
-					name='comment'
-					currentAvatarUser={currentUser?.firstName[0]}
-				/>
-			</Box>
+			<Comments />
 		</>
 	);
 };

@@ -13,6 +13,7 @@ interface ProcessPostData {
 	id: string;
 	title: string;
 	reason: string;
+	post: string;
 	created_by: number;
 	created_date: Date;
 	updated_date: string;
