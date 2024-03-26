@@ -1,5 +1,6 @@
 const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
+const { getVotes } = require('../controllers/votes.controller');
 
 const getAllInitiatives = async ({ status = 1 }) => {
 	try {
@@ -18,15 +19,26 @@ const getAllInitiatives = async ({ status = 1 }) => {
 				ON 
 					id.department_id = d.id
 				WHERE 
-					p.status = 1
+					p.status = ?
 				AND
 					p.deleted = false
 				GROUP BY 
 					p.id;`;
 
-		let results = await poolQuery(query, status);
+		let initiativesData = [];
+		let results = await poolQuery(query, [status]);
 
-		return results;
+		if(results.length > 0) {
+			initiativesData = await Promise.all(results.map(async (result) => {
+				let voteData = await getVotes(result.id);
+				return {
+					...result,
+					votes: voteData
+				};
+			}));
+		}
+
+		return initiativesData;
 	} catch (error) {
 		throw error;
 	}
@@ -34,11 +46,18 @@ const getAllInitiatives = async ({ status = 1 }) => {
 
 const getInitiativeById = async (id) => {
 	try {
-		let query = `SELECT * FROM initiatives WHERE id = ${id}`;
+		let result = await poolQuery(`SELECT * FROM initiatives WHERE id = ?`, id);
 
-		let result = await poolQuery(query, id);
+		if(result.length == 0) {
+			throw new Error('Initiative not found!');
+		}
 
-		return result[0];
+		let voteData = await getVotes(result[0].id);
+
+		return {
+			...result[0],
+            votes: voteData
+		};
 	} catch (error) {
 		throw error;
 	}
