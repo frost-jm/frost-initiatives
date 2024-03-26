@@ -85,7 +85,6 @@ module.exports = gql`
 	}
 
 	input AuthorInput {
-		id: Int!
 		email: String!
 	}
 
@@ -93,6 +92,7 @@ module.exports = gql`
 		comment: String!
 		name: String!
 		initials: String!
+		id: String!
 	}
 
 	type Query {

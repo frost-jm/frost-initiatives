@@ -1,30 +1,54 @@
 import { useMode } from '@/context/DataContext';
 import { useMutation } from '@apollo/client';
 import { Box } from '@mui/material';
-import { DELETE_INITIATIVE } from '@/graphql/queries';
+import { DELETE_INITIATIVE, DELETE_COMMENT, EDIT_COMMENT } from '@/graphql/queries';
 
-const ActionDropdown = ({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void }) => {
+interface CommentData {
+	id: string;
+	author: number | string;
+	comment: string;
+	initiativeID: string;
+}
+interface ActionDropdownProps {
+	setIsOpen: (isOpen: boolean) => void;
+	type: string;
+	commentData?: CommentData;
+	onEdit?: () => void;
+}
+
+const ActionDropdown = ({ setIsOpen, type, commentData, onEdit }: ActionDropdownProps) => {
 	const { setMode, selectedInitiative, setSelectedInitiative, setModalOpen, setActionNotif, setActionMessage } = useMode();
 	const [deletePost] = useMutation(DELETE_INITIATIVE);
+	const [deleteComment] = useMutation(DELETE_COMMENT);
 
-	const actions = [
+	const handleEditClick = () => {
+		if (type === 'modal') {
+			setMode('edit');
+			setSelectedInitiative(null);
+		} else {
+			onEdit?.();
+		}
+		setIsOpen(false);
+	};
+
+	const handleDeleteClick = () => {
+		type === 'modal' ? handleDelete() : handleRemoveComment();
+	};
+
+	const baseActions = [
 		{
-			type: 'Edit post',
+			type: 'Edit',
 			icon: './icons/edit-icon.svg',
-			onClick: () => {
-				setMode('edit');
-				setSelectedInitiative(null);
-				setIsOpen(false);
-			},
+			onClick: handleEditClick,
 		},
 		{
-			type: 'Delete post',
+			type: 'Delete',
 			icon: './icons/delete-icon.svg',
-			onClick: () => {
-				handleDelete();
-			},
+			onClick: handleDeleteClick,
 		},
 	];
+
+	const actions = type === 'comment' ? baseActions.map((action) => ({ ...action, type: `${action.type} comment` })) : baseActions.map((action) => ({ ...action, type: `${action.type} post` }));
 
 	const handleDelete = async () => {
 		const { data } = await deletePost({
@@ -40,6 +64,20 @@ const ActionDropdown = ({ setIsOpen }: { setIsOpen: (isOpen: boolean) => void })
 				setTimeout(() => {
 					setModalOpen(false);
 				}, 1000);
+			}
+		} catch (error) {
+			console.error('Error', error);
+		}
+	};
+
+	const handleRemoveComment = async () => {
+		const { data } = await deleteComment({
+			variables: { commentId: commentData?.id },
+		});
+
+		try {
+			if (data.removeComment && data.removeComment.success === true) {
+				setIsOpen(false);
 			}
 		} catch (error) {
 			console.error('Error', error);

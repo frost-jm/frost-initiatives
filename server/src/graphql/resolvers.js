@@ -74,12 +74,11 @@ const resolvers = {
 	Mutation: {
 		addComment: async (_, { input }) => {
 			try {
-				const { initiativeID, author, commentor } = input;
+				const { initiativeID, commentor } = input;
 
-				const { id: authorId } = author;
-				const { comment } = commentor;
+				const { comment, id } = commentor;
 
-				const commentId = await insertComment({ initiativeID, author: authorId, comment });
+				const commentId = await insertComment({ initiativeID, author: id, comment });
 
 				const insertedComment = await getCommentByID(commentId);
 

@@ -29,16 +29,11 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 		};
 	}, []);
 
-	// useEffect(() => {
-	// 	if (mode === 'view') {
-	// 		setPopupOpen(false);
-	// 	}
-	// }, [mode, popupOpen]);
-
 	return (
 		<Dialog
 			open={isOpen}
 			onClose={onClose}
+			disableEscapeKeyDown={true}
 			sx={{
 				'.MuiModal-backdrop': {
 					background: '#EFF4F7',
@@ -98,7 +93,10 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 									top: '29px',
 								}}
 							>
-								<ActionDropdown setIsOpen={setPopupOpen} />
+								<ActionDropdown
+									setIsOpen={setPopupOpen}
+									type='modal'
+								/>
 							</Box>
 						)}
 					</Box>

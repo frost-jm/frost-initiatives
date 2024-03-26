@@ -28,14 +28,16 @@ const getAllInitiatives = async ({ status = 1 }) => {
 		let initiativesData = [];
 		let results = await poolQuery(query, [status]);
 
-		if(results.length > 0) {
-			initiativesData = await Promise.all(results.map(async (result) => {
-				let voteData = await getVotes(result.id);
-				return {
-					...result,
-					votes: voteData
-				};
-			}));
+		if (results.length > 0) {
+			initiativesData = await Promise.all(
+				results.map(async (result) => {
+					let voteData = await getVotes(result.id);
+					return {
+						...result,
+						votes: voteData,
+					};
+				})
+			);
 		}
 
 		return initiativesData;
@@ -48,7 +50,7 @@ const getInitiativeById = async (id) => {
 	try {
 		let result = await poolQuery(`SELECT * FROM initiatives WHERE id = ?`, id);
 
-		if(result.length == 0) {
+		if (result.length == 0) {
 			throw new Error('Initiative not found!');
 		}
 
@@ -56,7 +58,7 @@ const getInitiativeById = async (id) => {
 
 		return {
 			...result[0],
-            votes: voteData
+			votes: voteData,
 		};
 	} catch (error) {
 		throw error;
