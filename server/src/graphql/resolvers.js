@@ -81,7 +81,7 @@ const resolvers = {
 
 				const insertedComment = await getCommentByID(commentId);
 
-				// await sendEmail(input);
+				await sendEmail(input);
 
 				return { data: insertedComment, success: true, message: 'Comment added successfully', error: null };
 			} catch (error) {
