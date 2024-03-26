@@ -69,6 +69,8 @@ const createInitiative = async (data) => {
 	try {
 		let { department, ...initiativeData } = data;
 
+		console.log(initiativeData);
+
 		const result = await poolQuery('INSERT INTO initiatives SET ?', [initiativeData]);
 		const postId = result.insertId;
 

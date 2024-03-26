@@ -14,7 +14,7 @@ const openai = new OpenAI({
 	apiKey: process.env.OPENAI_KEY,
 });
 
-const getAnalyzedData = async (text) => {
+const getSummarizedData = async (text) => {
 	let summary = '';
 	let startTime = Date.now();
 	let gpt_response = {
