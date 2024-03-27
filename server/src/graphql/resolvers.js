@@ -14,26 +14,21 @@ const openai = new OpenAI({
 	apiKey: process.env.OPENAI_KEY,
 });
 
-const pendingComments = [];
-let isSendingEmails = false;
-
-const getAnalyzedData = async (text) => {
-	let summary = '';
+const getSummary = async (text) => {
 	let startTime = Date.now();
 	let gpt_response = {
 		summary: '',
 	};
 
-	const parsed = JSON.parse(text);
-	const content = parsed.map((obj) => obj.data.text).join(' ');
-
 	let role_instructions = `
-		As a Technical Design Analyst you highlight key points and summarize data provided to you. 
-		Anything unrelated to tech and design work you return 'invalid' only without explanations.
+		As an Analyst you highlight key points and summarize data provided to you. You are analyzing a proposal for a project.
+		If character count of the data is less than 250 characters, then just return no summary needed.
+		You also return the output as an unordered list in raw HTML format.
 	`;
+
 	let prompt = `
-		Tone: 50% spartan. No introductions. Check this data: ${content} and summarize and
-		explain in two paragraphs with max of 2 sentences each. Return the output in raw HTML format.
+		Tone: 50% spartan. No introductions. Check this data: ${text} and summarize max of
+		two paragraphs with max of 2 sentences each. Return the output as an unordered list in raw HTML format.
 	`;
 
 	try {
@@ -53,14 +48,9 @@ const getAnalyzedData = async (text) => {
 			max_tokens: 1000,
 		});
 
-		summary = completion.choices[0].message.content;
+		let result = completion.choices[0].message.content;
 
-		role_instructions = `
-			You are a technical design analyst and you assign tags based on the content you receive.
-			You also only assign a maximum of 3 tags.
-		`;
-
-		gpt_response.summary = summary;
+		gpt_response.summary = result;
 
 		const endTime = Date.now();
 		const responseTimeInSeconds = (endTime - startTime) / 1000;
@@ -72,6 +62,9 @@ const getAnalyzedData = async (text) => {
 
 	return gpt_response;
 };
+
+const pendingComments = [];
+let isSendingEmails = false;
 
 const resolvers = {
 	Mutation: {
@@ -152,7 +145,18 @@ const resolvers = {
 					throw new Error('Missing required field/s');
 				}
 
-				let resultID = await createInitiative(input);
+				let gpt_response = await getSummary(post);
+
+				if(!gpt_response) {
+					throw new Error('GPT had a problem summarizing!!');
+				}
+
+				let inputData = {
+					...input,
+					summary: gpt_response.summary,
+				}
+
+				let resultID = await createInitiative(inputData);
 
 				let newInitiative = await getInitiativeById(resultID);
 
@@ -183,10 +187,16 @@ const resolvers = {
 					throw new Error('Initiative not found');
 				}
 
+				let gpt_response = await getSummary(post);
+				
+				if(!gpt_response) {
+					throw new Error('GPT had a problem summarizing!!');
+				}
+
 				let newInitiative = {
 					post: post || current.post,
 					reason: reason || current.reason,
-					//summary: summary || current.summary,
+					summary: gpt_response.summary || current.summary,
 					department: department || current.department,
 					title: title || current.title,
 					updated_date: new Date().toISOString().slice(0, 19).replace('T', ' '),
