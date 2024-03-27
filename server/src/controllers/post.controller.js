@@ -2,8 +2,8 @@ const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
 const { getVotes } = require('../controllers/votes.controller');
 
-const getAllInitiatives = async ( 
-	status = 1, 
+const getAllInitiatives = async (
+	status = 1,
 	pagination = {
 		page: 1,
 		limit: 5,
@@ -12,12 +12,13 @@ const getAllInitiatives = async (
 		department: null,
 		byDate: 'latest',
 		byVoteCount: null,
-	}) => {
-		try {
-			let { department, byDate, byVoteCount } = filterParams;
-			let { page, limit } = pagination;
-			let offset = (page - 1) * limit;
-			let query = `
+	}
+) => {
+	try {
+		let { department, byDate, byVoteCount } = filterParams;
+		let { page, limit } = pagination;
+		let offset = (page - 1) * limit;
+		let query = `
 				SELECT 
 					p.*,
 				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department,
@@ -44,16 +45,11 @@ const getAllInitiatives = async (
 				GROUP BY 
 					p.id
 				ORDER BY
-					p.created_date ${ byDate ? 
-						byDate.toLowerCase() == "oldest" ? 'ASC' : 'DESC' 
-						: 'DESC' }
-					${byVoteCount ? 
-						byVoteCount.toLowerCase() == 'most' ? ', VoteCount DESC' : ', VoteCount ASC'  
-						: '' 
-					}
+					p.created_date ${byDate ? (byDate.toLowerCase() == 'oldest' ? 'ASC' : 'DESC') : 'DESC'}
+					${byVoteCount ? (byVoteCount.toLowerCase() == 'most' ? ', VoteCount DESC' : ', VoteCount ASC') : ''}
 				LIMIT ?, ?;`;
 
-			let countQuery = `
+		let countQuery = `
 				SELECT 
 					p.*,
 				GROUP_CONCAT(DISTINCT d.department ORDER BY d.department SEPARATOR ', ') AS department
@@ -74,38 +70,38 @@ const getAllInitiatives = async (
 				${department != null ? 'AND id.department_id = ?' : ''}
 				GROUP BY 
 					p.id;`;
-				
-			let results;
-			let count;
-			let initiativesData = [];
 
-			if(department) {
-				results = await poolQuery(query, [status, department, offset, limit]);
-				count = await poolQuery(countQuery, [status, department]);
-			} else {
-				results = await poolQuery(query, [status, offset, limit]);
-				count = await poolQuery(countQuery, [status]);
-			}
+		let results;
+		let count;
+		let initiativesData = [];
 
-			if (results.length > 0) {
-				initiativesData = await Promise.all(
-					results.map(async (result) => {
-						let voteData = await getVotes(result.id);
-						return {
-							...result,
-							votes: voteData,
-						};
-					})
-				);
-			}
+		if (department) {
+			results = await poolQuery(query, [status.status, department, offset, limit]);
+			count = await poolQuery(countQuery, [status.status, department]);
+		} else {
+			results = await poolQuery(query, [status.status, offset, limit]);
+			count = await poolQuery(countQuery, [status.status]);
+		}
 
-			return {
-				items: initiativesData,
-				paginationData: {
-					page: page,
-					total: count.length,
-				}
-			}
+		if (results.length > 0) {
+			initiativesData = await Promise.all(
+				results.map(async (result) => {
+					let voteData = await getVotes(result.id);
+					return {
+						...result,
+						votes: voteData,
+					};
+				})
+			);
+		}
+
+		return {
+			items: initiativesData,
+			paginationData: {
+				page: page,
+				total: count.length,
+			},
+		};
 	} catch (error) {
 		throw error;
 	}
@@ -184,9 +180,12 @@ const joinInitiative = async (initiativeId, userId) => {
 
 		let currentMembers = initiative.members || '';
 
-		currentMembers = currentMembers.trim().replace(/^,*/, '');
+		currentMembers = currentMembers.trim().replace(/^,|,$/g, '');
 
-		const members = new Set(currentMembers.split(',').map((id) => id.trim()));
+		const membersArray = currentMembers.split(',').filter((member) => member.trim() !== '');
+
+		const members = new Set(membersArray.map((id) => id.trim()));
+
 		if (!members.has(userId)) {
 			members.add(userId);
 
@@ -208,7 +207,7 @@ const leaveInitiative = async (initiativeId, userId) => {
 
 		let currentMembers = initiative.members || '';
 
-		currentMembers = currentMembers.trim();
+		currentMembers = currentMembers.trim().replace(/^,|,$/g, '');
 
 		const members = new Set(currentMembers.split(',').map((id) => id.trim()));
 		if (members.has(userId)) {

@@ -109,10 +109,11 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 				>
 					{data &&
 						data.slice(0, 3).map((avatar, index) => {
+							const nameChecker = avatar.firstName;
 							const initials = avatar.firstName[0];
 							const bgColor = getAvatarColor(hailstormUsers, avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
 
-							return (
+							return nameChecker !== 'blank' ? (
 								<MUIAvatar
 									key={index}
 									sx={{
@@ -129,6 +130,15 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 								>
 									{initials}
 								</MUIAvatar>
+							) : (
+								<Box
+									key={index}
+									sx={{
+										color: 'rgba(29, 36, 79, 0.8)',
+									}}
+								>
+									-
+								</Box>
 							);
 						})}
 					{data && data.length > 3 && (
@@ -187,6 +197,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 								</Tooltip>
 							);
 						})}
+
 					{data && data.length > 14 && (
 						<Tooltip
 							title={data
