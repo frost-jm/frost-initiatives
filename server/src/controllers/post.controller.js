@@ -2,6 +2,7 @@ const { pool } = require('../config/database');
 const poolQuery = require('util').promisify(pool.query).bind(pool);
 const { getVotes } = require('../controllers/votes.controller');
 
+
 const getAllInitiatives = async ( 
 	status = 1, 
 	pagination = {
