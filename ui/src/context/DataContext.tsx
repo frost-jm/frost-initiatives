@@ -8,7 +8,7 @@ export interface FormData {
 	post: string;
 	reason: string;
 	department: string[] | string;
-	members: string;
+	members: string | any;
 	status: string;
 	created_by: string | null | number;
 	updated_at?: string;
@@ -26,7 +26,7 @@ interface InitiativesData {
 	summary?: string;
 	status: number;
 	department: string;
-	members?: string;
+	members?: string | string[] | any;
 }
 
 interface DataContextProps {

@@ -3,7 +3,7 @@
 import { Box, Input as MInput } from '@mui/material';
 
 import Editor from '../Editor/Editor';
-import { Avatar, ButtonType, Buttons, DepartmentDropdown, Input } from '@/components';
+import { Avatar, ButtonType, Buttons, DepartmentDropdown, ExpandButton, Input } from '@/components';
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '@/utils/helpers';
 import { useMode, FormData } from '@/context/DataContext';
@@ -17,8 +17,9 @@ const Form = () => {
 	const { currentUser } = useUser();
 	const [isFocus, setIsFocus] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [expanded, setExpanded] = useState<boolean>(true);
 
-	// Handle  Mutation for creating post
+	// Handle  Mutation for creating / updating post
 
 	const [createPost] = useMutation(CREATE_INITIATIVE);
 	const [updatePost] = useMutation(UPDATE_INITIATIVE);
@@ -76,6 +77,10 @@ const Form = () => {
 		}
 	};
 
+	const handleToggle = () => {
+		setExpanded((prevExpanded) => !prevExpanded);
+	};
+
 	const date = new Date();
 	const currentDate = formatDate(date);
 
@@ -90,6 +95,7 @@ const Form = () => {
 				department: selectedInitiative.department,
 				created_by: '',
 				created_date: selectedInitiative.created_date,
+				members: selectedInitiative.members,
 			}));
 		} else if (mode === 'create') {
 			setFormData((prevFormData: FormData) => ({
@@ -119,6 +125,8 @@ const Form = () => {
 			setDisabled(true);
 		}
 	}, [formData, setDisabled]);
+
+	console.log('selected', selectedInitiative);
 
 	return (
 		<>
@@ -172,6 +180,10 @@ const Form = () => {
 							},
 						},
 
+						'.form-control > div.assigned': {
+							height: 'auto',
+						},
+
 						'.form-label': {
 							width: '100%',
 							maxWidth: '180px',
@@ -211,6 +223,29 @@ const Form = () => {
 								{selectedInitiative ? formatDate(selectedInitiative.created_date) : currentDate}
 							</Box>
 						</Box>
+						{formData?.members && formData.members[0].firstName !== 'blank' && (
+							<Box className='assigned'>
+								<Box className='form-label'>Assigned to</Box>
+								<Box
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'space-between',
+										width: '100%',
+									}}
+								>
+									<Avatar
+										type={'multiple'}
+										data={formData && formData.members}
+										label={!expanded ? true : false}
+									/>
+									<ExpandButton
+										handleToggle={handleToggle}
+										expanded={expanded}
+									/>
+								</Box>
+							</Box>
+						)}
 						<Box>
 							<Box className='form-label'>Why do we need this?</Box>
 							<Input
