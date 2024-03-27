@@ -3,7 +3,7 @@ import TableHeader from '@/components/low-level-components/Table/TableHeader';
 
 import { Link } from 'react-router-dom';
 import LandingBanner from '@/sections/Banners/LandingBanner';
-import { InitiativesTable, PitchGroup } from '@/components';
+import { InitiativesTable, PitchGroup, Type } from '@/components';
 
 const Home = () => {
 	return (
@@ -48,7 +48,7 @@ const Home = () => {
 						</Box>
 					</Box>
 				</Box>
-				<InitiativesTable />
+				<InitiativesTable type={Type.forVoting} />
 			</Box>
 
 			<Box>

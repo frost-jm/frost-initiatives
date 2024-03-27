@@ -13,7 +13,7 @@ interface AvatarData {
 interface AvatarProps {
 	type: 'single' | 'multiple' | 'table' | 'tooltip';
 	label?: boolean;
-	data: AvatarData[] | AvatarData | null | number;
+	data: any;
 }
 
 const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#d35400', '#2c3e50', '#27ae60', '#c0392b'];
@@ -61,15 +61,17 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 						display: label ? 'grid' : 'flex',
 						gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr));',
 						gap: label ? '8px' : '2px',
+						width: '100%',
 					}}
 				>
 					{data &&
 						data.map((avatar: { firstName: string; lastName: string }, index: number) => {
+							const nameChecker = avatar.firstName;
 							const initials = avatar.firstName[0];
 							const fullname = avatar.firstName + ' ' + avatar.lastName;
 
 							const bgColor = getAvatarColor(hailstormUsers, avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
-							return (
+							return nameChecker !== 'blank' ? (
 								<Box
 									key={index}
 									sx={{
@@ -96,7 +98,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 									</MUIAvatar>
 									{label && <>{fullname}</>}
 								</Box>
-							);
+							) : null;
 						})}
 				</Box>
 			)}
@@ -109,10 +111,11 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 				>
 					{data &&
 						data.slice(0, 3).map((avatar, index) => {
+							const nameChecker = avatar.firstName;
 							const initials = avatar.firstName[0];
 							const bgColor = getAvatarColor(hailstormUsers, avatar.firstName, avatar.lastName) ?? colors[index % colors.length];
 
-							return (
+							return nameChecker !== 'blank' ? (
 								<MUIAvatar
 									key={index}
 									sx={{
@@ -129,6 +132,15 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 								>
 									{initials}
 								</MUIAvatar>
+							) : (
+								<Box
+									key={index}
+									sx={{
+										color: 'rgba(29, 36, 79, 0.8)',
+									}}
+								>
+									-
+								</Box>
 							);
 						})}
 					{data && data.length > 3 && (
@@ -187,6 +199,7 @@ const Avatar = ({ type = 'single', label, data }: AvatarProps) => {
 								</Tooltip>
 							);
 						})}
+
 					{data && data.length > 14 && (
 						<Tooltip
 							title={data

@@ -66,7 +66,7 @@ module.exports = gql`
 
 	type Status {
 		id: ID!
-		status: Int!
+		status: String!
 	}
 
 	type User {
@@ -80,7 +80,7 @@ module.exports = gql`
 
 	type PaginationData {
 		page: Int!
-        total: Int!
+		total: Int!
 	}
 
 	input CommentInput {
@@ -103,7 +103,7 @@ module.exports = gql`
 
 	input PaginationInput {
 		page: Int!
-        limit: Int!
+		limit: Int!
 	}
 
 	input FilterParams {
@@ -120,7 +120,7 @@ module.exports = gql`
 		hailstormData: [User]
 		commentID(commentID: ID!): Comment
 		comments(postID: ID!): [Comment]!
-		getVotes(initativeID: ID!) : Message
+		getVotes(initativeID: ID!): Message
 	}
 
 	type Mutation {
@@ -132,7 +132,7 @@ module.exports = gql`
 		deleteInitiative(id: ID!): Message
 		joinInitiative(input: InitiativeMembers): Message
 		leaveInitiative(input: InitiativeMembers): Message
-		setVote(userID: ID!, initiativeID: ID!) : Message
+		setVote(userID: ID!, initiativeID: ID!): Message
 	}
 
 	type Message {

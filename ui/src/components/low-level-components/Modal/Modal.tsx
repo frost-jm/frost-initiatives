@@ -2,6 +2,8 @@ import { useMode } from '@/context/DataContext';
 import { Box, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { ActionDropdown } from '@/components/index';
 import { useState, useRef, useEffect } from 'react';
+import { useUser } from '@/context/UserContext';
+import { getUserIdForName } from '@/utils/helpers';
 
 interface ModalProps {
 	isOpen: boolean;
@@ -10,10 +12,18 @@ interface ModalProps {
 }
 
 const Modal = ({ isOpen, onClose, children }: ModalProps) => {
-	const { mode } = useMode();
+	const { mode, selectedInitiative } = useMode();
+	const { currentUser, hailstorm } = useUser();
+
 	const popupRef = useRef<HTMLDivElement>(null);
 
 	const [popupOpen, setPopupOpen] = useState<boolean>(false);
+
+	let userId;
+
+	if (selectedInitiative) {
+		userId = getUserIdForName(hailstorm, selectedInitiative?.created_by);
+	}
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -69,37 +79,42 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 					sx={{
 						display: 'flex',
 						justifyContent: 'flex-end',
-						cursor: 'pointer',
+
 						gap: '4px',
+						img: {
+							cursor: 'pointer',
+						},
 					}}
 				>
-					<Box
-						position='relative'
-						height='24px'
-					>
-						<img
-							src='./icons/kebab.svg'
-							alt='kebab'
-							onClick={() => setPopupOpen(true)}
-						/>
-						{popupOpen && (
-							<Box
-								ref={popupRef}
-								sx={{
-									position: 'absolute',
-									zIndex: '3',
-									width: 'max-content',
-									right: '44px',
-									top: '29px',
-								}}
-							>
-								<ActionDropdown
-									setIsOpen={setPopupOpen}
-									type='modal'
-								/>
-							</Box>
-						)}
-					</Box>
+					{currentUser?.userId === userId && (
+						<Box
+							position='relative'
+							height='24px'
+						>
+							<img
+								src='./icons/kebab.svg'
+								alt='kebab'
+								onClick={() => setPopupOpen(true)}
+							/>
+							{popupOpen && (
+								<Box
+									ref={popupRef}
+									sx={{
+										position: 'absolute',
+										zIndex: '3',
+										width: 'max-content',
+										right: '44px',
+										top: '29px',
+									}}
+								>
+									<ActionDropdown
+										setIsOpen={setPopupOpen}
+										type='modal'
+									/>
+								</Box>
+							)}
+						</Box>
+					)}
 
 					<img
 						src='./icons/light-close-icon.svg'

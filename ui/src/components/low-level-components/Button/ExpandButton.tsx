@@ -1,13 +1,11 @@
 import { Box } from '@mui/material';
-import { useState } from 'react';
 
-const ExpandButton = () => {
-	const [expanded, setExpanded] = useState<boolean>(true);
+interface ExpandButtonProps {
+	expanded: boolean;
+	handleToggle: () => void;
+}
 
-	const handleToggle = () => {
-		setExpanded((prevExpanded) => !prevExpanded);
-	};
-
+const ExpandButton = ({ expanded, handleToggle }: ExpandButtonProps) => {
 	return (
 		<Box
 			sx={{

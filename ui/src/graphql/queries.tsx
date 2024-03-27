@@ -1,21 +1,25 @@
 import { gql } from '@apollo/client';
 
 export const GET_INITIATIVES = gql`
-	query Initiatives($status: InitiativeTab) {
-		initiatives(status: $status) {
+	query Query($status: InitiativeTab, $pagination: PaginationInput, $filter: FilterParams) {
+		initiatives(status: $status, pagination: $pagination, filter: $filter) {
 			items {
 				created_by
 				created_date
 				deleted
+				department
 				id
 				members
-				department
 				post
 				reason
 				status
 				summary
-				title
 				updated_date
+				title
+			}
+			pagination {
+				page
+				total
 			}
 		}
 	}
@@ -81,6 +85,33 @@ export const DELETE_INITIATIVE = gql`
 	}
 `;
 
+export const JOIN_INITIATIVE = gql`
+	mutation JoinInitiative($input: InitiativeMembers) {
+		joinInitiative(input: $input) {
+			data
+			error {
+				code
+				message
+			}
+			message
+			success
+		}
+	}
+`;
+
+export const LEAVE_INITIATIVE = gql`
+	mutation LeaveInitiative($input: InitiativeMembers) {
+		leaveInitiative(input: $input) {
+			data
+			error {
+				code
+				message
+			}
+			message
+			success
+		}
+	}
+`;
 export const GET_DEPARTMENTS = gql`
 	query {
 		departments {

@@ -29,6 +29,7 @@ import PitchGroup from '@/components/low-level-components/Card/PitchGroup';
 import VoteTooltip from '@/components/low-level-components/Tooltip/VoteTooltip';
 import Modal from '@/components/low-level-components/Modal/Modal';
 import Form from '@/components/high-level-components/Form/Form';
+import { Type } from '@/components/low-level-components/Table/InitiativesTable';
 import Sample from '@/components/sample';
 
 export {
@@ -62,4 +63,5 @@ export {
 	VoteTooltip,
 	Modal,
 	Form,
+	Type,
 };

@@ -72,6 +72,16 @@ export const getEmailOfUserId = (data: any, userId: number | string) => {
 	}
 };
 
+// Get ID through name
+export const getUserIdForName = (data: any, name: { firstName: string; lastName: string }) => {
+	if (data && data.hailstormData) {
+		const hsUser = data.hailstormData.find((hsUser: any) => hsUser.firstName === name.firstName && hsUser.lastName === name.lastName);
+
+		return hsUser ? hsUser.userId : null;
+	}
+	return null;
+};
+
 // Get avatar color
 export const getAvatarColor = (data: any, firstName: string, lastName: string): string | undefined => {
 	const user = data?.find((user: UserData) => user.firstName === firstName && user.lastName === lastName);

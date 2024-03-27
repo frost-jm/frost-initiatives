@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, ReactNode, Dispatch, SetStateAction } from 'react';
 
@@ -7,7 +8,7 @@ export interface FormData {
 	post: string;
 	reason: string;
 	department: string[] | string;
-	members: string;
+	members: string | any;
 	status: string;
 	created_by: string | null | number;
 	updated_at?: string;
@@ -19,13 +20,13 @@ interface InitiativesData {
 	title: string;
 	post: string;
 	reason: string;
-	created_by: number;
+	created_by: any;
 	created_date: Date;
 	updated_date: string;
 	summary?: string;
 	status: number;
 	department: string;
-	members?: string[];
+	members?: string | string[] | any;
 }
 
 interface DataContextProps {
